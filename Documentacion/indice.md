@@ -32,14 +32,6 @@
 - [Anexos](anexos.md)
   
 ---
-
-<style>
-    .contenedor {
-        display:flex;
-        justify-content: flex-end; 
-        align-items: center;
-    }
-</style>
-<div class="contenedor">
+<div style="display:flex; justify-content: flex-end; align-items: center;">
     <a href="1.introduccion.md">1. Introducción →</a>
 </div>
