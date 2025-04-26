@@ -15,11 +15,9 @@ import com.api.tebeoteca.servicios.IUsuarioServicio;
 public class UsuarioControlador {
 	
 	private IUsuarioServicio usuarioServicio;
-	private IClienteServicio clienteServicio;
 	
-	public UsuarioControlador(IUsuarioServicio usuarioServicio, IClienteServicio clienteServicio) {
+	public UsuarioControlador(IUsuarioServicio usuarioServicio) {
 		this.usuarioServicio = usuarioServicio;
-		this.clienteServicio = clienteServicio;
 	}
 	
 	@GetMapping("/todos")

@@ -1,4 +1,4 @@
-package com.api.tebeoteca.servicios;
+package com.api.tebeoteca.servicios.impl;
 
 import java.util.List;
 import java.util.Optional;
@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 import com.api.tebeoteca.dao.ClienteRepositorio;
 import com.api.tebeoteca.entidades.Cliente;
 import com.api.tebeoteca.entidades.Usuario;
+import com.api.tebeoteca.servicios.IClienteServicio;
 
 @Service
 public class ClienteServicioImpl implements IClienteServicio {
