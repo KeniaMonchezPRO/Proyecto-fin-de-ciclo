@@ -11,10 +11,17 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Inheritance;
 import jakarta.persistence.InheritanceType;
+import jakarta.persistence.PrePersist;
 import jakarta.persistence.Table;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
 @Entity
 @Inheritance(strategy = InheritanceType.JOINED)
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
 @Table(name = "usuarios")
 public abstract class Usuario {
 	
@@ -36,13 +43,13 @@ public abstract class Usuario {
 	@Column(name = "tipo_usuario")
 	private TipoUsuario tipoUsuario;
 	
-	@Column(name = "fecha_registro")
+	@Column(name = "fecha_registro", updatable = false)
 	private LocalDateTime fechaRegistro;
 	
 	@Column(name = "fecha_modificacion")
 	private LocalDateTime fechaModificacion;
 
-	public Usuario () {
+	/*public Usuario () {
 		
 	}
 	
@@ -128,6 +135,6 @@ public abstract class Usuario {
 		return "Usuario [id=" + id + ", nombreUsuario=" + nombreUsuario + ", email=" + email + ", contrasena="
 				+ contrasena + ", fotoPerfil=" + fotoPerfil + ", tipoUsuario=" + tipoUsuario + ", fechaRegistro="
 				+ fechaRegistro + ", fechaModificacion=" + fechaModificacion + "]";
-	}
+	}*/
 
 }

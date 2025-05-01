@@ -1,14 +1,22 @@
 package com.pruebas.vineta_virtual.entidades;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
+import jakarta.persistence.PrePersist;
 import jakarta.persistence.Table;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
 @Entity
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
 @Table(name = "clientes")
 public class Cliente extends Usuario {
 	
@@ -25,8 +33,15 @@ public class Cliente extends Usuario {
 	@Enumerated(EnumType.STRING)
 	@Column(name = "tipo_cliente")
 	private TipoCliente tipoCliente;
+	
+	@PrePersist
+	protected void prePersist() {
+		this.setTipoUsuario(TipoUsuario.cliente);
+		this.setFechaRegistro(LocalDateTime.now());
+		this.setFechaModificacion(LocalDateTime.now());
+	}
 
-	public Cliente() {
+	/*public Cliente() {
 		
 	}
 	
@@ -84,5 +99,5 @@ public class Cliente extends Usuario {
 	public String toString() {
 		return "Cliente [nombreCliente=" + nombreCliente + ", fechaCreacionEmpresa=" + fechaCreacionEmpresa
 				+ ", descripcion=" + descripcion + ", banner=" + banner + ", tipoCliente=" + tipoCliente + "]";
-	}
+	}*/
 }
