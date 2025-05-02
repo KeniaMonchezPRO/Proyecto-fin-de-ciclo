@@ -43,7 +43,7 @@ CREATE TABLE clientes (
     fecha_creacion_empresa DATE NOT NULL,
     descripcion VARCHAR(255),
     banner VARCHAR(255),
-    tipo_cliente ENUM('EDITORIAL', 'DISTRIBUIDORA', 'CREADOR') DEFAULT 'creador',
+    tipo_cliente ENUM('EDITORIAL', 'DISTRIBUIDORA', 'CREADOR') DEFAULT 'creador' NOT NULL,
     FOREIGN KEY (id) REFERENCES usuarios(id)
 );
 

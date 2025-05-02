@@ -1,6 +1,7 @@
 package com.example.tebeoteca.api;
 
 import com.example.tebeoteca.login.LoginRequest;
+import com.example.tebeoteca.registro.RegistroLectorRequest;
 
 import okhttp3.ResponseBody;
 import retrofit2.Call;
@@ -12,7 +13,7 @@ public interface ApiService {
     @POST("/api/login") // o el endpoint que hayas definido
     Call<ResponseBody> login(@Body LoginRequest request);
 
-    /*@POST("registro/lector")
-    Call<String> registrarLector(@Body RegistroLector request);*/
+    @POST("/api/v2/registro/lector")
+    Call<ResponseBody> registrarLector(@Body RegistroLectorRequest request);
 
 }

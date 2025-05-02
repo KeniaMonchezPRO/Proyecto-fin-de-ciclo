@@ -28,10 +28,18 @@ public class LoginControlador {
         
     	String usuario = datos.get("usuario");
         String contrasena = datos.get("contrasena");
-
+        
+        System.out.println("INPUT RECIBIDO: " + datos);
+        System.out.println("CONTRASEÑA RECIBIDA: " + contrasena);
+        
         Optional<Usuario> usuarioOpt = loginServicio.buscarPorNombreUsuarioOEmail(usuario);
 
-        if (usuarioOpt.isPresent() && usuarioOpt.get().getContrasena().equals(contrasena)) {
+        if (usuarioOpt.isPresent()) {
+        	System.out.println("USUARIO ENCONTRADO EN BD: " + usuarioOpt.get().getNombreUsuario());
+            System.out.println("CONTRASEÑA EN BD: " + usuarioOpt.get().getContrasena());
+        } 
+        
+        if(usuarioOpt.get().getContrasena().equals(contrasena)) {
             return ResponseEntity.ok("Inicio de sesión exitoso");
         } else {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Credenciales incorrectas");

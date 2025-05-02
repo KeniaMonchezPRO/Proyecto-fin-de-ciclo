@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">Tebeoteca</string>
+    <string name="textView_sinCuenta"><u>¿Aún no tienes cuenta? Creala aquí</u></string>
 </resources>

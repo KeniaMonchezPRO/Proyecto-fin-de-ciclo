@@ -1,16 +1,19 @@
 package com.example.tebeoteca.login;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.activity.ComponentActivity;
 
 import com.example.tebeoteca.R;
 import com.example.tebeoteca.api.ApiService;
+import com.example.tebeoteca.registro.RegistroLectorActivity;
 
 import okhttp3.ResponseBody;
 import retrofit2.Call;
@@ -23,6 +26,8 @@ public class LoginActivity extends ComponentActivity {
     private EditText etUsuarioEmail, etContrasena;
     private Button btnLogin;
     private ApiService apiService;
+    private TextView sinCuenta;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -32,6 +37,9 @@ public class LoginActivity extends ComponentActivity {
         etUsuarioEmail = findViewById(R.id.et_UsuarioEmail);
         etContrasena = findViewById(R.id.et_Contrasena);
         btnLogin = findViewById(R.id.btn_Login);
+
+        sinCuenta = findViewById(R.id.tv_link_cliente);
+        sinCuenta.setOnClickListener(view -> startRegistroLectorActivity());
 
         Retrofit retrofit = new Retrofit.Builder()
                 .baseUrl("http://10.0.2.2:8080/")
@@ -46,6 +54,12 @@ public class LoginActivity extends ComponentActivity {
                 loginUsuario();
             }
         });
+    }
+
+    public void startRegistroLectorActivity() {
+        Intent intent = new Intent(this, RegistroLectorActivity.class);
+        startActivity(intent);
+        finish();
     }
 
     private void loginUsuario() {
@@ -79,5 +93,4 @@ public class LoginActivity extends ComponentActivity {
             }
         });
     }
-
 }
