@@ -1,10 +1,12 @@
 package com.example.tebeoteca.registro;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.activity.ComponentActivity;
@@ -28,6 +30,7 @@ public class RegistroLectorActivity extends ComponentActivity {
     private EditText etNombreUsuario, etEmail, etContrasena, etNombre, etApellidos, etFechaNac;
     private Button btnRegistroLector;
     private ApiService apiService;
+    private TextView tvRegistroCliente;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,6 +44,9 @@ public class RegistroLectorActivity extends ComponentActivity {
         etApellidos = findViewById(R.id.et_Apellidos);
         etFechaNac = findViewById(R.id.et_FechaNac);
         btnRegistroLector = findViewById(R.id.btn_Registro_Lector1);
+
+        tvRegistroCliente = findViewById(R.id.tv_link_cliente);
+        tvRegistroCliente.setOnClickListener(view -> startRegistroClienteActivity());
 
         Retrofit retrofit = new Retrofit.Builder()
                 .baseUrl("http://10.0.2.2:8080/")
@@ -57,6 +63,11 @@ public class RegistroLectorActivity extends ComponentActivity {
         });
     }
 
+    public void startRegistroClienteActivity() {
+        Intent intent = new Intent(this, RegistroClienteActivity.class);
+        startActivity(intent);
+        finish();
+    }
     private void registroLector() {
         String nombreUsuario = etNombreUsuario.getText().toString().trim();
         String email = etEmail.getText().toString().trim();

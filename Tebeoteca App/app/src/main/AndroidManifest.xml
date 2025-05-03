@@ -27,6 +27,7 @@
         </activity>
         <activity android:name=".login.LoginActivity" />
         <activity android:name=".registro.RegistroLectorActivity"/>
+        <activity android:name=".registro.RegistroClienteActivity"/>
     </application>
 
 </manifest>

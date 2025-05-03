@@ -90,8 +90,9 @@
             android:id="@+id/tv_link_cliente"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Crear cuenta de cliente"
-            android:textStyle="bold"/>
+            android:text="@string/textView_registroClienteForm"
+            android:textStyle="bold"
+            android:onClick="startRegistroClienteActivity"/>
 
         <Button
             android:id="@+id/btn_Registro_Lector1"

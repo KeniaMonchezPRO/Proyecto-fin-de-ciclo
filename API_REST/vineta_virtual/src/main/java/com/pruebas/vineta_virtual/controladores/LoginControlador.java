@@ -37,12 +37,13 @@ public class LoginControlador {
         if (usuarioOpt.isPresent()) {
         	System.out.println("USUARIO ENCONTRADO EN BD: " + usuarioOpt.get().getNombreUsuario());
             System.out.println("CONTRASEÑA EN BD: " + usuarioOpt.get().getContrasena());
-        } 
-        
-        if(usuarioOpt.get().getContrasena().equals(contrasena)) {
-            return ResponseEntity.ok("Inicio de sesión exitoso");
+            if(usuarioOpt.get().getContrasena().equals(contrasena)) {
+                return ResponseEntity.ok("Inicio de sesión exitoso");
+            } else {
+                return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Credenciales incorrectas");
+            }
         } else {
-            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Credenciales incorrectas");
+        	return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Credenciales incorrectas");
         }
     }
 
