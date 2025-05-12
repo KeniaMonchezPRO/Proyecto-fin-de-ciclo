@@ -1,6 +1,7 @@
 package com.example.tebeoteca.api;
 
 import com.example.tebeoteca.login.LoginRequest;
+import com.example.tebeoteca.login.LoginResponseDTO;
 import com.example.tebeoteca.registro.RegistroClienteRequest;
 import com.example.tebeoteca.registro.RegistroLectorRequest;
 
@@ -12,7 +13,11 @@ import retrofit2.http.POST;
 public interface ApiService {
 
     @POST("/api/login") // o el endpoint que hayas definido
-    Call<ResponseBody> login(@Body LoginRequest request);
+    Call<LoginResponseDTO> login(@Body LoginRequest request);
+
+    /* En caso de errores descomentar, junto con el del backend
+    @POST("/api/login") // o el endpoint que hayas definido
+    Call<ResponseBody> login(@Body LoginRequest request);*/
 
     @POST("/api/v2/registro/lector")
     Call<ResponseBody> registrarLector(@Body RegistroLectorRequest request);

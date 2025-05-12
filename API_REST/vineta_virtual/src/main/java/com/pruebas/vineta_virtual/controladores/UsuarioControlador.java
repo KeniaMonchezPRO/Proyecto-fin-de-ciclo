@@ -21,7 +21,7 @@ public class UsuarioControlador {
         this.usuarioServicio = usuarioServicio;
     }
 
-    @GetMapping
+    @GetMapping("/todos")
     public List<Usuario> obtenerTodos() {
         return usuarioServicio.obtenerTodosLosUsuarios();
     }

@@ -1,6 +1,7 @@
 package com.example.tebeoteca.login;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -13,6 +14,8 @@ import androidx.activity.ComponentActivity;
 
 import com.example.tebeoteca.R;
 import com.example.tebeoteca.api.ApiService;
+import com.example.tebeoteca.cliente.PerfilClienteActivity;
+import com.example.tebeoteca.lector.PerfilLectorActivity;
 import com.example.tebeoteca.registro.RegistroLectorActivity;
 
 import okhttp3.ResponseBody;
@@ -74,6 +77,53 @@ public class LoginActivity extends ComponentActivity {
         Log.d("LOGIN_DEBUG", "Usuario: " + usuarioEmail);
         Log.d("LOGIN_DEBUG", "Contraseña: " + contrasena);
 
+        LoginRequest loginRequest = new LoginRequest(usuarioEmail, contrasena);
+        Call<LoginResponseDTO> call = apiService.login(loginRequest);
+        call.enqueue(new Callback<LoginResponseDTO>() {
+            @Override
+            public void onResponse(Call<LoginResponseDTO> call, Response<LoginResponseDTO> response) {
+                if (response.isSuccessful()) {
+                    Log.d("LOGIN_DEBUG", "response is successful");
+                    LoginResponseDTO loginData = response.body();
+
+                    // Guardar en SharedPreferences
+                    SharedPreferences prefs = getSharedPreferences("usuarioPrefs", MODE_PRIVATE);
+                    SharedPreferences.Editor editor = prefs.edit();
+
+                    editor.putInt("id", loginData.getId());
+                    editor.putString("nombreUsuario", loginData.getNombreUsuario());
+                    editor.putString("tipoUsuario", loginData.getTipoUsuario());
+
+                    if ("CLIENTE".equals(loginData.getTipoUsuario())) {
+                        editor.putString("nombreCliente", loginData.getNombreCliente());
+                    } else {
+                        editor.putString("nombreLector", loginData.getNombreLector());
+                        //editor.putString("apellidos", loginData.getApellidos());
+                    }
+
+                    editor.apply();
+
+                    // Redirigir a la Activity correspondiente
+                    if ("CLIENTE".equals(loginData.getTipoUsuario())) {
+                        startActivity(new Intent(LoginActivity.this, PerfilClienteActivity.class));
+                    } else {
+                        startActivity(new Intent(LoginActivity.this, PerfilLectorActivity.class));
+                    }
+                    finish();
+
+                } else {
+                    Toast.makeText(LoginActivity.this, "Credenciales incorrectas", Toast.LENGTH_SHORT).show();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<LoginResponseDTO> call, Throwable t) {
+                Toast.makeText(LoginActivity.this, "Error de red", Toast.LENGTH_SHORT).show();
+            }
+        });
+
+        /* En caso de error descomentar junto con ApiService y backend
+
         LoginRequest request = new LoginRequest(usuarioEmail, contrasena);
 
         Call<ResponseBody> call = apiService.login(request);
@@ -91,6 +141,6 @@ public class LoginActivity extends ComponentActivity {
             public void onFailure(Call<ResponseBody> call, Throwable t) {
                 Toast.makeText(LoginActivity.this, "Error de red: " + t.getMessage(), Toast.LENGTH_LONG).show();
             }
-        });
+        });*/
     }
 }
