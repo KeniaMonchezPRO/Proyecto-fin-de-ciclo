@@ -11,28 +11,24 @@ import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
+import com.example.tebeoteca.BaseActivity;
 import com.example.tebeoteca.R;
 
-public class PerfilClienteActivity extends ComponentActivity {
-
-    private TextView nombreUsuario;
+public class PerfilClienteActivity extends BaseActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        EdgeToEdge.enable(this);
-        setContentView(R.layout.activity_perfil_cliente);
-        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.perfil_cliente), (v, insets) -> {
-            Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
-            v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
-            return insets;
-        });
+        setCustomContent(R.layout.activity_perfil_cliente);
 
         SharedPreferences sharedPreferences = getSharedPreferences("usuarioPrefs", MODE_PRIVATE);
-        String nombreUsuario = sharedPreferences.getString("nombreUsuario", "Usuario desconocido");
+        String nombreEmpresa = sharedPreferences.getString("nombreEmpresa", "Cliente");
+        String nombreUsuario = "@"+(sharedPreferences.getString("nombreUsuario", "cliente"));
 
-        TextView miTextView = findViewById(R.id.tv_NombreUsuarioCliente);
-        miTextView.setText("¡Bienvenido, " + nombreUsuario + "!");
+        TextView tv_nombreEmpresa = findViewById(R.id.tv_displayNombreEmpresa);
+        TextView tv_nombreUsuario = findViewById(R.id.tv_displayNombreUsuario);
+        tv_nombreEmpresa.setText(nombreEmpresa);
+        tv_nombreUsuario.setText(nombreUsuario);
     }
 
     @Override

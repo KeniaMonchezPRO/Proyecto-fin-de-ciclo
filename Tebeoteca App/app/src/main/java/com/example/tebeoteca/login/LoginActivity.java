@@ -96,7 +96,8 @@ public class LoginActivity extends ComponentActivity {
                     editor.putString("tipoUsuario", loginData.getTipoUsuario());
 
                     if ("CLIENTE".equals(loginData.getTipoUsuario())) {
-                        editor.putString("nombreCliente", loginData.getNombreCliente());
+                        editor.putString("nombreEmpresa", loginData.getNombreCliente());
+                        editor.putString("nombreUsuario", loginData.getNombreUsuario());
                     } else {
                         editor.putString("nombreLector", loginData.getNombreLector());
                         //editor.putString("apellidos", loginData.getApellidos());

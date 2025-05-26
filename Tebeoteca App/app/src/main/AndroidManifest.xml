@@ -30,8 +30,10 @@
         <activity android:name=".login.LoginActivity" />
         <activity android:name=".registro.RegistroLectorActivity"/>
         <activity android:name=".registro.RegistroClienteActivity"/>
-        <activity android:name=".cliente.PerfilClienteActivity"/>
         <activity android:name=".lector.PerfilLectorActivity"/>
+        <activity android:name=".cliente.PerfilClienteActivity"/>
+        <activity android:name=".BaseActivity" />
+        <activity android:name=".BaseActivityAntes" />
     </application>
 
 </manifest>

@@ -2,8 +2,10 @@ package com.example.tebeoteca.registro;
 
 import android.app.DatePickerDialog;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Build;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -15,6 +17,8 @@ import androidx.activity.ComponentActivity;
 
 import com.example.tebeoteca.R;
 import com.example.tebeoteca.api.ApiService;
+import com.example.tebeoteca.cliente.PerfilClienteActivity;
+import com.example.tebeoteca.lector.PerfilLectorActivity;
 import com.example.tebeoteca.login.LoginActivity;
 
 import java.sql.Date;
@@ -129,21 +133,35 @@ public class RegistroLectorActivity extends ComponentActivity {
             return;
         }
 
+        Log.d("LOGIN_DEBUG", "Usuario: " + nombreUsuario);
+        Log.d("LOGIN_DEBUG", "Contraseña: " + contrasena);
+
         RegistroLectorRequest registroLectorRequest = new RegistroLectorRequest(nombreUsuario,email,contrasena,fechaNac);
 
-        Call<ResponseBody> call = apiService.registrarLector(registroLectorRequest);
-        call.enqueue(new Callback<ResponseBody>() {
+        Call<RegistroLectorResponseDTO> call = apiService.registrarLector(registroLectorRequest);
+        call.enqueue(new Callback<RegistroLectorResponseDTO>() {
             @Override
-            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+            public void onResponse(Call<RegistroLectorResponseDTO> call, Response<RegistroLectorResponseDTO> response) {
                 if (response.isSuccessful()) {
-                    Toast.makeText(RegistroLectorActivity.this, "Registro exitoso 🎉", Toast.LENGTH_SHORT).show();
+                    Log.d("LOGIN_DEBUG", "response is successful");
+                    //capturamos la response del proceso de registro:
+                    RegistroLectorResponseDTO registroData = response.body();
+
+                    // Guardar en SharedPreferences:
+                    SharedPreferences prefs = getSharedPreferences("usuarioPrefs", MODE_PRIVATE);
+                    SharedPreferences.Editor editor = prefs.edit();
+                    editor.putString("nombreUsuario", registroData.getNombreUsuario());
+                    editor.apply();
+
+                    //abre la pantalla de inicio:
+                    startActivity(new Intent(RegistroLectorActivity.this, PerfilLectorActivity.class));
                 } else {
-                    Toast.makeText(RegistroLectorActivity.this, "Hubo un error 😓", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(RegistroLectorActivity.this, "Hubo un error", Toast.LENGTH_SHORT).show();
                 }
             }
 
             @Override
-            public void onFailure(Call<ResponseBody> call, Throwable t) {
+            public void onFailure(Call<RegistroLectorResponseDTO> call, Throwable t) {
                 Toast.makeText(RegistroLectorActivity.this, "Error de red: " + t.getMessage(), Toast.LENGTH_LONG).show();
             }
         });

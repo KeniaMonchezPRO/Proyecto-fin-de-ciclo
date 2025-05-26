@@ -2,38 +2,30 @@ package com.example.tebeoteca;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.widget.FrameLayout;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.Fragment;
 
+import com.example.tebeoteca.fragments.InicioFragment;
 import com.example.tebeoteca.login.LoginActivity;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
-public class BaseActivity extends AppCompatActivity {
-    protected FrameLayout contentContainer;
-
+public class BaseActivityAntes extends AppCompatActivity {
     ImageButton btnConfig, btnNotificaciones, btnAnadir, btnEspeciales, btnRutas, btnWiki, btnNovedades;
     LinearLayout floatingSubmenu;
     BottomNavigationView bottomMenu;
     private Boolean isSubMenuVisible = false;
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_base2); // Layout con top+bottom menu
+        setContentView(R.layout.activity_base);
 
-        contentContainer = findViewById(R.id.content_container);
-        setupMenus();
-    }
-
-    private void setupMenus() {
-        // Aquí puedes inicializar el top menu y el bottom menu
-        // Por ejemplo: asignar listeners a los botones flotantes
         btnConfig = findViewById(R.id.btn_configuracion);
         btnNotificaciones = findViewById(R.id.btn_notificaciones);
         btnAnadir = findViewById(R.id.btn_anadir);
@@ -93,15 +85,21 @@ public class BaseActivity extends AppCompatActivity {
         btnNovedades.setOnClickListener(v -> {
             Toast.makeText(this, "Ir a Novedades", Toast.LENGTH_SHORT).show();
         });
-    }
 
-    protected void setCustomContent(int layoutResId) {
-        LayoutInflater.from(this).inflate(layoutResId, contentContainer, true);
+        // Mostrar fragmento inicial
+        cargarFragmento(new InicioFragment());
     }
 
     public void startEspecialesActivity(View view) {
         Intent intent = new Intent(this, LoginActivity.class);
         startActivity(intent);
+    }
+
+    private void cargarFragmento(Fragment fragment) {
+        getSupportFragmentManager()
+                .beginTransaction()
+                .replace(R.id.fragment_container, fragment)
+                .commit();
     }
 
     private void showSubMenu(LinearLayout submenu) {

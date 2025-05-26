@@ -9,6 +9,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.pruebas.vineta_virtual.dto.RegistroClienteDTO;
+import com.pruebas.vineta_virtual.dto.RegistroLectorDTO;
 import com.pruebas.vineta_virtual.entidades.Cliente;
 import com.pruebas.vineta_virtual.entidades.Lector;
 import com.pruebas.vineta_virtual.servicios.IRegistroServicio;
@@ -23,7 +25,42 @@ public class RegistroControlador {
 		this.registroServicio = registroServicio;
 	}
 	
-	 @PostMapping("/lector")
+	@PostMapping("/lector")
+	 public ResponseEntity<?> registrarLector(@RequestBody Lector lector) {
+		 Lector nuevoLector = registroServicio.registrarLector(lector);
+		 RegistroLectorDTO response = new RegistroLectorDTO();
+		 try {
+			 response.setId(nuevoLector.getId());
+			 response.setNombreUsuario(nuevoLector.getNombreUsuario());
+			 response.setContrasena(nuevoLector.getContrasena());
+			 response.setEmail(nuevoLector.getEmail());
+			 response.setFechaNac(nuevoLector.getFechaNac());
+			 return ResponseEntity.ok(response);
+		 } catch (Exception e) {
+			 return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("ENTRADA:" + nuevoLector + "Error al registrar el lector: " + e.getMessage());
+		 }
+	            
+		 //Lector nuevoLector = registroServicio.registrarLector(lector);
+	     //return ResponseEntity.status(HttpStatus.CREATED).body(nuevoLector);
+	 }
+
+	 @PostMapping("/cliente")
+	 public ResponseEntity<?> registrarCliente(@RequestBody Cliente cliente) {
+		 Cliente nuevoCliente = registroServicio.registrarCliente(cliente);
+		 RegistroClienteDTO response = new RegistroClienteDTO();
+		 try {
+			 response.setId(nuevoCliente.getId());
+			 response.setNombreUsuario(nuevoCliente.getNombreUsuario());
+			 response.setEmail(nuevoCliente.getEmail());
+			 response.setTipo(nuevoCliente.getTipoCliente());
+			 response.setNombreEmpresa(nuevoCliente.getNombreCliente());
+			 return ResponseEntity.ok(response);
+		 } catch (Exception e) { 
+			 return ResponseEntity.status(HttpStatus.CREATED).body(nuevoCliente);
+		 }
+	 }
+	
+	 /*@PostMapping("/lector")
 	 public ResponseEntity<?> registrarLector(@RequestBody Lector lector) {
 		 Lector nuevoLector = registroServicio.registrarLector(lector);
 		 try {
@@ -32,14 +69,14 @@ public class RegistroControlador {
 			 return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("ENTRADA:" + nuevoLector + "Error al registrar el lector: " + e.getMessage());
 		 }
 	            
-		 /*Lector nuevoLector = registroServicio.registrarLector(lector);
-	     return ResponseEntity.status(HttpStatus.CREATED).body(nuevoLector);*/
+		 //Lector nuevoLector = registroServicio.registrarLector(lector);
+	     //return ResponseEntity.status(HttpStatus.CREATED).body(nuevoLector);
 	 }
 
 	 @PostMapping("/cliente")
 	 public ResponseEntity<Cliente> registrarCliente(@RequestBody Cliente cliente) {
 		 Cliente nuevoCliente = registroServicio.registrarCliente(cliente);
 	     return ResponseEntity.status(HttpStatus.CREATED).body(nuevoCliente);
-	 }
+	 }*/
 
 }

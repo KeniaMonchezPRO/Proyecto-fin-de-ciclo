@@ -2,13 +2,14 @@ package com.pruebas.vineta_virtual.dto;
 
 import java.time.LocalDate;
 
-public class RegistroLectorDTO {
+import com.pruebas.vineta_virtual.entidades.TipoCliente;
+
+public class RegistroClienteDTO {
 	private int id;
 	private String nombreUsuario;
     private String email;
-    private String contrasena;
-    private LocalDate fechaNac;
-    
+    private String nombreEmpresa;
+    private TipoCliente tipo;
 	public int getId() {
 		return id;
 	}
@@ -27,19 +28,18 @@ public class RegistroLectorDTO {
 	public void setEmail(String email) {
 		this.email = email;
 	}
-	public String getContrasena() {
-		return contrasena;
+	public String getNombreEmpresa() {
+		return nombreEmpresa;
 	}
-	public void setContrasena(String contrasena) {
-		this.contrasena = contrasena;
+	public void setNombreEmpresa(String nombreEmpresa) {
+		this.nombreEmpresa = nombreEmpresa;
 	}
-	public LocalDate getFechaNac() {
-		return fechaNac;
+	public TipoCliente getTipo() {
+		return tipo;
 	}
-	public void setFechaNac(LocalDate fechaNac) {
-		this.fechaNac = fechaNac;
+	public void setTipo(TipoCliente tipo) {
+		this.tipo = tipo;
 	}
-    
     
 
 }

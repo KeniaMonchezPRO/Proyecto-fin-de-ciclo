@@ -1,6 +1,9 @@
 package com.example.tebeoteca.registro;
 
+import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -13,6 +16,8 @@ import androidx.activity.ComponentActivity;
 
 import com.example.tebeoteca.R;
 import com.example.tebeoteca.api.ApiService;
+import com.example.tebeoteca.cliente.PerfilClienteActivity;
+import com.example.tebeoteca.lector.PerfilLectorActivity;
 
 import okhttp3.ResponseBody;
 import retrofit2.Call;
@@ -74,21 +79,36 @@ public class RegistroClienteActivity extends ComponentActivity {
             return;
         }
 
+        Log.d("LOGIN_DEBUG", "Usuario: " + nombreUsuario);
+        Log.d("LOGIN_DEBUG", "Contraseña: " + contrasena);
+
         RegistroClienteRequest registroClienteRequest = new RegistroClienteRequest(nombreUsuario,email,contrasena,nombreEmpresa,tipo);
 
-        Call<ResponseBody> call = apiService.registrarCliente(registroClienteRequest);
-        call.enqueue(new Callback<ResponseBody>() {
+        Call<RegistroClienteResponseDTO> call = apiService.registrarCliente(registroClienteRequest);
+        call.enqueue(new Callback<RegistroClienteResponseDTO>() {
             @Override
-            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+            public void onResponse(Call<RegistroClienteResponseDTO> call, Response<RegistroClienteResponseDTO> response) {
                 if (response.isSuccessful()) {
-                    Toast.makeText(RegistroClienteActivity.this, "Registro exitoso 🎉", Toast.LENGTH_SHORT).show();
+                    Log.d("LOGIN_DEBUG", "response is successful");
+                    //capturamos la response del proceso de registro:
+                    RegistroClienteResponseDTO registroData = response.body();
+
+                    // Guardar en SharedPreferences:
+                    SharedPreferences prefs = getSharedPreferences("usuarioPrefs", MODE_PRIVATE);
+                    SharedPreferences.Editor editor = prefs.edit();
+                    editor.putString("nombreEmpresa", registroData.getNombreEmpresa());
+                    editor.putString("nombreUsuario", registroData.getNombreUsuario());
+                    editor.apply();
+
+                    //abre la pantalla de inicio:
+                    startActivity(new Intent(RegistroClienteActivity.this, PerfilClienteActivity.class));
                 } else {
-                    Toast.makeText(RegistroClienteActivity.this, "Hubo un error 😓", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(RegistroClienteActivity.this, "Hubo un error", Toast.LENGTH_SHORT).show();
                 }
             }
 
             @Override
-            public void onFailure(Call<ResponseBody> call, Throwable t) {
+            public void onFailure(Call<RegistroClienteResponseDTO> call, Throwable t) {
                 Toast.makeText(RegistroClienteActivity.this, "Error de red: " + t.getMessage(), Toast.LENGTH_LONG).show();
             }
         });
