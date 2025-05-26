@@ -3,118 +3,143 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/registro_cliente1">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/registro_cliente"
+    android:background="@drawable/bg_gradient">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical"
+        android:gravity="start|center"
         tools:ignore="MissingConstraints"
-        android:paddingHorizontal="50dp">
+        android:paddingHorizontal="35dp">
+
+        <ImageButton
+            android:id="@+id/btn_atras_login"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:layout_gravity="start"
+            android:background="@drawable/bg_glass_button"
+            android:src="@drawable/ic_next"
+            android:contentDescription="@string/textView_iniciarSesion"
+            android:scaleType="centerInside"
+            app:tint="@android:color/white"
+            android:rotation="180"
+            android:layout_marginBottom="50dp"/>
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Registrarse"
-            android:textSize="25dp"
-            android:layout_marginTop="30dp"/>
+            android:layout_gravity="center"
+            android:text="@string/textView_registrarse"
+            android:textSize="25sp"
+            android:textColor="@color/white"
+            android:layout_marginBottom="40dp"/>
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Nombre de Usuario"
-            android:layout_marginTop="30dp"/>
+            android:text="@string/textView_nombreUsuario"
+            android:textColor="@color/white"/>
 
         <EditText
             android:id="@+id/et_NombreUsuario"
             android:layout_width="match_parent"
-            android:layout_height="40dp"/>
+            android:layout_height="40dp"
+            android:layout_marginTop="10dp"
+            android:textColor="@color/white"
+            android:layout_marginBottom="25dp"/>
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Email"
-            android:layout_marginTop="25dp"/>
+            android:text="@string/textView_email"
+            android:textColor="@color/white"/>
 
         <EditText
             android:id="@+id/et_Email"
             android:layout_width="match_parent"
             android:layout_height="40dp"
-            android:layout_marginBottom="25dp"/>
+            android:layout_marginTop="10dp"
+            android:layout_marginBottom="25dp"
+            android:textColor="@color/white"/>
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Contraseña"/>
+            android:text="@string/textView_contrasena"
+            android:textColor="@color/white"/>
 
         <EditText
             android:id="@+id/et_Contrasena"
             android:layout_width="match_parent"
             android:layout_height="40dp"
-            android:layout_marginBottom="25dp"/>
+            android:layout_marginTop="10dp"
+            android:textColor="@color/white"
+            android:layout_marginBottom="25dp"
+            android:inputType="textPassword"/>
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Nombre de la empresa"/>
+            android:text="@string/textView_nombreEmpresa"
+            android:textColor="@color/white"/>
 
         <EditText
             android:id="@+id/et_NombreEmpresa"
             android:layout_width="match_parent"
             android:layout_height="40dp"
+            android:layout_marginTop="10dp"
+            android:textColor="@color/white"
             android:layout_marginBottom="25dp"/>
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Fecha de creación de la empresa"/>
-
-        <EditText
-            android:id="@+id/et_FechaCreacionEmpresa"
-            android:layout_width="match_parent"
-            android:layout_height="40dp"
-            android:layout_marginBottom="25dp"/>
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Tipo de empresa"/>
-
+            android:text="@string/textView_tipoEmpresa"
+            android:textColor="@color/white"/>
 
         <RadioGroup
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
+            android:layout_marginTop="10dp"
             android:id="@+id/rg_Tipo">
             <RadioButton
                 android:id="@+id/rb_Editorial"
                 android:layout_height="wrap_content"
                 android:layout_width="wrap_content"
                 android:text="Editorial"
+                android:textColor="@color/white"
                 android:layout_marginRight="10dp"/>
             <RadioButton
                 android:id="@+id/rb_Distribuidora"
                 android:layout_height="wrap_content"
                 android:layout_width="wrap_content"
                 android:text="Distribuidora"
+                android:textColor="@color/white"
                 android:layout_marginRight="10dp"/>
             <RadioButton
                 android:id="@+id/rb_Creador"
                 android:layout_height="wrap_content"
                 android:layout_width="wrap_content"
-                android:text="Creador"/>
+                android:text="Creador"
+                android:textColor="@color/white"/>
         </RadioGroup>
 
-        <Button
-            android:id="@+id/btn_Registro_Cliente1"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+        <ImageButton
+            android:id="@+id/btn_Registro_Cliente"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
             android:text="Siguiente >"
             android:layout_marginTop="30dp"
-            android:layout_gravity="end"/>
-
-
-
+            android:layout_gravity="end"
+            android:background="@drawable/bg_glass_button"
+            android:src="@drawable/ic_next"
+            android:contentDescription="Registrarse como Cliente"
+            android:scaleType="centerInside"
+            app:tint="@android:color/white"/>
     </LinearLayout>
 
 

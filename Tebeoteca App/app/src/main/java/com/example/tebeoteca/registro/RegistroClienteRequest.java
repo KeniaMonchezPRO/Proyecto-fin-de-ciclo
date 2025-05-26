@@ -6,15 +6,13 @@ public class RegistroClienteRequest {
     private String email;
     private String contrasena;
     private String nombreCliente;
-    private String fechaCreacionEmpresa;
     private String tipoCliente;
 
-    public RegistroClienteRequest(String nombreUsuario, String email, String contrasena, String nombreCliente, String fechaCreacionEmpresa, String tipoCliente) {
+    public RegistroClienteRequest(String nombreUsuario, String email, String contrasena, String nombreCliente, String tipoCliente) {
         this.nombreUsuario = nombreUsuario;
         this.email = email;
         this.contrasena = contrasena;
         this.nombreCliente = nombreCliente;
-        this.fechaCreacionEmpresa = fechaCreacionEmpresa;
         this.tipoCliente = tipoCliente;
     }
 
@@ -32,10 +30,6 @@ public class RegistroClienteRequest {
 
     public String getNombreCliente() {
         return nombreCliente;
-    }
-
-    public String getFechaCreacionEmpresa() {
-        return fechaCreacionEmpresa;
     }
 
     public String getTipoCliente() {
@@ -56,10 +50,6 @@ public class RegistroClienteRequest {
 
     public void setNombreCliente(String nombreCliente) {
         this.nombreCliente = nombreCliente;
-    }
-
-    public void setFechaCreacionEmpresa(String fechaCreacionEmpresa) {
-        this.fechaCreacionEmpresa = fechaCreacionEmpresa;
     }
 
     public void setTipoCliente(String tipoCliente) {

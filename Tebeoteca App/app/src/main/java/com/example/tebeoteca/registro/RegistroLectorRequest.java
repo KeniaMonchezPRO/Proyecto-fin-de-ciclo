@@ -4,16 +4,12 @@ public class RegistroLectorRequest {
     private String nombreUsuario;
     private String email;
     private String contrasena;
-    private String nombreLector;
-    private String apellidosLector;
     private String fechaNac;
 
-    public RegistroLectorRequest(String nombreUsuario, String email, String contrasena, String nombreLector, String apellidosLector, String fechaNac) {
+    public RegistroLectorRequest(String nombreUsuario, String email, String contrasena, String fechaNac) {
         this.nombreUsuario = nombreUsuario;
         this.email = email;
         this.contrasena = contrasena;
-        this.nombreLector = nombreLector;
-        this.apellidosLector = apellidosLector;
         this.fechaNac = fechaNac;
     }
 
@@ -27,14 +23,6 @@ public class RegistroLectorRequest {
 
     public String getContrasena() {
         return contrasena;
-    }
-
-    public String getNombreLector() {
-        return nombreLector;
-    }
-
-    public String getApellidosLector() {
-        return apellidosLector;
     }
 
     public String getFechaNac() {
@@ -51,14 +39,6 @@ public class RegistroLectorRequest {
 
     public void setContrasena(String contrasena) {
         this.contrasena = contrasena;
-    }
-
-    public void setNombreLector(String nombreLector) {
-        this.nombreLector = nombreLector;
-    }
-
-    public void setApellidosLector(String apellidosLector) {
-        this.apellidosLector = apellidosLector;
     }
 
     public void setFechaNac(String fechaNac) {

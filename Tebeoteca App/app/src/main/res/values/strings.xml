@@ -1,5 +1,19 @@
 <resources>
+    <!--Títulos-->
     <string name="app_name">Tebeoteca</string>
-    <string name="textView_sinCuenta"><u>¿Aún no tienes cuenta? Creala aquí</u></string>
-    <string name="textView_registroClienteForm"><u>Crear cuenta de cliente</u></string>
+    <string name="textView_registrarse">Registrarse</string>
+    <string name="textView_iniciarSesion">Iniciar Sesión</string>
+
+    <!--Enlaces-->
+    <string name="textView_sinCuenta"><u>¿Aún no tienes cuenta? Créala aquí</u></string>
+    <string name="textView_registroClienteForm">¿Eres editor, distribuidora o creador? &#xA;&#xA;<u>Crea una cuenta de cliente aquí</u></string>
+
+    <!--Campos obligatorios-->
+    <string name="textView_usuarioEmail">Usuario o Email <font color="#FF0000">*</font></string>
+    <string name="textView_contrasena">Contraseña <font color="#FF0000">*</font></string>
+    <string name="textView_nombreUsuario">Nombre de usuario <font color="#FF0000">*</font></string>
+    <string name="textView_email">Email <font color="#FF0000">*</font></string>
+    <string name="textView_fechaNac">Fecha de nacimiento <font color="#FF0000">*</font></string>
+    <string name="textView_nombreEmpresa">Nombre o razón social <font color="#FF0000">*</font></string>
+    <string name="textView_tipoEmpresa">Tipo <font color="#FF0000">*</font></string>
 </resources>

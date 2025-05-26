@@ -28,11 +28,11 @@ public class PerfilClienteActivity extends ComponentActivity {
             return insets;
         });
 
-        /*SharedPreferences sharedPreferences = getSharedPreferences("usuarioPrefs", MODE_PRIVATE);
+        SharedPreferences sharedPreferences = getSharedPreferences("usuarioPrefs", MODE_PRIVATE);
         String nombreUsuario = sharedPreferences.getString("nombreUsuario", "Usuario desconocido");
 
         TextView miTextView = findViewById(R.id.tv_NombreUsuarioCliente);
-        miTextView.setText("¡Bienvenido, " + nombreUsuario + "!");*/
+        miTextView.setText("¡Bienvenido, " + nombreUsuario + "!");
     }
 
     @Override
