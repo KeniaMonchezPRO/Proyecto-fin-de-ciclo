@@ -22,21 +22,24 @@
 
             <!-- BANNER: -->
             <ImageView
-                android:id="@+id/banner"
+                android:id="@+id/iv_banner"
                 android:layout_width="match_parent"
                 android:layout_height="200dp"
                 android:layout_gravity="center|top"
                 android:background="@drawable/bg_banner"
+                android:clipToOutline="true"
                 android:layout_margin="10dp"
                 android:scaleType="centerCrop"/>
 
             <!-- FOTO PERFIL -->
             <ImageView
+                android:id="@+id/iv_fotoPerfil"
                 android:layout_width="100dp"
                 android:layout_height="100dp"
                 android:layout_gravity="center|top"
                 android:layout_marginTop="50dp"
                 android:background="@drawable/bg_avatar"
+                android:clipToOutline="true"
                 android:elevation="20dp"
                 android:scaleType="centerCrop"/>
 
@@ -202,7 +205,16 @@
                 android:layout_height="wrap_content"
                 android:orientation="vertical">
                 <LinearLayout
-                    android:id="@+id/novedades_container"
+                    android:id="@+id/eventos_container"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:paddingVertical="10dp"
+                    android:paddingHorizontal="20dp"
+                    android:elevation="5dp">
+                </LinearLayout>
+                <LinearLayout
+                    android:id="@+id/rutas_container"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="vertical"
@@ -220,7 +232,16 @@
                     android:elevation="5dp">
                 </LinearLayout>
                 <LinearLayout
-                    android:id="@+id/eventos_container"
+                    android:id="@+id/wiki_container"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:paddingVertical="10dp"
+                    android:paddingHorizontal="20dp"
+                    android:elevation="5dp">
+                </LinearLayout>
+                <LinearLayout
+                    android:id="@+id/novedades_container"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="vertical"
@@ -233,7 +254,7 @@
         <!--footer:-->
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="100dp"
+            android:layout_height="200dp"
             android:orientation="vertical">
         </LinearLayout>
     </LinearLayout>

@@ -5,13 +5,19 @@
     android:layout_height="match_parent"
     android:background="@drawable/bg_gradient">
 
-
-
     <!-- Contenedor para el contenido dinámico -->
     <FrameLayout
         android:id="@+id/content_container"
         android:layout_width="match_parent"
         android:layout_height="match_parent"/>
+
+    <FrameLayout
+        android:id="@+id/overlay"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="#000000"
+        android:visibility="gone"
+        android:clickable="true" />
 
     <!-- Aquí van top + bottom menu, fijos -->
     <include layout="@layout/top_menu_fragment" android:elevation="1dp"/>

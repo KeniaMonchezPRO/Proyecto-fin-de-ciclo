@@ -1,6 +1,9 @@
 package com.example.tebeoteca;
 
 import android.content.Intent;
+import android.graphics.RenderEffect;
+import android.graphics.Shader;
+import android.os.Build;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -21,22 +24,27 @@ public class BaseActivity extends AppCompatActivity {
     LinearLayout floatingSubmenu;
     BottomNavigationView bottomMenu;
     private Boolean isSubMenuVisible = false;
+    View overlay;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_base2); // Layout con top+bottom menu
+        setContentView(R.layout.activity_base2); // Layout con top y bottom menu
 
         contentContainer = findViewById(R.id.content_container);
         setupMenus();
     }
 
     private void setupMenus() {
-        // Aquí puedes inicializar el top menu y el bottom menu
-        // Por ejemplo: asignar listeners a los botones flotantes
+        overlay = findViewById(R.id.overlay);
+
+        //Top menu:
         btnConfig = findViewById(R.id.btn_configuracion);
         btnNotificaciones = findViewById(R.id.btn_notificaciones);
+
         btnAnadir = findViewById(R.id.btn_anadir);
+
+        //Bottom menu:
         btnRutas = findViewById(R.id.btn_ruta);
         btnWiki = findViewById(R.id.btn_wiki);
         btnNovedades = findViewById(R.id.btn_novedades);
@@ -44,29 +52,37 @@ public class BaseActivity extends AppCompatActivity {
         floatingSubmenu = findViewById(R.id.submenu_layout);
         floatingSubmenu.setVisibility(View.GONE);
 
+        overlay.setOnClickListener(v -> {
+            overlay.setVisibility(View.GONE);
+            hideSubMenu(floatingSubmenu);
+        });
+
         bottomMenu = findViewById(R.id.bottom_nav);
         bottomMenu.setOnItemSelectedListener(item -> {
             if(item.getItemId() == R.id.nav_menu) {
-                if(isSubMenuVisible) {
-                    //floatingSubmenu.setVisibility(View.GONE);
+                if(isSubMenuVisible && !(overlay.getVisibility() == View.GONE)) {
+                    overlay.animate()
+                            .alpha(0f)
+                            .setDuration(300)
+                            .withEndAction(() -> overlay.setVisibility(View.GONE))
+                            .start();
                     hideSubMenu(floatingSubmenu);
                 } else {
-                    //floatingSubmenu.setVisibility(View.VISIBLE);
+                    overlay.setAlpha(0f);
+                    overlay.setVisibility(View.VISIBLE);
+                    overlay.animate()
+                            .alpha(0.5f) // o 0.6f según qué tan oscuro lo quieres
+                            .setDuration(300)
+                            .start();
                     showSubMenu(floatingSubmenu);
                 }
                 isSubMenuVisible = !isSubMenuVisible;
                 return true;
             } else {
-                // Lógica para los demás botones
                 hideSubMenu(floatingSubmenu);
                 isSubMenuVisible = false;
                 return true;
             }
-
-            // Lógica para los demás botones
-            //floatingSubmenu.setVisibility(View.GONE);
-            //isSubMenuVisible = false;
-            //return true;
         });
 
         //funcionalidades botones

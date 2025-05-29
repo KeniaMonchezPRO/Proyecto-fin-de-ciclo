@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.FrameLayout;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -21,6 +22,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class PerfilClienteActivity extends BaseActivity {
+    private ImageView fotoPerfil, banner;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,10 +38,11 @@ public class PerfilClienteActivity extends BaseActivity {
         tv_nombreEmpresa.setText(nombreEmpresa);
         tv_nombreUsuario.setText(nombreUsuario);
 
-        List<Novedad> listaNovedades = new ArrayList<>();
-        //listaNovedades.add(new Novedad("Nuevo cómic disponible", "¡Ya puedes leer el nuevo tomo de..."));
-        //listaNovedades.add(new Novedad("Evento especial", "Participa en nuestro concurso de ilustración..."));
-        agregarSeccionNovedades(listaNovedades);
+        List<Evento> listaEventos = new ArrayList<>();
+        agregarSeccionEventos(listaEventos);
+
+        List<Ruta> listaRutas = new ArrayList<>();
+        agregarSeccionRutas(listaRutas);
 
         List<Producto> listaProductos = new ArrayList<>();
         //listaProductos.add(new Producto("Comic 1", "¡Ya puedes leer el nuevo tomo de..."));
@@ -47,8 +50,16 @@ public class PerfilClienteActivity extends BaseActivity {
         //listaProductos.add(new Producto("Comic 3", "Participa en nuestro concurso de ilustración..."));
         agregarSeccionProductos(listaProductos);
 
-        List<Evento> listaEventos = new ArrayList<>();
-        agregarSeccionEventos(listaEventos);
+        List<Wiki> listaWiki = new ArrayList<>();
+        agregarSeccionWiki(listaWiki);
+
+        //List<Novedad> listaNovedades = new ArrayList<>();
+        //agregarSeccionNovedades(listaNovedades);
+
+        fotoPerfil = findViewById(R.id.iv_fotoPerfil);
+        fotoPerfil.setImageResource(R.drawable.dc);
+        banner = findViewById(R.id.iv_banner);
+        banner.setImageResource(R.drawable.flash);
     }
 
     @Override
@@ -149,6 +160,60 @@ public class PerfilClienteActivity extends BaseActivity {
         });
 
         LinearLayout contenedor = findViewById(R.id.eventos_container);
+        contenedor.addView(seccionView);
+    }
+
+    private void agregarSeccionRutas(List<Ruta> listaRutas) {
+        View seccionView = LayoutInflater.from(this).inflate(R.layout.seccion_rutas, null);
+
+        FrameLayout flAnadirRuta = seccionView.findViewById(R.id.fl_anadirRuta);
+
+        TextView tvTitulo = seccionView.findViewById(R.id.seccion_rutas);
+        tvTitulo.setText("Rutas");
+
+        if (listaRutas == null || listaRutas.isEmpty()) {
+            flAnadirRuta.setVisibility(View.VISIBLE);
+        }
+
+        RecyclerView recycler = seccionView.findViewById(R.id.seccion_recycler);
+        recycler.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false));
+        recycler.setAdapter(new RutaAdapter(listaRutas));
+        recycler.addItemDecoration(new RecyclerView.ItemDecoration() {
+            @Override
+            public void getItemOffsets(@NonNull Rect outRect, @NonNull View view,
+                                       @NonNull RecyclerView parent, @NonNull RecyclerView.State state) {
+                outRect.right = 30;
+            }
+        });
+
+        LinearLayout contenedor = findViewById(R.id.rutas_container);
+        contenedor.addView(seccionView);
+    }
+
+    private void agregarSeccionWiki(List<Wiki> listaWiki) {
+        View seccionView = LayoutInflater.from(this).inflate(R.layout.seccion_wiki, null);
+
+        FrameLayout flAnadirWiki = seccionView.findViewById(R.id.fl_anadirWiki);
+
+        TextView tvTitulo = seccionView.findViewById(R.id.seccion_wiki);
+        tvTitulo.setText("Wiki");
+
+        if (listaWiki == null || listaWiki.isEmpty()) {
+            flAnadirWiki.setVisibility(View.VISIBLE);
+        }
+
+        RecyclerView recycler = seccionView.findViewById(R.id.seccion_recycler);
+        recycler.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false));
+        recycler.setAdapter(new WikiAdapter(listaWiki));
+        recycler.addItemDecoration(new RecyclerView.ItemDecoration() {
+            @Override
+            public void getItemOffsets(@NonNull Rect outRect, @NonNull View view,
+                                       @NonNull RecyclerView parent, @NonNull RecyclerView.State state) {
+                outRect.right = 30;
+            }
+        });
+
+        LinearLayout contenedor = findViewById(R.id.wiki_container);
         contenedor.addView(seccionView);
     }
 }
