@@ -1,4 +1,4 @@
-package com.example.tebeoteca.cliente;
+package com.example.tebeoteca.cliente.ruta;
 
 import android.view.LayoutInflater;
 import android.view.View;

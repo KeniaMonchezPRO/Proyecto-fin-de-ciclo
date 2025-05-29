@@ -79,6 +79,26 @@ public class RegistroLectorActivity extends ComponentActivity {
         btnAtrasLogin.setOnClickListener(view -> startLoginActivity());
     }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+    }
+
+    @Override
+    protected void onRestart() {
+        super.onRestart();
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+    }
+
     public void startRegistroClienteActivity() {
         Intent intent = new Intent(this, RegistroClienteActivity.class);
         startActivity(intent);

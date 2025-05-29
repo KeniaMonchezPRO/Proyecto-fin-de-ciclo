@@ -12,15 +12,19 @@ import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.Toast;
 
+import androidx.annotation.IdRes;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.example.tebeoteca.cliente.BuscarActivity;
+import com.example.tebeoteca.cliente.PerfilClienteActivity;
+import com.example.tebeoteca.cliente.comic.ComicsActivity;
 import com.example.tebeoteca.login.LoginActivity;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 public class BaseActivity extends AppCompatActivity {
     protected FrameLayout contentContainer;
 
-    ImageButton btnConfig, btnNotificaciones, btnAnadir, btnEspeciales, btnRutas, btnWiki, btnNovedades;
+    ImageButton btnConfig, btnNotificaciones, btnAnadir, btnRutas, btnWiki, btnEventos, btnAtras;;
     LinearLayout floatingSubmenu;
     BottomNavigationView bottomMenu;
     private Boolean isSubMenuVisible = false;
@@ -29,13 +33,25 @@ public class BaseActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_base2); // Layout con top y bottom menu
+        setContentView(R.layout.activity_base2);
 
         contentContainer = findViewById(R.id.content_container);
-        setupMenus();
+        //setupMenus();
+
+        btnAtras = findViewById(R.id.btn_atras);
+        btnAtras.setOnClickListener(new View.OnClickListener() { // Establece un OnClickListener
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
     }
 
-    private void setupMenus() {
+    public void volverAtras(View view) {
+        finish(); // ¡Esto cierra la Activity actual y regresa a la anterior!
+    }
+
+    protected void setupMenus(@IdRes int activeMenuItemId) {
         overlay = findViewById(R.id.overlay);
 
         //Top menu:
@@ -47,7 +63,7 @@ public class BaseActivity extends AppCompatActivity {
         //Bottom menu:
         btnRutas = findViewById(R.id.btn_ruta);
         btnWiki = findViewById(R.id.btn_wiki);
-        btnNovedades = findViewById(R.id.btn_novedades);
+        btnEventos = findViewById(R.id.btn_eventos);
 
         floatingSubmenu = findViewById(R.id.submenu_layout);
         floatingSubmenu.setVisibility(View.GONE);
@@ -58,7 +74,16 @@ public class BaseActivity extends AppCompatActivity {
         });
 
         bottomMenu = findViewById(R.id.bottom_nav);
+        bottomMenu.setSelectedItemId(activeMenuItemId);
         bottomMenu.setOnItemSelectedListener(item -> {
+            int id = item.getItemId();
+            if (id == R.id.nav_inicio && !(this instanceof PerfilClienteActivity)) {
+                startActivity(new Intent(this, PerfilClienteActivity.class));
+            } else if (id == R.id.nav_buscar && !(this instanceof BuscarActivity)) {
+                startActivity(new Intent(this, BuscarActivity.class));
+            } else if (id == R.id.nav_comics && !(this instanceof ComicsActivity)) {
+                startActivity(new Intent(this, ComicsActivity.class));
+            }
             if(item.getItemId() == R.id.nav_menu) {
                 if(isSubMenuVisible && !(overlay.getVisibility() == View.GONE)) {
                     overlay.animate()
@@ -71,7 +96,7 @@ public class BaseActivity extends AppCompatActivity {
                     overlay.setAlpha(0f);
                     overlay.setVisibility(View.VISIBLE);
                     overlay.animate()
-                            .alpha(0.5f) // o 0.6f según qué tan oscuro lo quieres
+                            .alpha(0.5f)
                             .setDuration(300)
                             .start();
                     showSubMenu(floatingSubmenu);
@@ -106,8 +131,8 @@ public class BaseActivity extends AppCompatActivity {
             Toast.makeText(this, "Ir a Wiki", Toast.LENGTH_SHORT).show();
         });
 
-        btnNovedades.setOnClickListener(v -> {
-            Toast.makeText(this, "Ir a Novedades", Toast.LENGTH_SHORT).show();
+        btnEventos.setOnClickListener(v -> {
+            Toast.makeText(this, "Ir a Eventos", Toast.LENGTH_SHORT).show();
         });
     }
 

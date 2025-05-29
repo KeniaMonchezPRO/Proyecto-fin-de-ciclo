@@ -3,23 +3,15 @@ package com.example.tebeoteca;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
-import android.widget.ImageView;
-import android.widget.Toast;
 //import android.widget.Toolbar;
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.Toolbar;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
-import androidx.fragment.app.Fragment;
 
-import com.example.tebeoteca.fragments.BuscarFragment;
-import com.example.tebeoteca.fragments.InicioFragment;
-import com.example.tebeoteca.fragments.PerfilFragment;
 import com.example.tebeoteca.login.LoginActivity;
-import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 public class MainActivity extends AppCompatActivity {
 

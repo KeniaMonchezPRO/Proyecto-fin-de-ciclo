@@ -10,7 +10,6 @@ import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 
-import com.example.tebeoteca.fragments.InicioFragment;
 import com.example.tebeoteca.login.LoginActivity;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
@@ -87,7 +86,7 @@ public class BaseActivityAntes extends AppCompatActivity {
         });
 
         // Mostrar fragmento inicial
-        cargarFragmento(new InicioFragment());
+        //cargarFragmento(new InicioFragment());
     }
 
     public void startEspecialesActivity(View view) {

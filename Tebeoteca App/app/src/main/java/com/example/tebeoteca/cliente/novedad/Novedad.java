@@ -1,10 +1,10 @@
-package com.example.tebeoteca.cliente;
+package com.example.tebeoteca.cliente.novedad;
 
-public class Ruta {
+public class Novedad {
     private String titulo;
     private String descripcion;
 
-    public Ruta(String titulo, String descripcion) {
+    public Novedad(String titulo, String descripcion) {
         this.titulo = titulo;
         this.descripcion = descripcion;
     }
@@ -12,3 +12,4 @@ public class Ruta {
     public String getTitulo() { return titulo; }
     public String getDescripcion() { return descripcion; }
 }
+

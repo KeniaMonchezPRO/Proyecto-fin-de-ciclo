@@ -52,14 +52,35 @@ public class LoginActivity extends ComponentActivity {
 
         apiService = retrofit.create(ApiService.class);
 
-        btnLogin.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                loginUsuario();
-            }
-        });
+        //btnLogin.setOnClickListener(view -> loginUsuario());
+        btnLogin.setOnClickListener(view -> startPerfilCliente());
     }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+    }
+
+    @Override
+    protected void onRestart() {
+        super.onRestart();
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+    }
+
+    public void startPerfilCliente() {
+        Intent intent = new Intent(this, PerfilClienteActivity.class);
+        startActivity(intent);
+        finish();
+    }
     public void startRegistroLectorActivity() {
         Intent intent = new Intent(this, RegistroLectorActivity.class);
         startActivity(intent);

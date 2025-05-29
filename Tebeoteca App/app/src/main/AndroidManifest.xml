@@ -19,7 +19,7 @@
         android:hardwareAccelerated="true">
 
         <activity
-            android:name=".cliente.PerfilClienteActivity"
+            android:name=".MainActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -31,8 +31,8 @@
         <activity android:name=".registro.RegistroLectorActivity"/>
         <activity android:name=".registro.RegistroClienteActivity"/>
         <activity android:name=".lector.PerfilLectorActivity"/>
-        <!--<activity android:name=".cliente.PerfilClienteActivity"/>-->
-        <activity android:name=".MainActivity" />
+        <activity android:name=".cliente.comic.ComicsActivity"/>
+        <activity android:name=".cliente.PerfilClienteActivity"/>
         <activity android:name=".BaseActivity" />
         <activity android:name=".BaseActivityAntes" />
     </application>

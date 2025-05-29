@@ -18,6 +18,7 @@ import com.example.tebeoteca.R;
 import com.example.tebeoteca.api.ApiService;
 import com.example.tebeoteca.cliente.PerfilClienteActivity;
 import com.example.tebeoteca.lector.PerfilLectorActivity;
+import com.example.tebeoteca.login.LoginActivity;
 
 import okhttp3.ResponseBody;
 import retrofit2.Call;
@@ -30,7 +31,7 @@ public class RegistroClienteActivity extends ComponentActivity {
     private EditText etNombreUsuario, etEmail, etContrasena, etNombreEmpresa;
     private RadioButton rbEditorial, rbDistribuidora, rbCreador;
     private RadioGroup rgTipo;
-    private ImageButton btnRegistroCliente;
+    private ImageButton btnRegistroCliente, btnAtrasLogin;
     private ApiService apiService;
 
     @Override
@@ -44,6 +45,7 @@ public class RegistroClienteActivity extends ComponentActivity {
         etNombreEmpresa = findViewById(R.id.et_NombreEmpresa);
 
         btnRegistroCliente = findViewById(R.id.btn_Registro_Cliente);
+        btnAtrasLogin = findViewById(R.id.btn_atras_login);
 
         rgTipo = findViewById(R.id.rg_Tipo);
         rbCreador = findViewById(R.id.rb_Creador);
@@ -62,6 +64,34 @@ public class RegistroClienteActivity extends ComponentActivity {
                 registroCliente();
             }
         });
+
+        btnAtrasLogin.setOnClickListener(view -> startLoginActivity());
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+    }
+
+    @Override
+    protected void onRestart() {
+        super.onRestart();
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+    }
+
+    public void startLoginActivity() {
+        Intent intent = new Intent(this, LoginActivity.class);
+        startActivity(intent);
+        finish();
     }
 
     private void registroCliente() {

@@ -19,6 +19,20 @@
         app:tint="#22103b"/>
 
     <ImageButton
+        android:id="@+id/btn_atras"
+        android:layout_width="48dp"
+        android:layout_height="48dp"
+        android:layout_gravity="start"
+        android:layout_marginStart="60dp"
+        android:background="@drawable/bg_glass_button"
+        android:src="@drawable/ic_next"
+        android:contentDescription="atrás"
+        android:scaleType="centerInside"
+        app:tint="#22103b"
+        android:rotation="180"
+        android:onClick="volverAtras"/>
+
+    <ImageButton
         android:id="@+id/btn_notificaciones"
         android:layout_width="48dp"
         android:layout_height="48dp"

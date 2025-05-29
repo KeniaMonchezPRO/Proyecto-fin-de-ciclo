@@ -24,7 +24,7 @@
             android:src="@drawable/ic_next"
             android:contentDescription="@string/textView_iniciarSesion"
             android:scaleType="centerInside"
-            app:tint="@android:color/white"
+            app:tint="#22103b"
             android:rotation="180"
             android:layout_marginBottom="50dp"/>
 
@@ -117,7 +117,7 @@
             android:src="@drawable/ic_next"
             android:contentDescription="@string/textView_registrarse"
             android:scaleType="centerInside"
-            app:tint="@android:color/white"/>
+            app:tint="#22103b"/>
 
 
 

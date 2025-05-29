@@ -40,7 +40,7 @@
             android:elevation="8dp"
             android:layout_gravity="center|end|bottom">
 
-            <FrameLayout
+           <!-- <FrameLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_gravity="end"
@@ -54,7 +54,7 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
                     android:layout_marginRight="30dp"
-                    android:text="Especiales"
+                    android:text="Eventos"
                     android:textColor="@color/white"
                     android:textStyle="bold"/>
                 <ImageButton
@@ -68,87 +68,99 @@
                     android:scaleType="centerInside"
                     app:tint="#22103b" />
 
-            </FrameLayout>
+            </FrameLayout> -->
 
-            <LinearLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+            <FrameLayout
+                android:layout_width="130dp"
+                android:layout_height="50dp"
                 android:orientation="horizontal"
                 android:layout_marginBottom="12dp"
-                android:layout_gravity="end">
+                android:layout_gravity="end"
+                android:clickable="true"
+                android:focusable="true"
+                android:background="?android:attr/selectableItemBackground"
+                android:onClick="startWikiActivity">
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_gravity="center"
+                    android:layout_gravity="center|end"
                     android:text="Wiki"
                     android:textColor="@color/white"
                     android:textStyle="bold"
-                    android:layout_marginRight="20dp"/>
+                    android:layout_marginEnd="80dp"/>
                 <ImageButton
                     android:id="@+id/btn_wiki"
                     android:layout_width="50dp"
                     android:layout_height="50dp"
-                    android:layout_gravity="start"
+                    android:layout_gravity="end"
                     android:layout_marginBottom="12dp"
                     android:background="@drawable/bg_glass_button"
                     android:src="@drawable/ic_wiki"
                     android:contentDescription="Wiki"
                     android:scaleType="centerInside"
                     app:tint="#22103b" />
-            </LinearLayout>
+            </FrameLayout>
 
-            <LinearLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+            <FrameLayout
+                android:layout_width="130dp"
+                android:layout_height="50dp"
                 android:orientation="horizontal"
                 android:layout_marginBottom="12dp"
-                android:layout_gravity="end">
+                android:layout_gravity="end"
+                android:clickable="true"
+                android:focusable="true"
+                android:background="?android:attr/selectableItemBackground"
+                android:onClick="startRutasActivity">
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_gravity="center"
+                    android:layout_gravity="center|end"
                     android:text="Rutas"
                     android:textColor="@color/white"
                     android:textStyle="bold"
-                    android:layout_marginRight="20dp"/>
+                    android:layout_marginEnd="80dp"/>
                 <ImageButton
                     android:id="@+id/btn_ruta"
                     android:layout_width="50dp"
                     android:layout_height="50dp"
-                    android:layout_gravity="start"
+                    android:layout_gravity="right"
                     android:layout_marginBottom="12dp"
                     android:background="@drawable/bg_glass_button"
                     android:src="@drawable/ic_ruta"
                     android:contentDescription="Rutas"
                     android:scaleType="centerInside"
                     app:tint="#22103b" />
-            </LinearLayout>
+            </FrameLayout>
 
-            <LinearLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+            <FrameLayout
+                android:layout_width="140dp"
+                android:layout_height="50dp"
                 android:orientation="horizontal"
                 android:layout_marginBottom="12dp"
-                android:layout_gravity="end">
+                android:layout_gravity="end"
+                android:clickable="true"
+                android:focusable="true"
+                android:background="?android:attr/selectableItemBackground"
+                android:onClick="startEventosActivity">
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:text="Novedades"
+                    android:layout_gravity="center|end"
+                    android:text="Eventos"
                     android:textColor="@color/white"
                     android:textStyle="bold"
-                    android:layout_marginRight="20dp"/>
+                    android:layout_marginEnd="80dp"/>
                 <ImageButton
-                    android:id="@+id/btn_novedades"
+                    android:id="@+id/btn_eventos"
                     android:layout_width="50dp"
                     android:layout_height="50dp"
-                    android:layout_gravity="start"
+                    android:layout_gravity="right"
                     android:background="@drawable/bg_glass_button"
                     android:src="@drawable/ic_star"
-                    android:contentDescription="Novedades"
+                    android:contentDescription="Eventos"
                     android:scaleType="centerInside"
                     app:tint="#22103b" />
-            </LinearLayout>
+            </FrameLayout>
         </LinearLayout>
     </FrameLayout>
 

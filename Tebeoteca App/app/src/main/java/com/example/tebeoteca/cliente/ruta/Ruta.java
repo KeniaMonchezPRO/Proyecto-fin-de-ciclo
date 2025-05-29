@@ -1,10 +1,10 @@
-package com.example.tebeoteca.cliente;
+package com.example.tebeoteca.cliente.ruta;
 
-public class Evento {
+public class Ruta {
     private String titulo;
     private String descripcion;
 
-    public Evento(String titulo, String descripcion) {
+    public Ruta(String titulo, String descripcion) {
         this.titulo = titulo;
         this.descripcion = descripcion;
     }

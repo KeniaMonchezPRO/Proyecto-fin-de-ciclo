@@ -1,10 +1,10 @@
-package com.example.tebeoteca.cliente;
+package com.example.tebeoteca.cliente.wiki;
 
-public class Novedad {
+public class Wiki {
     private String titulo;
     private String descripcion;
 
-    public Novedad(String titulo, String descripcion) {
+    public Wiki(String titulo, String descripcion) {
         this.titulo = titulo;
         this.descripcion = descripcion;
     }
