@@ -1,14 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources xmlns:tools="http://schemas.android.com/tools">
     <style name="Theme.VinetaVirtual" parent="Theme.Material3.DayNight.NoActionBar">
-        <!-- Personalización de colores (puedes cambiar estos) -->
-        <item name="colorPrimary">#6200EE</item>
-        <item name="colorOnPrimary">#FFFFFF</item>
-        <item name="colorSecondary">#03DAC6</item>
-        <item name="colorOnSecondary">#000000</item>
+        <item name="colorPrimary">#018786</item>
+        <item name="colorOnPrimary">#FFA500</item>
+        <!--<item name="colorAccent">#FF0000</item> sobreescribe el colorSecondary-->
+        <!--<item name="colorButtonNormal">#000000</item>  para los image button por ejemplo-->
+        <!--<item name="android:textColorPrimary">#FF0000</item> PARA LOS COLORES DE LOS NUMS DEL CALENDARIO-->
+        <item name="colorSecondary">#018786</item> <!--COLOR TOP DEL DATE PICKER-->
+        <item name="colorOnSecondary">#FFA500</item>
         <!--<item name="colorBackground">#FFFFFF</item>-->
-        <item name="colorOnBackground">#000000</item>
-        <item name="colorSurface">#FFFFFF</item>
-        <item name="colorOnSurface">#000000</item>
+        <item name="colorOnBackground">#03DAC5</item>
+        <item name="colorSurface">#FFFFFF</item> <!--COLOR DE FONDO DEL DATE PICKER-->
+        <item name="colorOnSurface">#7BFFFFFF</item>
+        <item name="colorOnSurfaceVariant">#03DAC5</item>
+        <item name="colorOutline">#03DAC5</item>
     </style>
 </resources>

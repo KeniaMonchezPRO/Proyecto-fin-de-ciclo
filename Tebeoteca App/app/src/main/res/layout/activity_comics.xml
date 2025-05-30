@@ -52,151 +52,6 @@
                 android:orientation="vertical"
                 android:layout_marginVertical="20dp">
                 <LinearLayout
-                    android:id="@+id/categoriaAventura"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="vertical"
-                    android:background="@drawable/bg_cards"
-                    android:elevation="10dp"
-                    android:padding="20dp"
-                    android:layout_marginBottom="10dp">
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="Aventura"
-                        android:textSize="16sp"
-                        android:textStyle="bold"
-                        android:textColor="@android:color/white"/>
-                    <HorizontalScrollView
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:overScrollMode="never"
-                        android:scrollbars="none">
-                        <LinearLayout
-                            android:id="@+id/aventura_container"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:orientation="horizontal"
-                            android:gravity="center_vertical" />
-                    </HorizontalScrollView>
-                </LinearLayout>
-                <LinearLayout
-                    android:id="@+id/categoriaMisterio"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="vertical"
-                    android:background="@drawable/bg_cards"
-                    android:elevation="10dp"
-                    android:padding="20dp"
-                    android:layout_marginBottom="10dp">
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="Misterio"
-                        android:textSize="16sp"
-                        android:textStyle="bold"
-                        android:textColor="@android:color/white"/>
-                    <HorizontalScrollView
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:overScrollMode="never"
-                        android:scrollbars="none">
-                        <LinearLayout
-                            android:id="@+id/misterio_container"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:orientation="horizontal"
-                            android:gravity="center_vertical" />
-                    </HorizontalScrollView>
-                </LinearLayout>
-                <LinearLayout
-                    android:id="@+id/categoriaSuperheroes"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="vertical"
-                    android:background="@drawable/bg_cards"
-                    android:elevation="10dp"
-                    android:padding="20dp"
-                    android:layout_marginBottom="10dp">
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="Superheroes"
-                        android:textSize="16sp"
-                        android:textStyle="bold"
-                        android:textColor="@android:color/white"/>
-                    <HorizontalScrollView
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:overScrollMode="never"
-                        android:scrollbars="none">
-                        <LinearLayout
-                            android:id="@+id/superheroes_container"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:orientation="horizontal"
-                            android:gravity="center_vertical" />
-                    </HorizontalScrollView>
-                </LinearLayout>
-                <LinearLayout
-                    android:id="@+id/categoriaSciFi"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="vertical"
-                    android:background="@drawable/bg_cards"
-                    android:elevation="10dp"
-                    android:padding="20dp"
-                    android:layout_marginBottom="10dp">
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="Sci-Fi"
-                        android:textSize="16sp"
-                        android:textStyle="bold"
-                        android:textColor="@android:color/white"/>
-                    <HorizontalScrollView
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:overScrollMode="never"
-                        android:scrollbars="none">
-                        <LinearLayout
-                            android:id="@+id/scifi_container"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:orientation="horizontal"
-                            android:gravity="center_vertical" />
-                    </HorizontalScrollView>
-                </LinearLayout>
-                <LinearLayout
-                    android:id="@+id/categoriaFantasia"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="vertical"
-                    android:background="@drawable/bg_cards"
-                    android:elevation="10dp"
-                    android:padding="20dp"
-                    android:layout_marginBottom="10dp">
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="Fantasia"
-                        android:textSize="16sp"
-                        android:textStyle="bold"
-                        android:textColor="@android:color/white"/>
-                    <HorizontalScrollView
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:overScrollMode="never"
-                        android:scrollbars="none">
-                        <LinearLayout
-                            android:id="@+id/fantasia_container"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:orientation="horizontal"
-                            android:gravity="center_vertical" />
-                    </HorizontalScrollView>
-                </LinearLayout>
-                <LinearLayout
                     android:id="@+id/categoriaAccion"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -219,6 +74,35 @@
                         android:scrollbars="none">
                         <LinearLayout
                             android:id="@+id/accion_container"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal"
+                            android:gravity="center_vertical" />
+                    </HorizontalScrollView>
+                </LinearLayout>
+                <LinearLayout
+                    android:id="@+id/categoriaAventura"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:background="@drawable/bg_cards"
+                    android:elevation="10dp"
+                    android:padding="20dp"
+                    android:layout_marginBottom="10dp">
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Aventura"
+                        android:textSize="16sp"
+                        android:textStyle="bold"
+                        android:textColor="@android:color/white"/>
+                    <HorizontalScrollView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:overScrollMode="never"
+                        android:scrollbars="none">
+                        <LinearLayout
+                            android:id="@+id/aventura_container"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:orientation="horizontal"
@@ -313,6 +197,64 @@
                     </HorizontalScrollView>
                 </LinearLayout>
                 <LinearLayout
+                    android:id="@+id/categoriaFantasia"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:background="@drawable/bg_cards"
+                    android:elevation="10dp"
+                    android:padding="20dp"
+                    android:layout_marginBottom="10dp">
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Fantasia"
+                        android:textSize="16sp"
+                        android:textStyle="bold"
+                        android:textColor="@android:color/white"/>
+                    <HorizontalScrollView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:overScrollMode="never"
+                        android:scrollbars="none">
+                        <LinearLayout
+                            android:id="@+id/fantasia_container"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal"
+                            android:gravity="center_vertical" />
+                    </HorizontalScrollView>
+                </LinearLayout>
+                <LinearLayout
+                    android:id="@+id/categoriaMisterio"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:background="@drawable/bg_cards"
+                    android:elevation="10dp"
+                    android:padding="20dp"
+                    android:layout_marginBottom="10dp">
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Misterio"
+                        android:textSize="16sp"
+                        android:textStyle="bold"
+                        android:textColor="@android:color/white"/>
+                    <HorizontalScrollView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:overScrollMode="never"
+                        android:scrollbars="none">
+                        <LinearLayout
+                            android:id="@+id/misterio_container"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal"
+                            android:gravity="center_vertical" />
+                    </HorizontalScrollView>
+                </LinearLayout>
+                <LinearLayout
                     android:id="@+id/categoriarRealista"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -341,8 +283,65 @@
                             android:gravity="center_vertical" />
                     </HorizontalScrollView>
                 </LinearLayout>
+                <LinearLayout
+                    android:id="@+id/categoriaSciFi"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:background="@drawable/bg_cards"
+                    android:elevation="10dp"
+                    android:padding="20dp"
+                    android:layout_marginBottom="10dp">
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Sci-Fi"
+                        android:textSize="16sp"
+                        android:textStyle="bold"
+                        android:textColor="@android:color/white"/>
+                    <HorizontalScrollView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:overScrollMode="never"
+                        android:scrollbars="none">
+                        <LinearLayout
+                            android:id="@+id/scifi_container"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal"
+                            android:gravity="center_vertical" />
+                    </HorizontalScrollView>
+                </LinearLayout>
+                <LinearLayout
+                    android:id="@+id/categoriaSuperheroes"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:background="@drawable/bg_cards"
+                    android:elevation="10dp"
+                    android:padding="20dp"
+                    android:layout_marginBottom="10dp">
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Superheroes"
+                        android:textSize="16sp"
+                        android:textStyle="bold"
+                        android:textColor="@android:color/white"/>
+                    <HorizontalScrollView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:overScrollMode="never"
+                        android:scrollbars="none">
+                        <LinearLayout
+                            android:id="@+id/superheroes_container"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal"
+                            android:gravity="center_vertical" />
+                    </HorizontalScrollView>
+                </LinearLayout>
             </LinearLayout>
-            
         </LinearLayout>
         <!--FOOTER-->
         <LinearLayout

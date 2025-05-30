@@ -19,7 +19,7 @@
         android:hardwareAccelerated="true">
 
         <activity
-            android:name=".MainActivity"
+            android:name=".cliente.comic.AnadirComicActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -28,7 +28,6 @@
             </intent-filter>
         </activity>
         <activity android:name=".login.LoginActivity" />
-        <activity android:name=".registro.RegistroLectorActivity"/>
         <activity android:name=".registro.RegistroClienteActivity"/>
         <activity android:name=".lector.PerfilLectorActivity"/>
         <activity android:name=".cliente.comic.ComicsActivity"/>

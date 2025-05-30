@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="spinner_idiomaOriginal_array">
+        <item>Alemán</item>
+        <item>Español</item>
+        <item>Francés</item>
+        <item>Inglés</item>
+        <item>Portugués</item>
+    </string-array>
+    <string-array name="spinner_categorias_array">
+        <item>Acción</item>
+        <item>Aventura</item>
+        <item>Comedia</item>
+        <item>Crimen</item>
+        <item>Drama</item>
+        <item>Fantasía</item>
+        <item>Misterio</item>
+        <item>Realista</item>
+        <item>Sci-Fi</item>
+        <item>Superhéroes</item>
+    </string-array>
+</resources>

@@ -138,7 +138,6 @@ public class RegistroLectorActivity extends ComponentActivity {
                 },
                 year, month, day
         );
-
         datePickerDialog.show();
     }
 
