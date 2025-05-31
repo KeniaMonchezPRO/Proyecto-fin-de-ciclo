@@ -16,35 +16,33 @@
         tools:ignore="MissingConstraints">
 
         <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/textInputLayoutAutores"
+            android:id="@+id/textInputLayoutCategorias"
             android:layout_width="250dp"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:hint="Autores"
-            app:boxStrokeWidth="1dp"
+            android:hint="Categorías"
             app:boxStrokeColor="@color/text_input_stroke_color"
-            app:hintTextColor="@color/teal_200"
-            android:textColorHint="@color/teal_200"
-            app:cursorColor="@color/teal_200"
-            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
+            app:hintTextColor="#FFFFFF"
+            android:textColorHint="#CCCCCC"
+            app:boxBackgroundColor="@android:color/transparent"
+            style="@style/Widget.Material3.TextInputLayout.OutlinedBox.ExposedDropdownMenu">
 
             <AutoCompleteTextView
-                android:id="@+id/autoCompleteTextViewAutores"
+                android:id="@+id/autoCompleteTextViewCategorias"
                 android:layout_width="match_parent"
-                android:layout_height="70dp"
-                android:padding="20dp"
-                android:layout_gravity="center"
+                android:layout_height="wrap_content"
+                android:inputType="none"
+                android:focusable="false"
+                android:focusableInTouchMode="false"
                 android:textSize="14sp"
-                android:textColor="@color/white"
+                android:textColor="#FFFFFF"
                 android:textCursorDrawable="@null"
-                android:completionThreshold="1"
-                android:imeOptions="actionDone"
-                android:inputType="textCapWords"
-                android:backgroundTint="@android:color/transparent"/>
+                android:background="@android:color/transparent" />
+
         </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.chip.ChipGroup
-            android:id="@+id/chipGroupAutores"
+            android:id="@+id/chipGroupCategorias"
             android:layout_width="250dp"
             android:layout_height="wrap_content"
             android:layout_gravity="center"

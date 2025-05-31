@@ -112,7 +112,7 @@ public class LoginActivity extends ComponentActivity {
                     SharedPreferences prefs = getSharedPreferences("usuarioPrefs", MODE_PRIVATE);
                     SharedPreferences.Editor editor = prefs.edit();
 
-                    editor.putInt("id", loginData.getId());
+                    editor.putInt("idUsuario", loginData.getId());
                     editor.putString("nombreUsuario", loginData.getNombreUsuario());
                     editor.putString("tipoUsuario", loginData.getTipoUsuario());
 

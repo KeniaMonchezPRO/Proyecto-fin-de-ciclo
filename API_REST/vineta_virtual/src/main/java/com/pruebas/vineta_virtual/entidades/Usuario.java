@@ -2,6 +2,8 @@ package com.pruebas.vineta_virtual.entidades;
 
 import java.time.LocalDateTime;
 
+import com.pruebas.vineta_virtual.entidades.enums.TipoUsuario;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;

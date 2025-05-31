@@ -11,6 +11,7 @@ import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -18,7 +19,9 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.tebeoteca.BaseActivity;
 import com.example.tebeoteca.R;
+import com.example.tebeoteca.api.ApiService;
 import com.example.tebeoteca.cliente.comic.Comic;
+import com.example.tebeoteca.cliente.comic.ComicActivity;
 import com.example.tebeoteca.cliente.evento.Evento;
 import com.example.tebeoteca.cliente.evento.EventoAdapter;
 import com.example.tebeoteca.cliente.novedad.Novedad;
@@ -34,14 +37,29 @@ import com.example.tebeoteca.cliente.wiki.WikiAdapter;
 import java.util.ArrayList;
 import java.util.List;
 
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+import retrofit2.Retrofit;
+import retrofit2.converter.gson.GsonConverterFactory;
+
 public class PerfilClienteActivity extends BaseActivity {
     private ImageView fotoPerfil, banner;
+    private ApiService apiService;
+    TextView verAllComics;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setCustomContent(R.layout.activity_perfil_cliente);
         setupMenus(R.id.nav_inicio);
+
+        //Conexion con api:
+        Retrofit retrofit = new Retrofit.Builder()
+                .baseUrl("http://10.0.2.2:8080/")
+                .addConverterFactory(GsonConverterFactory.create())
+                .build();
+        apiService = retrofit.create(ApiService.class);
 
         ImageButton btnAtras = findViewById(R.id.btn_atras);
         if (btnAtras != null) {
@@ -51,26 +69,32 @@ public class PerfilClienteActivity extends BaseActivity {
         SharedPreferences sharedPreferences = getSharedPreferences("usuarioPrefs", MODE_PRIVATE);
         String nombreEmpresa = sharedPreferences.getString("nombreEmpresa", "Cliente");
         String nombreUsuario = "@"+(sharedPreferences.getString("nombreUsuario", "cliente"));
+        int idUsuario = sharedPreferences.getInt("idUsuario",1);
 
         TextView tv_nombreEmpresa = findViewById(R.id.tv_displayNombreEmpresa);
         TextView tv_nombreUsuario = findViewById(R.id.tv_displayNombreUsuario);
         tv_nombreEmpresa.setText(nombreEmpresa);
         tv_nombreUsuario.setText(nombreUsuario);
 
+        //Eventos
         List<Evento> listaEventos = new ArrayList<>();
         agregarSeccionEventos(listaEventos);
 
+        //Rutas
         List<Ruta> listaRutas = new ArrayList<>();
         agregarSeccionRutas(listaRutas);
 
-        Comic nuevo = new Comic("Flashpoint", "Neil Gaiman, Stan Lee", "Misterio", R.drawable.flash);
-        Comic nuevo1 = new Comic("Flashpoint", "Neil Gaiman, Stan Lee", "Misterio", R.drawable.flash);
-        Comic nuevo2 = new Comic("Flashpoint", "Neil Gaiman, Stan Lee", "Misterio", R.drawable.flash);
+        //Comics:
+        obtenerComicsDelCliente(idUsuario);
+        /*Comic nuevo = new Comic("Flashpoint 1", "Neil Gaiman, Stan Lee", "Misterio", R.drawable.flash);
+        Comic nuevo1 = new Comic("Flashpoint 2", "Neil Gaiman, Stan Lee", "Misterio", R.drawable.flash);
+        Comic nuevo2 = new Comic("Flashpoint 3", "Neil Gaiman, Stan Lee", "Misterio", R.drawable.flash);
         ComicRepository.agregarComic(nuevo);
         ComicRepository.agregarComic(nuevo1);
         ComicRepository.agregarComic(nuevo2);
-        agregarSeccionComics(ComicRepository.getComics());
+        agregarSeccionComics(ComicRepository.getComics());*/
 
+        //Wiki
         List<Wiki> listaWiki = new ArrayList<>();
         agregarSeccionWiki(listaWiki);
 
@@ -79,9 +103,8 @@ public class PerfilClienteActivity extends BaseActivity {
         banner = findViewById(R.id.iv_banner);
         banner.setImageResource(R.drawable.flash);
 
-        TextView verAllComics = findViewById(R.id.seccion_comics_ver_mas);
-        verAllComics.setOnClickListener(view -> startComicsActivity());
-
+        /*verAllComics = findViewById(R.id.seccion_comics_ver_mas);
+        verAllComics.setOnClickListener(view -> startComicsActivity());*/
     }
 
     @Override
@@ -110,6 +133,27 @@ public class PerfilClienteActivity extends BaseActivity {
         startActivity(intent);
     }
 
+    private void obtenerComicsDelCliente(int idCliente) {
+        Call<List<Comic>> call = apiService.obtenerComicsPorCliente(idCliente);
+
+        call.enqueue(new Callback<List<Comic>>() {
+            @Override
+            public void onResponse(Call<List<Comic>> call, Response<List<Comic>> response) {
+                if (response.isSuccessful() && response.body() != null) {
+                    List<Comic> listaComics = response.body();
+                    agregarSeccionComics(listaComics);
+                } else {
+                    Toast.makeText(PerfilClienteActivity.this, "Error al cargar los cómics", Toast.LENGTH_SHORT).show();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<List<Comic>> call, Throwable t) {
+                Toast.makeText(PerfilClienteActivity.this, "Error de red: " + t.getMessage(), Toast.LENGTH_LONG).show();
+            }
+        });
+    }
+
     private void agregarSeccionNovedades(List<Novedad> listaNovedades) {
         View seccionView = LayoutInflater.from(this).inflate(R.layout.seccion_novedades, null);
 
@@ -134,6 +178,7 @@ public class PerfilClienteActivity extends BaseActivity {
         });
 
         LinearLayout contenedor = findViewById(R.id.novedades_container);
+        contenedor.removeAllViews(); //para limpiar antes de agregar, por si se llama agegarSeccionComics varias veces
         contenedor.addView(seccionView);
     }
 
@@ -161,7 +206,6 @@ public class PerfilClienteActivity extends BaseActivity {
                 outRect.right = 30;
             }
         });
-
         contenedor.addView(seccionView);
     }
 

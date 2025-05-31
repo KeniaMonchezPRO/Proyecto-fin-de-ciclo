@@ -1,70 +1,112 @@
 package com.example.tebeoteca.cliente.comic;
 
 import android.app.DatePickerDialog;
+import android.content.Intent;
+import android.content.SharedPreferences;
+import android.content.res.ColorStateList;
 import android.os.Build;
 import android.os.Bundle;
 
 import com.example.tebeoteca.BaseActivity;
 import com.example.tebeoteca.R;
 
+import android.util.Log;
+import android.view.KeyEvent;
 import android.view.View;
+import android.view.inputmethod.EditorInfo;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
+import android.widget.ImageView;
+import android.widget.RadioButton;
+import android.widget.RadioGroup;
 import android.widget.Spinner;
 import android.widget.Toast;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 
+import androidx.core.content.ContextCompat;
+
+import com.example.tebeoteca.api.ApiService;
 import com.example.tebeoteca.registro.RegistroLectorActivity;
+import com.google.android.material.chip.Chip;
+import com.google.android.material.chip.ChipGroup;
 import com.google.android.material.datepicker.MaterialDatePicker;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textfield.TextInputLayout;
 
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Calendar;
+import java.util.HashSet;
+import java.util.List;
 import java.util.Locale;
+import java.util.Set;
 import java.util.TimeZone;
 
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+import retrofit2.Retrofit;
+import retrofit2.converter.gson.GsonConverterFactory;
+
 public class AnadirComicActivity extends BaseActivity {
-
+    private ApiService apiService;
+    private Button btnAnadirComic;
+    private ImageView ivPortada;
+    private int idCliente;
+    TextInputEditText fechaLanzamiento, etTitulo, etSello, etDescripcion;
+    int idResLayout, idResSpinner, idResArrayItems;
+    private TextInputLayout textInputLayoutAutores, textInputLayoutCategorias;
+    private AutoCompleteTextView autoCompleteTextViewAutores, autoCompleteTextViewCategorias, etAudiencia, etIdiomaOriginal, etPaisOrigen;
+    private ChipGroup chipGroupAutores, chipGroupCategorias;
+    // Conjunto para almacenar los autores seleccionados (usamos Set para evitar duplicados)
+    private Set<String> selectedAutores = new HashSet<>(), selectedCategorias = new HashSet<>();
+    private RadioButton rbEstadoPublicado;
+    private RadioGroup rgEstado;
     Calendar calendar = Calendar.getInstance();
-    TextInputEditText fechaLanzamiento;
-    TextInputEditText fechaPublicacion;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setCustomContent(R.layout.activity_anadir_comic);
         setupMenus(R.id.nav_comics);
 
+        //obtener info de cliente:
+        SharedPreferences sharedPreferences = getSharedPreferences("usuarioPrefs", MODE_PRIVATE);
+        idCliente = sharedPreferences.getInt("idUsuario",1);
+
+        //Conexion con api:
+        Retrofit retrofit = new Retrofit.Builder()
+                .baseUrl("http://10.0.2.2:8080/")
+                .addConverterFactory(GsonConverterFactory.create())
+                .build();
+
+        apiService = retrofit.create(ApiService.class);
+
+        //por defecto checkear estado a publicado:
+        rgEstado = findViewById(R.id.rg_EstadoComic);
+        rbEstadoPublicado = findViewById(R.id.r_publicado);
+        rgEstado.check(rbEstadoPublicado.getId());
+
+        //spinner audiencia
+        idResLayout = R.id.spinner_audiencia_layout;
+        idResSpinner = R.id.spinner_audiencia;
+        idResArrayItems = R.array.spìnner_audiencia_array;
+        cargarSpinner(idResLayout, idResSpinner, idResArrayItems);
+
         //spinner idiomaOriginal
-        TextInputLayout spinnerLayoutIdiomaOriginal = findViewById(R.id.spinner_idiomaOriginal_layout);
-        AutoCompleteTextView spinnerIdiomaOriginal = (AutoCompleteTextView) spinnerLayoutIdiomaOriginal.findViewById(R.id.spinner_idiomaOriginal);
+        idResLayout = R.id.spinner_idiomaOriginal_layout;
+        idResSpinner = R.id.spinner_idiomaOriginal;
+        idResArrayItems = R.array.spinner_idiomaOriginal_array;
+        cargarSpinner(idResLayout, idResSpinner, idResArrayItems);
 
-        String[] idiomasOriginal = getResources().getStringArray(R.array.spinner_idiomaOriginal_array);
-
-        ArrayAdapter<String> idiomaOriginalAdapter = new ArrayAdapter<>(this, R.layout.dropdown_item_layout, idiomasOriginal);
-        spinnerIdiomaOriginal.setAdapter(idiomaOriginalAdapter);
-        spinnerIdiomaOriginal.setOnItemClickListener((parent, view, position, id) -> {
-            String idiomaOriginalSeleccionado = (String) parent.getItemAtPosition(position);
-            //Toast.makeText(this, "Seleccionado: " + idiomaOriginalSeleccionado, Toast.LENGTH_SHORT).show();
-        });
-        String idiomaOriginalActual = spinnerIdiomaOriginal.getText().toString();
-
-        //spinner categorias
-        TextInputLayout spinnerCategoriasLayout = findViewById(R.id.spinner_categorias_layout);
-        AutoCompleteTextView spinnerCategorias = (AutoCompleteTextView) spinnerCategoriasLayout.findViewById(R.id.spinner_categorias);
-
-        String[] categorias = getResources().getStringArray(R.array.spinner_categorias_array);
-
-        ArrayAdapter<String> categoriasAdapter = new ArrayAdapter<>(this, R.layout.dropdown_item_layout, categorias);
-        spinnerCategorias.setAdapter(categoriasAdapter);
-        spinnerCategorias.setOnItemClickListener((parent, view, position, id) -> {
-            String categoriaSeleccionada = (String) parent.getItemAtPosition(position);
-            //Toast.makeText(this, "Seleccionado: " + categoriaSeleccionada, Toast.LENGTH_SHORT).show();
-        });
-        String categoriaActual = spinnerCategorias.getText().toString();
+        //spinner pais de origen
+        idResLayout = R.id.spinner_paisOrigen_layout;
+        idResSpinner = R.id.spinner_paisOrigen;
+        idResArrayItems = R.array.spinner_paisOrigen_array;
+        cargarSpinner(idResLayout, idResSpinner, idResArrayItems);
 
         //fecha de lanzamiento:
         fechaLanzamiento = findViewById(R.id.et_fechaLanzamiento);
@@ -74,13 +116,181 @@ public class AnadirComicActivity extends BaseActivity {
             }
         });
 
-        //fecha de publicación:
-        fechaPublicacion = findViewById(R.id.et_fechaPublicacion);
-        fechaPublicacion.setOnFocusChangeListener((view, hasFocus) -> {
-            if(hasFocus) {
-                mostrarDatePicker(fechaPublicacion);
+        //Lógica Autores
+        textInputLayoutAutores = findViewById(R.id.textInputLayoutAutores);
+        autoCompleteTextViewAutores = findViewById(R.id.autoCompleteTextViewAutores);
+        chipGroupAutores = findViewById(R.id.chipGroupAutores);
+        manejarEventoTeclado(autoCompleteTextViewAutores, "autores");
+
+        //Lógica categorias:
+        textInputLayoutCategorias = findViewById(R.id.textInputLayoutCategorias);
+        autoCompleteTextViewCategorias = findViewById(R.id.autoCompleteTextViewCategorias);
+        chipGroupCategorias = findViewById(R.id.chipGroupCategorias);
+        manejarEventoTeclado(autoCompleteTextViewCategorias, "categorias");
+
+        //Inicializando el resto de campos:
+        ivPortada = findViewById(R.id.iv_portada);
+        etTitulo = findViewById(R.id.et_titulo);
+        etSello = findViewById(R.id.et_selloEditorial);
+        etDescripcion = findViewById(R.id.et_descripcion);
+        etAudiencia = findViewById(R.id.spinner_audiencia);
+        etPaisOrigen = findViewById(R.id.spinner_paisOrigen);
+        etIdiomaOriginal = findViewById(R.id.spinner_idiomaOriginal);
+
+        //Añadir comic:
+        btnAnadirComic = findViewById(R.id.btn_anadirComic);
+        btnAnadirComic.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                anadirNuevoComic();
             }
         });
+    }
+
+    private void manejarEventoTeclado(AutoCompleteTextView autoCompleteTextView, String campo) {
+        if(campo.equals("autores")) {
+            autoCompleteTextView.setOnEditorActionListener((v, actionId, event) -> {
+                if (actionId == EditorInfo.IME_ACTION_DONE ||
+                        (event != null && event.getKeyCode() == KeyEvent.KEYCODE_ENTER && event.getAction() == KeyEvent.ACTION_DOWN)) {
+                    String typedAuthor = autoCompleteTextView.getText().toString().trim();
+                    if (!typedAuthor.isEmpty()) {
+                        addAuthorChip(typedAuthor);
+                        autoCompleteTextView.setText("");
+                        return true; // Consumir el evento
+                    }
+                }
+                return false;
+            });
+        } else if (campo.equals("categorias")) {
+            // 1. Cargar las categorías del array.xml
+            String[] categoriasArray = getResources().getStringArray(R.array.spinner_categorias_array);
+            List<String> allAvailableCategorias = new ArrayList<>(Arrays.asList(categoriasArray));
+            // 2. Configurar el ArrayAdapter para el AutoCompleteTextView (el "Spinner")
+            ArrayAdapter<String> adapter = new ArrayAdapter<>(
+                    this,
+                    R.layout.dropdown_item_layout, // Layout para los items del dropdown
+                    allAvailableCategorias
+            );
+            autoCompleteTextViewCategorias.setAdapter(adapter);
+            // 3. Manejar la selección de categorías
+            autoCompleteTextViewCategorias.setOnItemClickListener((parent, view, position, id) -> {
+                String selectedCategory = (String) parent.getItemAtPosition(position);
+                addCategoryChip(selectedCategory);
+                // Opcional: Limpiar el texto si quieres que el "hint" vuelva a aparecer
+                autoCompleteTextViewCategorias.setText("", false); // 'false' para no filtrar al limpiar
+            });
+
+            // Opcional: Si quieres que el usuario no pueda escribir nada en el campo del spinner
+            // Aunque inputType="none" y focusable="false" ya deberían evitarlo,
+            // esto es una seguridad extra si ves que el teclado aparece.
+            autoCompleteTextViewCategorias.setKeyListener(null);
+
+            // Manejar el evento de "Done" o "Enter" en el teclado para añadir autores
+            autoCompleteTextViewCategorias.setOnEditorActionListener((v, actionId, event) -> {
+                if (actionId == EditorInfo.IME_ACTION_DONE ||
+                        (event != null && event.getKeyCode() == KeyEvent.KEYCODE_ENTER && event.getAction() == KeyEvent.ACTION_DOWN)) {
+                    String typedCategory = autoCompleteTextViewCategorias.getText().toString().trim();
+                    if (!typedCategory.isEmpty()) {
+                        addCategoryChip(typedCategory);
+                        autoCompleteTextViewCategorias.setText("");
+                        return true; // Consumir el evento
+                    }
+                }
+                return false;
+            });
+        }
+    }
+    private void startAgregarDetallesComicActivity() {
+
+    }
+    private void anadirNuevoComic() {
+        AnadirComicRequest anadirComicRequest = new AnadirComicRequest();
+
+        anadirComicRequest.setClienteId(idCliente);
+
+        String titulo = etTitulo.getText().toString().trim();
+        anadirComicRequest.setTitulo(titulo);
+
+        String sello = etSello.getText().toString().trim();
+        anadirComicRequest.setSelloEditorial(sello);
+
+        String fechaLanz = fechaLanzamiento.getText().toString().trim();
+        anadirComicRequest.setFechaLanzamiento(fechaLanz);
+
+        String audiencia = etAudiencia.getText().toString().trim();
+        if(audiencia.contains("12")) {
+            audiencia = "niños";
+        } else if (audiencia.contains("13")) {
+            audiencia = "jovenes";
+        } else if (audiencia.contains("18")) {
+            audiencia = "adultos";
+        } else {
+            audiencia = "";
+        }
+        anadirComicRequest.setAudiencia(audiencia);
+
+        int selectedRadioId = rgEstado.getCheckedRadioButtonId();
+        RadioButton selectedOption = findViewById(selectedRadioId);
+        String estado = selectedOption.getText().toString().trim().toLowerCase();
+        anadirComicRequest.setEstado(estado);
+
+        String autores = getSelectedAuthorsList().toString();
+        anadirComicRequest.setAutores(autores);
+
+        String descripcion = etDescripcion.getText().toString().trim();
+        anadirComicRequest.setDescripcion(descripcion);
+
+        String paisOrigen = etPaisOrigen.getText().toString().trim();
+        anadirComicRequest.setPaisOrigen(paisOrigen);
+
+        String idiomaOriginal = etIdiomaOriginal.getText().toString().trim();
+        anadirComicRequest.setIdiomaOriginal(idiomaOriginal);
+
+        String categorias = getSelectedCategoriesList().toString();
+        anadirComicRequest.setCategorias(categorias);
+        Log.d("COMIC_DEBUG", "Comic: " + anadirComicRequest);
+
+        Call<AnadirComicResponseDTO> call = apiService.crearComic(anadirComicRequest);
+        call.enqueue(new Callback<AnadirComicResponseDTO>() {
+            @Override
+            public void onResponse(Call<AnadirComicResponseDTO> call, Response<AnadirComicResponseDTO> response) {
+                if (response.isSuccessful()) {
+                    Log.d("LOGIN_DEBUG", "response is successful");
+                    AnadirComicResponseDTO comicData = response.body();
+                    SharedPreferences prefs = getSharedPreferences("comicPrefs", MODE_PRIVATE);
+                    SharedPreferences.Editor editor = prefs.edit();
+                    editor.putString("titulo", comicData.getTitulo());
+                    editor.putString("audiencia", comicData.getAudiencia());
+                    editor.putString("descripcion", comicData.getDescripcion());
+                    editor.putString("activity", "AnadirComicActivity");
+                    editor.apply();
+                    startActivity(new Intent(AnadirComicActivity.this, ComicActivity.class));
+                    finish();
+                } else {
+                    Toast.makeText(getApplicationContext(), "Error al crear comic", Toast.LENGTH_SHORT).show();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<AnadirComicResponseDTO> call, Throwable t) {
+                Toast.makeText(getApplicationContext(), "Fallo en la conexión", Toast.LENGTH_SHORT).show();
+            }
+        });
+
+    }
+    private void cargarSpinner(int idLayout, int idSpinner, int idArrayFile) {
+        TextInputLayout spinnerLayout = findViewById(idLayout);
+        AutoCompleteTextView spinner = (AutoCompleteTextView) spinnerLayout.findViewById(idSpinner);
+
+        String[] arrayItems = getResources().getStringArray(idArrayFile);
+
+        ArrayAdapter<String> adapter = new ArrayAdapter<>(this, R.layout.dropdown_item_layout, arrayItems);
+        spinner.setAdapter(adapter);
+        /*spinner.setOnItemClickListener((parent, view, position, id) -> {
+            itemSeleccionado = (String) parent.getItemAtPosition(position);
+            //Toast.makeText(this, "Seleccionado: " + itemSeleccionado, Toast.LENGTH_SHORT).show();
+        });
+        String itemSeleccionado = spinner.getText().toString();*/
     }
 
     private void mostrarDatePicker(TextInputEditText inputEditText) {
@@ -97,5 +307,79 @@ public class AnadirComicActivity extends BaseActivity {
                 year, month, day
         );
         datePickerDialog.show();
+    }
+
+    // Método para añadir un chip de autor al ChipGroup
+    private void addAuthorChip(String authorName) {
+        // Evitar duplicados
+        if (selectedAutores.contains(authorName)) {
+            Toast.makeText(this, authorName + " ya ha sido añadido.", Toast.LENGTH_SHORT).show();
+            return;
+        }
+
+        // Crear un nuevo Chip
+        Chip chip = new Chip(this);
+        chip.setText(authorName);
+        chip.setCloseIconVisible(true); // Permite que el usuario elimine el chip
+        chip.setCheckable(false); // No se comportará como un checkbox
+        chip.setClickable(false); // No se puede hacer clic para seleccionar/deseleccionar
+
+        ColorStateList strokeColorList = ContextCompat.getColorStateList(this, R.color.chip_stroke_color);
+        chip.setChipBackgroundColor(strokeColorList);
+        chip.setChipStrokeColor(strokeColorList);
+
+        // Añadir el listener para cuando se cierre el chip
+        chip.setOnCloseIconClickListener(v -> {
+            chipGroupAutores.removeView(chip); // Elimina el chip de la vista
+            selectedAutores.remove(authorName); // Elimina el autor del conjunto de seleccionados
+            Toast.makeText(this, authorName + " eliminado.", Toast.LENGTH_SHORT).show();
+        });
+
+        // Añadir el chip al ChipGroup
+        chipGroupAutores.addView(chip);
+        selectedAutores.add(authorName); // Añadir el autor al conjunto de seleccionados
+    }
+
+    // Método para obtener la lista final de autores seleccionados
+    public String getSelectedAuthorsList() {
+        List<String> listaAutores = new ArrayList<>(selectedAutores);
+        return String.join(", ", listaAutores);
+    }
+
+    // Método para añadir un chip de autor al ChipGroup
+    private void addCategoryChip(String categoryName) {
+        // Evitar duplicados
+        if (selectedCategorias.contains(categoryName)) {
+            Toast.makeText(this, categoryName + " ya ha sido añadido.", Toast.LENGTH_SHORT).show();
+            return;
+        }
+
+        // Crear un nuevo Chip
+        Chip chip = new Chip(this);
+        chip.setText(categoryName);
+        chip.setCloseIconVisible(true); // Permite que el usuario elimine el chip
+        chip.setCheckable(false); // No se comportará como un checkbox
+        chip.setClickable(false); // No se puede hacer clic para seleccionar/deseleccionar
+
+        ColorStateList strokeColorList = ContextCompat.getColorStateList(this, R.color.chip_stroke_color);
+        chip.setChipBackgroundColor(strokeColorList);
+        chip.setChipStrokeColor(strokeColorList);
+
+        // Añadir el listener para cuando se cierre el chip
+        chip.setOnCloseIconClickListener(v -> {
+            chipGroupCategorias.removeView(chip); // Elimina el chip de la vista
+            selectedCategorias.remove(categoryName); // Elimina el autor del conjunto de seleccionados
+            Toast.makeText(this, categoryName + " eliminado.", Toast.LENGTH_SHORT).show();
+        });
+
+        // Añadir el chip al ChipGroup
+        chipGroupCategorias.addView(chip);
+        selectedCategorias.add(categoryName); // Añadir el autor al conjunto de seleccionados
+    }
+
+    // Método para obtener la lista final de autores seleccionados
+    public String getSelectedCategoriesList() {
+        List<String> listaCategorias = new ArrayList<>(selectedCategorias);
+        return String.join(", ", listaCategorias);
     }
 }

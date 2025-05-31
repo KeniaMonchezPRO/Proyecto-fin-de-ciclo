@@ -1,11 +1,27 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <string-array name="spìnner_audiencia_array">
+        <item>Niños (3-12)</item>
+        <item>Jóvenes (13-17)</item>
+        <item>Adultos (18+)</item>
+    </string-array>
     <string-array name="spinner_idiomaOriginal_array">
         <item>Alemán</item>
         <item>Español</item>
         <item>Francés</item>
         <item>Inglés</item>
         <item>Portugués</item>
+    </string-array>
+    <string-array name="spinner_paisOrigen_array">
+        <item>Alemania</item>
+        <item>Argentina</item>
+        <item>Canadá</item>
+        <item>España</item>
+        <item>Estados Unidos</item>
+        <item>Francia</item>
+        <item>México</item>
+        <item>Portugal</item>
+        <item>Reino Unido</item>
     </string-array>
     <string-array name="spinner_categorias_array">
         <item>Acción</item>

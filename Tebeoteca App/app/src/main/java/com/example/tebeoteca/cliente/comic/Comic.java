@@ -1,6 +1,8 @@
 package com.example.tebeoteca.cliente.comic;
 
-public class Comic {
+import java.io.Serializable;
+
+public class Comic implements Serializable {
     private String titulo;
     private String autores;
     private String categoria;

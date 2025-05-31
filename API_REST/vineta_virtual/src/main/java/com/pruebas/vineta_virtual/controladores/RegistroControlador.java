@@ -9,8 +9,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.pruebas.vineta_virtual.dto.RegistroClienteDTO;
-import com.pruebas.vineta_virtual.dto.RegistroLectorDTO;
+import com.pruebas.vineta_virtual.dto.RegistroClienteResponseDTO;
+import com.pruebas.vineta_virtual.dto.RegistroLectorResponseDTO;
 import com.pruebas.vineta_virtual.entidades.Cliente;
 import com.pruebas.vineta_virtual.entidades.Lector;
 import com.pruebas.vineta_virtual.servicios.IRegistroServicio;
@@ -28,7 +28,7 @@ public class RegistroControlador {
 	@PostMapping("/lector")
 	 public ResponseEntity<?> registrarLector(@RequestBody Lector lector) {
 		 Lector nuevoLector = registroServicio.registrarLector(lector);
-		 RegistroLectorDTO response = new RegistroLectorDTO();
+		 RegistroLectorResponseDTO response = new RegistroLectorResponseDTO();
 		 try {
 			 response.setId(nuevoLector.getId());
 			 response.setNombreUsuario(nuevoLector.getNombreUsuario());
@@ -47,7 +47,7 @@ public class RegistroControlador {
 	 @PostMapping("/cliente")
 	 public ResponseEntity<?> registrarCliente(@RequestBody Cliente cliente) {
 		 Cliente nuevoCliente = registroServicio.registrarCliente(cliente);
-		 RegistroClienteDTO response = new RegistroClienteDTO();
+		 RegistroClienteResponseDTO response = new RegistroClienteResponseDTO();
 		 try {
 			 response.setId(nuevoCliente.getId());
 			 response.setNombreUsuario(nuevoCliente.getNombreUsuario());

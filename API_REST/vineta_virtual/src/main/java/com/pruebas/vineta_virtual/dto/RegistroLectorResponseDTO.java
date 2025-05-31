@@ -2,12 +2,12 @@ package com.pruebas.vineta_virtual.dto;
 
 import java.time.LocalDate;
 
-public class RegistroLectorDTO {
+public class RegistroLectorResponseDTO {
 	private int id;
 	private String nombreUsuario;
     private String email;
     private String contrasena;
-    private LocalDate fechaNac;
+    private LocalDate fechaNacc;
     
 	public int getId() {
 		return id;
@@ -33,11 +33,11 @@ public class RegistroLectorDTO {
 	public void setContrasena(String contrasena) {
 		this.contrasena = contrasena;
 	}
-	public LocalDate getFechaNac() {
-		return fechaNac;
+	public LocalDate getFechaNacc() {
+		return fechaNacc;
 	}
-	public void setFechaNac(LocalDate fechaNac) {
-		this.fechaNac = fechaNac;
+	public void setFechaNac(LocalDate fechaNacc) {
+		this.fechaNacc = fechaNacc;
 	}
     
     

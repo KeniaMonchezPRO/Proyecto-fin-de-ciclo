@@ -2,14 +2,15 @@ package com.pruebas.vineta_virtual.dto;
 
 import java.time.LocalDate;
 
-import com.pruebas.vineta_virtual.entidades.TipoCliente;
+import com.pruebas.vineta_virtual.entidades.enums.TipoCliente;
 
-public class RegistroClienteDTO {
+public class RegistroClienteResponseDTO {
 	private int id;
 	private String nombreUsuario;
     private String email;
     private String nombreEmpresa;
     private TipoCliente tipo;
+    
 	public int getId() {
 		return id;
 	}

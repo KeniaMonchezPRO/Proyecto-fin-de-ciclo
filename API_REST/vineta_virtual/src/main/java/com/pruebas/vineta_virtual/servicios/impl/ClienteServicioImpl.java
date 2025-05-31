@@ -1,6 +1,7 @@
 package com.pruebas.vineta_virtual.servicios.impl;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -21,9 +22,10 @@ public class ClienteServicioImpl implements IClienteServicio {
 	}
 
 	@Override
-	public Cliente buscarPorId(int id) {
-		return clienteRepositorio.findById(id)
-                .orElseThrow(() -> new RuntimeException("Cliente no encontrado"));
+	public Optional<Cliente> buscarPorId(int id) {
+		/*return clienteRepositorio.findById(id)
+                .orElseThrow(() -> new RuntimeException("Cliente no encontrado"));*/
+		return clienteRepositorio.findById(id);
 	}
 
 	@Override
