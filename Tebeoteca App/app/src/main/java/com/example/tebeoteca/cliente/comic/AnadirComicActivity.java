@@ -17,6 +17,7 @@ import android.view.inputmethod.EditorInfo;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
@@ -147,6 +148,31 @@ public class AnadirComicActivity extends BaseActivity {
         });
     }
 
+    /*@Override
+    protected void onResume() {
+        setupMenus(R.id.nav_comics);
+        super.onResume();
+        //ImageButton btnAtras = findViewById(R.id.btn_atras);
+        //if (btnAtras != null) {
+        //    btnAtras.setVisibility(View.GONE);
+        //}
+    }
+
+    @Override
+    protected void onRestart() {
+        super.onRestart();
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+    }*/
+
     private void manejarEventoTeclado(AutoCompleteTextView autoCompleteTextView, String campo) {
         if(campo.equals("autores")) {
             autoCompleteTextView.setOnEditorActionListener((v, actionId, event) -> {
@@ -248,22 +274,33 @@ public class AnadirComicActivity extends BaseActivity {
 
         String categorias = getSelectedCategoriesList().toString();
         anadirComicRequest.setCategorias(categorias);
-        Log.d("COMIC_DEBUG", "Comic: " + anadirComicRequest);
+        //Log.d("COMIC_DEBUG", "Comic: " + anadirComicRequest);
 
         Call<AnadirComicResponseDTO> call = apiService.crearComic(anadirComicRequest);
         call.enqueue(new Callback<AnadirComicResponseDTO>() {
             @Override
             public void onResponse(Call<AnadirComicResponseDTO> call, Response<AnadirComicResponseDTO> response) {
                 if (response.isSuccessful()) {
-                    Log.d("LOGIN_DEBUG", "response is successful");
+                    //Log.d("LOGIN_DEBUG", "response is successful");
                     AnadirComicResponseDTO comicData = response.body();
+
                     SharedPreferences prefs = getSharedPreferences("comicPrefs", MODE_PRIVATE);
                     SharedPreferences.Editor editor = prefs.edit();
+
+                    editor.putString("portada", comicData.getPortada());
                     editor.putString("titulo", comicData.getTitulo());
                     editor.putString("audiencia", comicData.getAudiencia());
                     editor.putString("descripcion", comicData.getDescripcion());
+                    editor.putString("selloEditorial", comicData.getSelloEditorial());
+                    editor.putString("fechaLanzamiento", comicData.getFechaLanzamiento());
+                    editor.putString("estado", comicData.getEstado());
+                    editor.putString("autores", comicData.getAutores());
+                    editor.putString("paisOrigen", comicData.getPaisOrigen());
+                    editor.putString("idiomaOriginal", comicData.getIdiomaOriginal());
+                    editor.putString("categorias", comicData.getCategorias());
                     editor.putString("activity", "AnadirComicActivity");
                     editor.apply();
+
                     startActivity(new Intent(AnadirComicActivity.this, ComicActivity.class));
                     finish();
                 } else {

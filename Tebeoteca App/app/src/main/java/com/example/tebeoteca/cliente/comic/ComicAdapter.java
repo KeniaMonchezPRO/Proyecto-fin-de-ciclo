@@ -1,8 +1,10 @@
 package com.example.tebeoteca.cliente.comic;
 
+import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -15,9 +17,16 @@ import java.util.List;
 
 public class ComicAdapter extends RecyclerView.Adapter<ComicAdapter.ComicViewHolder> {
     private List<Comic> lista;
-
-    public ComicAdapter(List<Comic> lista) {
+    //private final Context context;
+    private OnItemClickListener listener;
+    public ComicAdapter(List<Comic> lista, OnItemClickListener listener) {
         this.lista = lista;
+        //this.context = context;
+        this.listener = listener;
+    }
+
+    public interface OnItemClickListener {
+        void onItemClick(Comic comic);
     }
 
     @NonNull
@@ -31,9 +40,19 @@ public class ComicAdapter extends RecyclerView.Adapter<ComicAdapter.ComicViewHol
     @Override
     public void onBindViewHolder(@NonNull ComicAdapter.ComicViewHolder holder, int position) {
         Comic comic = lista.get(position);
+        holder.bind(comic, listener);
         holder.tvTitulo.setText(comic.getTitulo());
         holder.tvAutores.setText(comic.getAutores());
-        holder.idImagen.setImageResource(comic.getIdImagen());
+        holder.tvSelloEditorial.setText(comic.getSelloEditorial());
+        String nombrePortada = comic.getPortada();
+        if (nombrePortada == null) {
+            holder.portada.setImageResource(R.drawable.sin_foto);
+        } /*else {
+            int idImagen = context.getResources().getIdentifier(
+                    nombrePortada, "drawable", context.getPackageName()
+            );
+            holder.portada.setImageResource(idImagen);
+        }*/
     }
 
     @Override
@@ -42,14 +61,30 @@ public class ComicAdapter extends RecyclerView.Adapter<ComicAdapter.ComicViewHol
     }
 
     static class ComicViewHolder extends RecyclerView.ViewHolder {
-        TextView tvTitulo, tvAutores;
-        ImageView idImagen;
+        TextView tvTitulo, tvAutores, tvSelloEditorial;
+        ImageView portada;
 
         public ComicViewHolder(@NonNull View itemView) {
             super(itemView);
             tvTitulo = itemView.findViewById(R.id.tvTitulo);
             tvAutores = itemView.findViewById(R.id.tvAutores);
-            idImagen = itemView.findViewById(R.id.iv_portada);
+            portada = itemView.findViewById(R.id.iv_portada);
+            tvSelloEditorial = itemView.findViewById(R.id.tvSelloEditorial);
+        }
+
+        public void bind(Comic comic, OnItemClickListener listener) {
+            tvTitulo.setText(comic.getTitulo());
+
+            int idImagen = itemView.getContext().getResources().getIdentifier(
+                    comic.getPortada(), "drawable", itemView.getContext().getPackageName()
+            );
+            if (idImagen != 0) {
+                portada.setImageResource(idImagen);
+            } else {
+                portada.setImageResource(R.drawable.sin_foto);
+            }
+
+            itemView.setOnClickListener(v -> listener.onItemClick(comic));
         }
     }
 

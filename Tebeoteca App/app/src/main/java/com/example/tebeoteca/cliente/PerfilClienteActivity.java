@@ -5,6 +5,7 @@ import android.content.SharedPreferences;
 import android.graphics.Rect;
 import android.os.Bundle;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.widget.FrameLayout;
 import android.widget.ImageButton;
@@ -34,6 +35,7 @@ import com.example.tebeoteca.cliente.ruta.RutaAdapter;
 import com.example.tebeoteca.cliente.wiki.Wiki;
 import com.example.tebeoteca.cliente.wiki.WikiAdapter;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -46,7 +48,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
 public class PerfilClienteActivity extends BaseActivity {
     private ImageView fotoPerfil, banner;
     private ApiService apiService;
-    TextView verAllComics;
+    int idUsuario;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -61,15 +63,10 @@ public class PerfilClienteActivity extends BaseActivity {
                 .build();
         apiService = retrofit.create(ApiService.class);
 
-        ImageButton btnAtras = findViewById(R.id.btn_atras);
-        if (btnAtras != null) {
-            btnAtras.setVisibility(View.GONE);
-        }
-
         SharedPreferences sharedPreferences = getSharedPreferences("usuarioPrefs", MODE_PRIVATE);
         String nombreEmpresa = sharedPreferences.getString("nombreEmpresa", "Cliente");
         String nombreUsuario = "@"+(sharedPreferences.getString("nombreUsuario", "cliente"));
-        int idUsuario = sharedPreferences.getInt("idUsuario",1);
+        idUsuario = sharedPreferences.getInt("idUsuario",1);
 
         TextView tv_nombreEmpresa = findViewById(R.id.tv_displayNombreEmpresa);
         TextView tv_nombreUsuario = findViewById(R.id.tv_displayNombreUsuario);
@@ -102,20 +99,28 @@ public class PerfilClienteActivity extends BaseActivity {
         fotoPerfil.setImageResource(R.drawable.dc);
         banner = findViewById(R.id.iv_banner);
         banner.setImageResource(R.drawable.flash);
-
-        /*verAllComics = findViewById(R.id.seccion_comics_ver_mas);
-        verAllComics.setOnClickListener(view -> startComicsActivity());*/
     }
 
     @Override
     protected void onResume() {
         setupMenus(R.id.nav_inicio);
         super.onResume();
+        //Conexion con api:
+        Retrofit retrofit = new Retrofit.Builder()
+                .baseUrl("http://10.0.2.2:8080/")
+                .addConverterFactory(GsonConverterFactory.create())
+                .build();
+        apiService = retrofit.create(ApiService.class);
+        ImageButton btnAtras = findViewById(R.id.btn_atras);
+        if (btnAtras != null) {
+            btnAtras.setVisibility(View.GONE);
+        }
     }
 
     @Override
     protected void onRestart() {
         super.onRestart();
+        obtenerComicsDelCliente(idUsuario);
     }
 
     @Override
@@ -140,6 +145,7 @@ public class PerfilClienteActivity extends BaseActivity {
             @Override
             public void onResponse(Call<List<Comic>> call, Response<List<Comic>> response) {
                 if (response.isSuccessful() && response.body() != null) {
+
                     List<Comic> listaComics = response.body();
                     agregarSeccionComics(listaComics);
                 } else {
@@ -192,13 +198,33 @@ public class PerfilClienteActivity extends BaseActivity {
         TextView tvTitulo = seccionView.findViewById(R.id.seccion_comics);
         tvTitulo.setText("Comics");
 
+        TextView tvVerTodo = seccionView.findViewById(R.id.tv_verTodo);
+        tvVerTodo.setOnClickListener(view -> startComicsActivity());
+
         if (listaComics == null || listaComics.isEmpty()) {
             flAnadirComic.setVisibility(View.VISIBLE);
         }
 
+        List<Comic> comicsLimitados;
+        if (listaComics.size() > 6) {
+            comicsLimitados = listaComics.subList(0, 6);
+        } else {
+            comicsLimitados = listaComics;
+        }
+
         RecyclerView recycler = seccionView.findViewById(R.id.seccion_recycler);
         recycler.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false));
-        recycler.setAdapter(new ComicAdapter(listaComics));
+        ComicAdapter adapter = new ComicAdapter(listaComics, comic -> {
+            SharedPreferences prefs = getSharedPreferences("comicPrefs", MODE_PRIVATE);
+            SharedPreferences.Editor editor = prefs.edit();
+            editor.putString("activity", "PerfilClienteActivity");
+            editor.apply();
+            Intent intent = new Intent(PerfilClienteActivity.this, ComicActivity.class);
+            intent.putExtra("comic", comic);
+            startActivity(intent);
+        });
+        recycler.setAdapter(adapter);
+
         recycler.addItemDecoration(new RecyclerView.ItemDecoration() {
             @Override
             public void getItemOffsets(@NonNull Rect outRect, @NonNull View view,
@@ -206,6 +232,7 @@ public class PerfilClienteActivity extends BaseActivity {
                 outRect.right = 30;
             }
         });
+        contenedor.removeAllViews();
         contenedor.addView(seccionView);
     }
 
@@ -233,6 +260,7 @@ public class PerfilClienteActivity extends BaseActivity {
         });
 
         LinearLayout contenedor = findViewById(R.id.eventos_container);
+        contenedor.removeAllViews();
         contenedor.addView(seccionView);
     }
 
@@ -260,6 +288,7 @@ public class PerfilClienteActivity extends BaseActivity {
         });
 
         LinearLayout contenedor = findViewById(R.id.rutas_container);
+        contenedor.removeAllViews();
         contenedor.addView(seccionView);
     }
 
@@ -287,6 +316,7 @@ public class PerfilClienteActivity extends BaseActivity {
         });
 
         LinearLayout contenedor = findViewById(R.id.wiki_container);
+        contenedor.removeAllViews();
         contenedor.addView(seccionView);
     }
 }

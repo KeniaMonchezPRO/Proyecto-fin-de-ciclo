@@ -5,19 +5,55 @@ import java.io.Serializable;
 public class Comic implements Serializable {
     private String titulo;
     private String autores;
-    private String categoria;
-    private int idImagen;
+    private String categorias;
+    private String portada;
+    private String audiencia;
+    private String selloEditorial;
+    private String fechaLanzamiento;
+    private String estado;
+    private String descripcion;
+    private String pais_origen;
+    private String idiomaOriginal;
 
-    public Comic(String titulo, String autores, String categoria, int idImagen) {
+    public Comic() {}
+    public Comic(String titulo, String autores, String categorias, String portada) {
         this.titulo = titulo;
         this.autores = autores;
-        this.categoria = categoria;
-        this.idImagen = idImagen;
+        this.categorias = categorias;
+        this.portada = portada;
     }
 
     public String getTitulo() { return titulo; }
     public String getAutores() { return autores; }
-    public int getIdImagen() { return idImagen; }
+    public String getPortada() { return portada; }
 
-    public String getCategoria() { return categoria; }
+    public String getCategorias() { return categorias; }
+
+    public String getAudiencia() {
+        return audiencia;
+    }
+
+    public String getSelloEditorial() {
+        return selloEditorial;
+    }
+
+    public String getFechaLanzamiento() {
+        return fechaLanzamiento;
+    }
+
+    public String getEstado() {
+        return estado;
+    }
+
+    public String getDescripcion() {
+        return descripcion;
+    }
+
+    public String getPais_origen() {
+        return pais_origen;
+    }
+
+    public String getIdiomaOriginal() {
+        return idiomaOriginal;
+    }
 }
