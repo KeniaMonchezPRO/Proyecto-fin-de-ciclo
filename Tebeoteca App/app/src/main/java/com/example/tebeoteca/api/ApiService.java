@@ -39,6 +39,9 @@ public interface ApiService {
     @GET("/api/comics/cliente/{clienteId}")
     Call<List<Comic>> obtenerComicsPorCliente(@Path("clienteId") int clienteId);
 
+    //@GET("/api/usuarios/{id}")
+    //Call<UsuarioResponseDTO> obtenerUsuario(@Path("id") int usuarioId);
+
     /* En caso de errores descomentar, junto con el del backend
     @POST("/api/login") // o el endpoint que hayas definido
     Call<ResponseBody> login(@Body LoginRequest request);

@@ -43,6 +43,8 @@ public class Cliente extends Usuario {
 		this.setFechaRegistro(LocalDateTime.now());
 		this.setFechaModificacion(LocalDateTime.now());
 	}
+	
+	private String nif;
 
 	/*public Cliente() {
 		

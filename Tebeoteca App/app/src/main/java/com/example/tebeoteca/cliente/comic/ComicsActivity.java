@@ -52,11 +52,8 @@ public class ComicsActivity extends BaseActivity {
         //limpiarContenedores();
         //cargarComicsDesdeApi();
 
-
         tvAnadirComic = findViewById(R.id.tv_anadir_comic);
         tvAnadirComic.setOnClickListener(view -> { startAnadirComicActivity(); });
-
-
     }
 
     @Override

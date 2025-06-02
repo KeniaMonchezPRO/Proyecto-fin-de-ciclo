@@ -74,16 +74,19 @@ public class ComicAdapter extends RecyclerView.Adapter<ComicAdapter.ComicViewHol
 
         public void bind(Comic comic, OnItemClickListener listener) {
             tvTitulo.setText(comic.getTitulo());
-
-            int idImagen = itemView.getContext().getResources().getIdentifier(
-                    comic.getPortada(), "drawable", itemView.getContext().getPackageName()
-            );
-            if (idImagen != 0) {
-                portada.setImageResource(idImagen);
-            } else {
+            String nombrePortada = comic.getPortada();
+            if (nombrePortada == null) {
                 portada.setImageResource(R.drawable.sin_foto);
+            } else {
+                int idImagen = itemView.getContext().getResources().getIdentifier(
+                        comic.getPortada(), "drawable", itemView.getContext().getPackageName()
+                );
+                if (idImagen != 0) {
+                    portada.setImageResource(idImagen);
+                } else {
+                    portada.setImageResource(R.drawable.sin_foto);
+                }
             }
-
             itemView.setOnClickListener(v -> listener.onItemClick(comic));
         }
     }

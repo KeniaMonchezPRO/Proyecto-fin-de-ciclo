@@ -56,6 +56,9 @@ public class LoginControlador {
                 } else if (u instanceof Cliente cliente) {
                     response.setTipoUsuario("CLIENTE");
                     response.setNombreCliente(cliente.getNombreCliente());
+                    response.setDescripcion(cliente.getDescripcion());
+                    response.setDescripcion(cliente.getNif());
+                    response.setFechaCreacionEmpresa(cliente.getFechaCreacionEmpresa().toString());
                 } else {
                     response.setTipoUsuario("DESCONOCIDO");
                 }

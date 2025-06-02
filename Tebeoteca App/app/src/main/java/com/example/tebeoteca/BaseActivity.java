@@ -16,9 +16,11 @@ import androidx.annotation.IdRes;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.tebeoteca.cliente.BuscarActivity;
+import com.example.tebeoteca.cliente.DialogAnadirSeccionActivity;
 import com.example.tebeoteca.cliente.PerfilClienteActivity;
 import com.example.tebeoteca.cliente.comic.ComicsActivity;
 import com.example.tebeoteca.login.LoginActivity;
+import com.example.tebeoteca.registro.RegistroLectorActivity;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 public class BaseActivity extends AppCompatActivity {
@@ -112,16 +114,18 @@ public class BaseActivity extends AppCompatActivity {
 
         //funcionalidades botones
         btnConfig.setOnClickListener(v -> {
-            Toast.makeText(this, "Ir a configuracion", Toast.LENGTH_SHORT).show();
+            if (!(this instanceof ConfiguracionActivity)) {
+                startConfiguracionActivity();
+            }
         });
 
         btnNotificaciones.setOnClickListener(v -> {
-            Toast.makeText(this, "Ir a notificaciones", Toast.LENGTH_SHORT).show();
+            if (!(this instanceof NotificacionesActivity)) {
+                startNotificacionesActivity();
+            }
         });
 
-        btnAnadir.setOnClickListener(v -> {
-            Toast.makeText(this, "Ir a añadir", Toast.LENGTH_SHORT).show();
-        });
+        btnAnadir.setOnClickListener(v -> startDialogAnadirSeccionActivity());
 
         btnRutas.setOnClickListener(v -> {
             Toast.makeText(this, "Ir a Rutas", Toast.LENGTH_SHORT).show();
@@ -142,6 +146,24 @@ public class BaseActivity extends AppCompatActivity {
 
     public void startEspecialesActivity(View view) {
         Intent intent = new Intent(this, LoginActivity.class);
+        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
+        startActivity(intent);
+    }
+
+    public void startConfiguracionActivity() {
+        Intent intent = new Intent(this, ConfiguracionActivity.class);
+        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
+        startActivity(intent);
+    }
+
+    public void startDialogAnadirSeccionActivity() {
+        Intent intent = new Intent(this, DialogAnadirSeccionActivity.class);
+        startActivity(intent);
+    }
+
+    public void startNotificacionesActivity() {
+        Intent intent = new Intent(this, NotificacionesActivity.class);
+        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
         startActivity(intent);
     }
 

@@ -52,8 +52,8 @@ public class LoginActivity extends ComponentActivity {
 
         apiService = retrofit.create(ApiService.class);
 
-        //btnLogin.setOnClickListener(view -> loginUsuario());
-        btnLogin.setOnClickListener(view -> startPerfilCliente());
+        btnLogin.setOnClickListener(view -> loginUsuario());
+        //btnLogin.setOnClickListener(view -> startPerfilCliente()); //solo para pruebas, comentar cuando termine
     }
 
     @Override
@@ -77,6 +77,11 @@ public class LoginActivity extends ComponentActivity {
     }
 
     public void startPerfilCliente() {
+        SharedPreferences prefs = getSharedPreferences("usuarioPrefs", MODE_PRIVATE);
+        SharedPreferences.Editor editor = prefs.edit();
+        editor.putInt("idUsuario", 1);
+        editor.putString("nombreUsuario", "Pruebas");
+        editor.putString("tipoUsuario", "CLIENTE");
         Intent intent = new Intent(this, PerfilClienteActivity.class);
         startActivity(intent);
         finish();
@@ -119,6 +124,9 @@ public class LoginActivity extends ComponentActivity {
                     if ("CLIENTE".equals(loginData.getTipoUsuario())) {
                         editor.putString("nombreEmpresa", loginData.getNombreCliente());
                         editor.putString("nombreUsuario", loginData.getNombreUsuario());
+                        editor.putString("descripcion", loginData.getDescripcion());
+                        editor.putString("nif", loginData.getNif());
+                        editor.putString("fechaCreacionEmpresa", loginData.getFechaCreacionEmpresa());
                     } else {
                         editor.putString("nombreLector", loginData.getNombreLector());
                         //editor.putString("apellidos", loginData.getApellidos());

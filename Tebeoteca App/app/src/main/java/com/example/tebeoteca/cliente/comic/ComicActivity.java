@@ -7,6 +7,7 @@ import android.view.View;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.core.content.ContextCompat;
 
@@ -45,7 +46,7 @@ public class ComicActivity extends BaseActivity {
 
         //Log.d("DEBUG", "activityContext: " + activityContext);
         if(activityContext.equals("AnadirComicActivity")) {
-            Log.d("DEBUG", "entró en el if");
+            //Log.d("DEBUG", "entró en el if");
             String portada = sharedPreferences.getString("portada","null");
             int idImagen = 0;
             if(portada != null) {
@@ -58,11 +59,14 @@ public class ComicActivity extends BaseActivity {
             } else {
                 ivPortada.setImageResource(R.drawable.sin_foto);
             }
-            String titulo = sharedPreferences.getString("titulo", "Añadir Título");
+
+            String titulo = sharedPreferences.getString("titulo", "Añadir título");
             tvTitulo.setText(titulo);
-            String descripcion = sharedPreferences.getString("descripcion", "Añadir Descripción");
+
+            String descripcion = sharedPreferences.getString("descripcion", "Añadir descripción");
             tvDescripcion.setText(descripcion);
-            String audiencia = sharedPreferences.getString("audiencia","Añadir Audiencia");
+
+            String audiencia = sharedPreferences.getString("audiencia","Añadir audiencia");
             if(audiencia.contains("niños")) {
                 audiencia = "Niños (3-12)";
             } else if (audiencia.contains("jovenes")) {
@@ -73,30 +77,39 @@ public class ComicActivity extends BaseActivity {
                 audiencia = "Añadir audiencia";
             }
             tvAudiencia.setText(audiencia);
-            String selloEditorial = sharedPreferences.getString("selloEditorial", "Añadir Sello Editorial");
+
+            String selloEditorial = sharedPreferences.getString("selloEditorial", "Añadir sello editorial");
             tvSelloEditorial.setText(selloEditorial);
-            String fechaLanzamiento = sharedPreferences.getString("fechaLanzamiento", "Añadir Fecha de Lanzamiento");
+
+            String fechaLanzamiento = sharedPreferences.getString("fechaLanzamiento", "Añadir fecha de lanzamiento");
             tvFechaLanzamiento.setText(fechaLanzamiento);
 
-            String estado = sharedPreferences.getString("estado","Añadir Estado");
-            tvEstado.setText(estado);
-            if(estado.equals("activo")) {
-                tvEstado.setTextColor(verde);
-            } else if(estado.equals("publicado")) {
-                tvEstado.setTextColor(azul);
-            } else if(estado.equals("terminado")) {
-                tvEstado.setTextColor(naranja);
-            } else if(estado.equals("descontinuado")) {
-                tvEstado.setTextColor(rojo);
+            String estado = sharedPreferences.getString("estado","Añadir estado");
+            if(estado.equals("Añadir estado")) {
+                tvEstado.setText(estado);
+            } else {
+                tvEstado.setText(estado.toUpperCase());
+                if(estado.equals("activo")) {
+                    tvEstado.setTextColor(verde);
+                } else if(estado.equals("publicado")) {
+                    tvEstado.setTextColor(azul);
+                } else if(estado.equals("terminado")) {
+                    tvEstado.setTextColor(naranja);
+                } else if(estado.equals("descontinuado")) {
+                    tvEstado.setTextColor(rojo);
+                }
             }
 
-            String autores = sharedPreferences.getString("autores", "Añadir Autores");
+            String autores = sharedPreferences.getString("autores", "Añadir autores");
             tvAutores.setText(autores);
-            String paisOrigen = sharedPreferences.getString("paisOrigen","Añadir País de Origen");
+
+            String paisOrigen = sharedPreferences.getString("paisOrigen","Añadir país de origen");
             tvPaisOrigen.setText(paisOrigen);
-            String idiomaOriginal = sharedPreferences.getString("idiomaOriginal", "Añadir Idioma Original");
+
+            String idiomaOriginal = sharedPreferences.getString("idiomaOriginal", "Añadir idioma original");
             tvIdiomaOriginal.setText(idiomaOriginal);
-            String categorias = sharedPreferences.getString("categorias","Añadir Categorías");
+
+            String categorias = sharedPreferences.getString("categorias","Añadir categorías");
             tvCategorias.setText(categorias);
 
         } else if (activityContext.equals("ComicsActivity") || activityContext.equals(("PerfilClienteActivity"))) {
@@ -110,7 +123,6 @@ public class ComicActivity extends BaseActivity {
                             nombrePortada, "drawable", this.getPackageName()
                     );
                 }
-
                 if (idImagen != 0) {
                     ivPortada.setImageResource(idImagen);
                 } else {
@@ -119,7 +131,6 @@ public class ComicActivity extends BaseActivity {
 
                 int idResArrayItems = R.array.spìnner_audiencia_array;
                 String[] audienciaArray = getResources().getStringArray(idResArrayItems);
-
                 String audiencia = comic.getAudiencia();
                 if(audiencia != null) {
                     if(audiencia.contains("niños")) {
@@ -136,32 +147,80 @@ public class ComicActivity extends BaseActivity {
                 }
                 tvAudiencia.setText(audiencia);
 
-                tvSelloEditorial.setText(comic.getSelloEditorial());
-                tvFechaLanzamiento.setText(comic.getFechaLanzamiento());
-                tvTitulo.setText(comic.getTitulo());
-                tvDescripcion.setText(comic.getDescripcion());
+                String sello = comic.getSelloEditorial();
+                if(sello != null) {
+                    tvSelloEditorial.setText(sello);
+                } else {
+                    tvSelloEditorial.setText("Añadir sello editorial");
+                }
+
+                String fechaLanz = comic.getFechaLanzamiento();
+                if(fechaLanz != null) {
+                    tvFechaLanzamiento.setText(fechaLanz);
+                } else {
+                    tvFechaLanzamiento.setText("Añadir fecha lanzamiento");
+                }
+
+                String titulo = comic.getTitulo();
+                if(titulo != null) {
+                    tvTitulo.setText(titulo);
+                } else {
+                    tvTitulo.setText("Añadir título");
+                }
+
+                String descripcion = comic.getDescripcion();
+                if(descripcion != null) {
+                    tvDescripcion.setText(descripcion);
+                } else {
+                    tvDescripcion.setText("Añadir descripción");
+                }
 
                 String estado = comic.getEstado();
                 if(estado != null) {
                     String estadoUp = estado.toUpperCase();
-                    if(estadoUp.equals("activo")) {
+                    if(estadoUp.equals("ACTIVO")) {
                         tvEstado.setTextColor(verde);
-                    } else if(estadoUp.equals("publicado")) {
+                    } else if(estadoUp.equals("PUBLICADO")) {
                         tvEstado.setTextColor(azul);
-                    } else if(estadoUp.equals("terminado")) {
+                    } else if(estadoUp.equals("TERMINADO")) {
                         tvEstado.setTextColor(naranja);
-                    } else if(estadoUp.equals("descontinuado")) {
+                    } else if(estadoUp.equals("DESCONTINUADO")) {
                         tvEstado.setTextColor(rojo);
                     }
-                    tvEstado.setText(estado);
+                    tvEstado.setText(estadoUp);
                 } else {
                     tvEstado.setText("Añadir Estado");
                 }
 
-                tvAutores.setText(comic.getAutores());
-                tvPaisOrigen.setText(comic.getPais_origen());
-                tvIdiomaOriginal.setText(comic.getIdiomaOriginal());
-                tvCategorias.setText(comic.getCategorias());
+                String autores = comic.getAutores();
+                if(autores != null) {
+                    tvAutores.setText(autores);
+                } else {
+                    tvAutores.setText("Añadir autores");
+                }
+
+                String paisOrigen = comic.getPais_origen();
+                if(paisOrigen != null) {
+                    tvPaisOrigen.setText(paisOrigen);
+                } else {
+                    tvPaisOrigen.setText("Añadir país de origen");
+                }
+
+                String idiomaOriginal = comic.getIdiomaOriginal();
+                if(idiomaOriginal != null) {
+                    tvIdiomaOriginal.setText(idiomaOriginal);
+                } else {
+                    tvIdiomaOriginal.setText("Añadir idioma original");
+                }
+
+                String categorias = comic.getCategorias();
+                if(categorias != null) {
+                    tvCategorias.setText(categorias);
+                } else {
+                    tvCategorias.setText("Añadir categorías");
+                }
+            } else {
+                Toast.makeText(this, "No se pudo cargar el comic", Toast.LENGTH_SHORT).show();
             }
         }
     }

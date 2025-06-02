@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Rect;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
@@ -66,12 +67,16 @@ public class PerfilClienteActivity extends BaseActivity {
         SharedPreferences sharedPreferences = getSharedPreferences("usuarioPrefs", MODE_PRIVATE);
         String nombreEmpresa = sharedPreferences.getString("nombreEmpresa", "Cliente");
         String nombreUsuario = "@"+(sharedPreferences.getString("nombreUsuario", "cliente"));
+        String descripcion = sharedPreferences.getString("descripcion", "Sin descripción");
+        String nif = sharedPreferences.getString("nif", "Y1238900N");
         idUsuario = sharedPreferences.getInt("idUsuario",1);
 
         TextView tv_nombreEmpresa = findViewById(R.id.tv_displayNombreEmpresa);
         TextView tv_nombreUsuario = findViewById(R.id.tv_displayNombreUsuario);
+        TextView tv_descripcion = findViewById(R.id.tv_displayDescripcion);
         tv_nombreEmpresa.setText(nombreEmpresa);
         tv_nombreUsuario.setText(nombreUsuario);
+        tv_descripcion.setText(descripcion);
 
         //Eventos
         List<Evento> listaEventos = new ArrayList<>();
@@ -145,7 +150,6 @@ public class PerfilClienteActivity extends BaseActivity {
             @Override
             public void onResponse(Call<List<Comic>> call, Response<List<Comic>> response) {
                 if (response.isSuccessful() && response.body() != null) {
-
                     List<Comic> listaComics = response.body();
                     agregarSeccionComics(listaComics);
                 } else {
@@ -156,6 +160,8 @@ public class PerfilClienteActivity extends BaseActivity {
             @Override
             public void onFailure(Call<List<Comic>> call, Throwable t) {
                 Toast.makeText(PerfilClienteActivity.this, "Error de red: " + t.getMessage(), Toast.LENGTH_LONG).show();
+                List<Comic> listaVacia = new ArrayList<>();
+                agregarSeccionComics(listaVacia);
             }
         });
     }
@@ -164,12 +170,13 @@ public class PerfilClienteActivity extends BaseActivity {
         View seccionView = LayoutInflater.from(this).inflate(R.layout.seccion_novedades, null);
 
         FrameLayout flAnadirNovedad = seccionView.findViewById(R.id.fl_anadirNovedad);
-
+        TextView tvVerTodo = seccionView.findViewById(R.id.tv_verTodo);
         TextView tvTitulo = seccionView.findViewById(R.id.seccion_novedades);
         tvTitulo.setText("Novedades");
 
         if (listaNovedades == null || listaNovedades.isEmpty()) {
             flAnadirNovedad.setVisibility(View.VISIBLE);
+            tvVerTodo.setVisibility(View.GONE);
         }
 
         RecyclerView recycler = seccionView.findViewById(R.id.seccion_recycler);
@@ -189,9 +196,12 @@ public class PerfilClienteActivity extends BaseActivity {
     }
 
     private void agregarSeccionComics(List<Comic> listaComics) {
+        Log.d("DEBUG", "ENTRO EN AGREGAR SECCION COMICS");
         LinearLayout contenedor = findViewById(R.id.comics_container);
 
         View seccionView = LayoutInflater.from(this).inflate(R.layout.seccion_comics, null);
+
+        RecyclerView recycler = seccionView.findViewById(R.id.seccion_recycler);
 
         FrameLayout flAnadirComic = seccionView.findViewById(R.id.fl_anadirComic);
 
@@ -199,39 +209,42 @@ public class PerfilClienteActivity extends BaseActivity {
         tvTitulo.setText("Comics");
 
         TextView tvVerTodo = seccionView.findViewById(R.id.tv_verTodo);
-        tvVerTodo.setOnClickListener(view -> startComicsActivity());
 
         if (listaComics == null || listaComics.isEmpty()) {
+            Log.d("DEBUG", "set visibility");
             flAnadirComic.setVisibility(View.VISIBLE);
+            tvVerTodo.setVisibility(View.GONE);
+            recycler.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false));
+            recycler.setAdapter(null);
         }
-
-        List<Comic> comicsLimitados;
-        if (listaComics.size() > 6) {
-            comicsLimitados = listaComics.subList(0, 6);
-        } else {
-            comicsLimitados = listaComics;
-        }
-
-        RecyclerView recycler = seccionView.findViewById(R.id.seccion_recycler);
-        recycler.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false));
-        ComicAdapter adapter = new ComicAdapter(listaComics, comic -> {
-            SharedPreferences prefs = getSharedPreferences("comicPrefs", MODE_PRIVATE);
-            SharedPreferences.Editor editor = prefs.edit();
-            editor.putString("activity", "PerfilClienteActivity");
-            editor.apply();
-            Intent intent = new Intent(PerfilClienteActivity.this, ComicActivity.class);
-            intent.putExtra("comic", comic);
-            startActivity(intent);
-        });
-        recycler.setAdapter(adapter);
-
-        recycler.addItemDecoration(new RecyclerView.ItemDecoration() {
-            @Override
-            public void getItemOffsets(@NonNull Rect outRect, @NonNull View view,
-                                       @NonNull RecyclerView parent, @NonNull RecyclerView.State state) {
-                outRect.right = 30;
+            Log.d("DEBUG", "else");
+            tvVerTodo.setOnClickListener(view -> startComicsActivity());
+            if (listaComics.size() > 6) {
+                listaComics.subList(0, 6);
             }
-        });
+
+            recycler.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false));
+
+            ComicAdapter adapter = new ComicAdapter(listaComics, comic -> {
+                SharedPreferences prefs = getSharedPreferences("comicPrefs", MODE_PRIVATE);
+                SharedPreferences.Editor editor = prefs.edit();
+                editor.putString("activity", "PerfilClienteActivity");
+                editor.apply();
+                Intent intent = new Intent(PerfilClienteActivity.this, ComicActivity.class);
+                intent.putExtra("comic", comic);
+                startActivity(intent);
+            });
+            recycler.setAdapter(adapter);
+
+            recycler.addItemDecoration(new RecyclerView.ItemDecoration() {
+                @Override
+                public void getItemOffsets(@NonNull Rect outRect, @NonNull View view,
+                                           @NonNull RecyclerView parent, @NonNull RecyclerView.State state) {
+                    outRect.right = 30;
+                }
+            });
+
+
         contenedor.removeAllViews();
         contenedor.addView(seccionView);
     }
@@ -240,12 +253,13 @@ public class PerfilClienteActivity extends BaseActivity {
         View seccionView = LayoutInflater.from(this).inflate(R.layout.seccion_eventos, null);
 
         FrameLayout flAnadirEvento = seccionView.findViewById(R.id.fl_anadirEvento);
-
+        TextView tvVerTodo = seccionView.findViewById(R.id.tv_verTodo);
         TextView tvTitulo = seccionView.findViewById(R.id.seccion_eventos);
         tvTitulo.setText("Eventos");
 
         if (listaEventos == null || listaEventos.isEmpty()) {
             flAnadirEvento.setVisibility(View.VISIBLE);
+            tvVerTodo.setVisibility(View.GONE);
         }
 
         RecyclerView recycler = seccionView.findViewById(R.id.seccion_recycler);
@@ -268,12 +282,13 @@ public class PerfilClienteActivity extends BaseActivity {
         View seccionView = LayoutInflater.from(this).inflate(R.layout.seccion_rutas, null);
 
         FrameLayout flAnadirRuta = seccionView.findViewById(R.id.fl_anadirRuta);
-
+        TextView tvVerTodo = seccionView.findViewById(R.id.tv_verTodo);
         TextView tvTitulo = seccionView.findViewById(R.id.seccion_rutas);
         tvTitulo.setText("Rutas");
 
         if (listaRutas == null || listaRutas.isEmpty()) {
             flAnadirRuta.setVisibility(View.VISIBLE);
+            tvVerTodo.setVisibility(View.GONE);
         }
 
         RecyclerView recycler = seccionView.findViewById(R.id.seccion_recycler);
@@ -296,12 +311,13 @@ public class PerfilClienteActivity extends BaseActivity {
         View seccionView = LayoutInflater.from(this).inflate(R.layout.seccion_wiki, null);
 
         FrameLayout flAnadirWiki = seccionView.findViewById(R.id.fl_anadirWiki);
-
+        TextView tvVerTodo = seccionView.findViewById(R.id.tv_verTodo);
         TextView tvTitulo = seccionView.findViewById(R.id.seccion_wiki);
         tvTitulo.setText("Wiki");
 
         if (listaWiki == null || listaWiki.isEmpty()) {
             flAnadirWiki.setVisibility(View.VISIBLE);
+            tvVerTodo.setVisibility(View.GONE);
         }
 
         RecyclerView recycler = seccionView.findViewById(R.id.seccion_recycler);

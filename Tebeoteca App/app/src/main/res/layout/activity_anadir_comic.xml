@@ -23,7 +23,8 @@
             <FrameLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal">
+                android:orientation="horizontal"
+                android:layout_marginTop="5dp">
                 <!--<ImageButton
                     android:id="@+id/btn_atras_form"
                     android:layout_width="40dp"
@@ -55,8 +56,8 @@
                 <!--Portada-->
                 <ImageButton
                     android:id="@+id/iv_portada"
-                    android:layout_width="150dp"
-                    android:layout_height="200dp"
+                    android:layout_width="160dp"
+                    android:layout_height="240dp"
                     android:layout_gravity="center"
                     android:layout_marginTop="10dp"
                     android:textColor="@color/white"
@@ -75,7 +76,7 @@
                         android:layout_height="wrap_content"
                         android:layout_gravity="start"
                         app:boxStrokeWidth="1dp"
-                        android:hint="Título"
+                        android:hint="@string/textView_tituloComic"
                         android:overScrollMode="always"
                         app:hintTextColor="@color/teal_200"
                         android:textColorHint="@color/teal_200"
@@ -123,7 +124,7 @@
                     android:layout_gravity="center"
                     android:layout_marginTop="5dp"
                     app:boxStrokeWidth="1dp"
-                    android:hint="Sello editorial"
+                    android:hint="@string/textView_selloComic"
                     app:hintTextColor="@color/teal_200"
                     android:textColorHint="@color/teal_200"
                     app:cursorColor="@color/teal_200"

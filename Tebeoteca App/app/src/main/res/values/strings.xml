@@ -9,11 +9,17 @@
     <string name="textView_registroClienteForm">¿Eres editor, distribuidora o creador? &#xA;&#xA;<u>Crea una cuenta de cliente aquí</u></string>
 
     <!--Campos obligatorios-->
-    <string name="textView_usuarioEmail">Usuario o Email <font color="#FF0000">*</font></string>
-    <string name="textView_contrasena">Contraseña <font color="#FF0000">*</font></string>
-    <string name="textView_nombreUsuario">Nombre de usuario <font color="#FF0000">*</font></string>
-    <string name="textView_email">Email <font color="#FF0000">*</font></string>
-    <string name="textView_fechaNac">Fecha de nacimiento <font color="#FF0000">*</font></string>
-    <string name="textView_nombreEmpresa">Nombre o razón social <font color="#FF0000">*</font></string>
-    <string name="textView_tipoEmpresa">Tipo <font color="#FF0000">*</font></string>
+        <!--Para activity registro-->
+        <string name="textView_usuarioEmail">Usuario o Email <font color="#FF0000">*</font></string>
+        <string name="textView_contrasena">Contraseña <font color="#FF0000">*</font></string>
+        <string name="textView_nombreUsuario">Nombre de usuario <font color="#FF0000">*</font></string>
+        <string name="textView_email">Email <font color="#FF0000">*</font></string>
+        <string name="textView_fechaNac">Fecha de nacimiento <font color="#FF0000">*</font></string>
+        <string name="textView_nombreEmpresa">Nombre o razón social <font color="#FF0000">*</font></string>
+        <string name="textView_tipoEmpresa">Tipo <font color="#FF0000">*</font></string>
+
+        <!--Para activity anadir comic-->
+        <string name="textView_tituloComic">Título <font color="#FF0000">*</font></string>
+        <string name="textView_selloComic">Sello editorial <font color="#FF0000">*</font></string>
+        <string name="textView_autoresComic">Autores <font color="#FF0000">*</font></string>
 </resources>
