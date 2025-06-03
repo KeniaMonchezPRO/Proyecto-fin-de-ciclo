@@ -69,14 +69,20 @@ public class PerfilClienteActivity extends BaseActivity {
         String nombreUsuario = "@"+(sharedPreferences.getString("nombreUsuario", "cliente"));
         String descripcion = sharedPreferences.getString("descripcion", "Sin descripción");
         String nif = sharedPreferences.getString("nif", "Y1238900N");
+        String fechaCreacionEmpresa = sharedPreferences.getString("fechaCreacionEmpresa", "1997-10-31");
         idUsuario = sharedPreferences.getInt("idUsuario",1);
 
         TextView tv_nombreEmpresa = findViewById(R.id.tv_displayNombreEmpresa);
         TextView tv_nombreUsuario = findViewById(R.id.tv_displayNombreUsuario);
         TextView tv_descripcion = findViewById(R.id.tv_displayDescripcion);
+        TextView tv_nif = findViewById(R.id.tv_nifEmpresa);
+        TextView tv_fechaCreacionEmpresa = findViewById(R.id.tv_fechaCreacionEmpresa);
+
         tv_nombreEmpresa.setText(nombreEmpresa);
         tv_nombreUsuario.setText(nombreUsuario);
         tv_descripcion.setText(descripcion);
+        tv_nif.setText(nif);
+        tv_fechaCreacionEmpresa.setText(fechaCreacionEmpresa);
 
         //Eventos
         List<Evento> listaEventos = new ArrayList<>();
