@@ -40,4 +40,9 @@ public class ComicServicioImpl implements IComicServicio {
 		return comicRepositorio.findAll();
 	}
 
+	@Override
+	public List<Comic> obtenerTodosLosComicsPorTitulo(String titulo) {
+		return comicRepositorio.findByTituloContainingIgnoreCase(titulo);
+	}
+
 }

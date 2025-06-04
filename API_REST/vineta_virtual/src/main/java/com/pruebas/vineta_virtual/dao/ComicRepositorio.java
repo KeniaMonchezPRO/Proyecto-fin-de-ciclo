@@ -16,4 +16,6 @@ public interface ComicRepositorio extends JpaRepository<Comic, Integer>{
     
 	@Query("SELECT c FROM Comic c WHERE c.categorias LIKE %:categoria%")
 	List<Comic> findByCategoria(String categoria);
+	
+	List<Comic> findByTituloContainingIgnoreCase(String titulo);
 }

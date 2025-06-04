@@ -3,6 +3,7 @@ package com.example.tebeoteca.api;
 import com.example.tebeoteca.cliente.comic.AnadirComicRequest;
 import com.example.tebeoteca.cliente.comic.AnadirComicResponseDTO;
 import com.example.tebeoteca.cliente.comic.Comic;
+import com.example.tebeoteca.general.BusquedaRequest;
 import com.example.tebeoteca.login.LoginRequest;
 import com.example.tebeoteca.login.LoginResponseDTO;
 import com.example.tebeoteca.registro.RegistroClienteRequest;
@@ -12,12 +13,12 @@ import com.example.tebeoteca.registro.RegistroLectorResponseDTO;
 
 import java.util.List;
 
-import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.http.Body;
 import retrofit2.http.GET;
 import retrofit2.http.POST;
 import retrofit2.http.Path;
+import retrofit2.http.Query;
 
 public interface ApiService {
 
@@ -38,6 +39,9 @@ public interface ApiService {
 
     @GET("/api/comics/cliente/{clienteId}")
     Call<List<Comic>> obtenerComicsPorCliente(@Path("clienteId") int clienteId);
+
+    @GET("/api/buscar/todo")
+    Call<BusquedaRequest> buscarTodo(@Query("titulo") String titulo);
 
     //@GET("/api/usuarios/{id}")
     //Call<UsuarioResponseDTO> obtenerUsuario(@Path("id") int usuarioId);

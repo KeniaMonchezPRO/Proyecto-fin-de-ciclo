@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:scrollbars="none"
+    android:background="@drawable/bg_gradient">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingTop="70dp"
+        android:paddingHorizontal="20dp"
+        android:orientation="vertical">
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="10dp"
+            android:orientation="horizontal"
+            android:background="@drawable/bg_cards"
+            android:elevation="10dp">
+            <EditText
+                android:id="@+id/etSearch"
+                android:layout_width="300dp"
+                android:layout_height="wrap_content"
+                android:hint="Buscar..."
+                android:textColorHint="@color/teal_200"
+                android:textSize="14dp"/>
+            <ImageButton
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:layout_gravity="center|end"
+                android:src="@drawable/ic_search"
+                android:background="@android:color/transparent"/>
+        </FrameLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/spinner_buscar_layout"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:layout_marginVertical="10dp"
+            android:hint="Tipo de búsqueda"
+            app:hintTextColor="@color/teal_200"
+            android:textColorHint="@color/teal_200"
+            app:boxStrokeColor="@color/text_input_stroke_color"
+            app:boxStrokeWidth="1dp"
+            android:background="@android:color/transparent"
+            style="@style/Widget.Material3.TextInputLayout.OutlinedBox.ExposedDropdownMenu">
+            <AutoCompleteTextView
+                android:id="@+id/spinnerTipoBusqueda"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="none"
+                android:textSize="12sp"
+                android:textColor="#FFFFFF"
+                android:textCursorDrawable="@null"
+                android:backgroundTint="@android:color/transparent"
+                android:completionThreshold="1" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recyclerResultados"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginTop="10dp"/>
+    </LinearLayout>
+</ScrollView>

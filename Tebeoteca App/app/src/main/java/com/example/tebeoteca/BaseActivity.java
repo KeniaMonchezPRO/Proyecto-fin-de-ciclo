@@ -1,9 +1,6 @@
 package com.example.tebeoteca;
 
 import android.content.Intent;
-import android.graphics.RenderEffect;
-import android.graphics.Shader;
-import android.os.Build;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -15,12 +12,11 @@ import android.widget.Toast;
 import androidx.annotation.IdRes;
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.example.tebeoteca.cliente.BuscarActivity;
 import com.example.tebeoteca.cliente.DialogAnadirSeccionActivity;
 import com.example.tebeoteca.cliente.PerfilClienteActivity;
 import com.example.tebeoteca.cliente.comic.ComicsActivity;
+import com.example.tebeoteca.general.BusquedaActivity;
 import com.example.tebeoteca.login.LoginActivity;
-import com.example.tebeoteca.registro.RegistroLectorActivity;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 public class BaseActivity extends AppCompatActivity {
@@ -81,8 +77,8 @@ public class BaseActivity extends AppCompatActivity {
             int id = item.getItemId();
             if (id == R.id.nav_inicio && !(this instanceof PerfilClienteActivity)) {
                 startActivity(new Intent(this, PerfilClienteActivity.class));
-            } else if (id == R.id.nav_buscar && !(this instanceof BuscarActivity)) {
-                startActivity(new Intent(this, BuscarActivity.class));
+            } else if (id == R.id.nav_buscar && !(this instanceof BusquedaActivity)) {
+                startActivity(new Intent(this, BusquedaActivity.class));
             } else if (id == R.id.nav_comics && !(this instanceof ComicsActivity)) {
                 startActivity(new Intent(this, ComicsActivity.class));
             }
