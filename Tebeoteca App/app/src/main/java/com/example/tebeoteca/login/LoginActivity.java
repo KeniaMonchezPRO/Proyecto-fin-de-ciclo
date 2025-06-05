@@ -129,7 +129,8 @@ public class LoginActivity extends ComponentActivity {
                         editor.putString("fechaCreacionEmpresa", loginData.getFechaCreacionEmpresa());
                     } else {
                         editor.putString("nombreLector", loginData.getNombreLector());
-                        //editor.putString("apellidos", loginData.getApellidos());
+                        editor.putString("apellidos", loginData.getApellidos());
+                        editor.putString("fechaNacimiento", loginData.getFechaNacimiento());
                     }
 
                     editor.apply();

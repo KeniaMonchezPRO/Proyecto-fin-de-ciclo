@@ -12,6 +12,8 @@ public class LoginResponseDTO {
 	private String banner;
 	private String fechaCreacionEmpresa;
 	private String fotoPerfil;
+	private String apellidosLector;
+	private String fechaNacimiento;
 	
 	public int getId() {
 		return id;
@@ -79,6 +81,20 @@ public class LoginResponseDTO {
 	public void setFotoPerfil(String fotoPerfil) {
 		this.fotoPerfil = fotoPerfil;
 	}
+	public String getApellidosLector() {
+		return apellidosLector;
+	}
+	public void setApellidosLector(String apellidosLector) {
+		this.apellidosLector = apellidosLector;
+	}
+	public String getFechaNacimiento() {
+		return fechaNacimiento;
+	}
+	public void setFechaNacimiento(String fechaNacimiento) {
+		this.fechaNacimiento = fechaNacimiento;
+	}
+	
+	
 	
 	
 	

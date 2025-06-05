@@ -38,4 +38,9 @@ public class ClienteServicioImpl implements IClienteServicio {
 		clienteRepositorio.deleteById(id);
 	}
 
+	@Override
+	public List<Cliente> buscarPorNombreUsuario(String nombreUsuario) {
+		return clienteRepositorio.findByNombreUsuarioContainingIgnoreCase(nombreUsuario);
+	}
+
 }

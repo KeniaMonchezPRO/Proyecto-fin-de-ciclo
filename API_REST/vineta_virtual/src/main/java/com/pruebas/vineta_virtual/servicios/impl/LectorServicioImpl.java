@@ -35,6 +35,11 @@ public class LectorServicioImpl implements ILectorServicio {
 	public void eliminarLector(int id) {
 		lectorRepositorio.deleteById(id);
 	}
+
+	@Override
+	public List<Lector> buscarPorNombreUsuario(String nombreUsuario) {
+		return lectorRepositorio.findByNombreUsuarioContainingIgnoreCase(nombreUsuario);
+	}
 	
 	
 

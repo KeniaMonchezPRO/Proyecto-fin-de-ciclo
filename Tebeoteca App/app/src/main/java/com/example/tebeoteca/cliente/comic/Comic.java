@@ -16,6 +16,7 @@ public class Comic implements Serializable {
     private String idiomaOriginal;
 
     public Comic() {}
+
     public Comic(String titulo, String autores, String categorias, String portada) {
         this.titulo = titulo;
         this.autores = autores;

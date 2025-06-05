@@ -3,6 +3,7 @@ package com.pruebas.vineta_virtual.servicios;
 import java.util.List;
 import java.util.Optional;
 
+import com.pruebas.vineta_virtual.entidades.Cliente;
 import com.pruebas.vineta_virtual.entidades.Lector;
 
 public interface ILectorServicio {
@@ -14,5 +15,7 @@ public interface ILectorServicio {
     Lector guardar(Lector lector);
     
     void eliminarLector(int id);
+    
+    List<Lector> buscarPorNombreUsuario(String nombreUsuario);
 
 }

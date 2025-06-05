@@ -14,5 +14,7 @@ public interface IClienteServicio {
     Cliente guardar(Cliente cliente);
     
     void eliminar(int id);
+    
+    List<Cliente> buscarPorNombreUsuario(String nombreUsuario);
 
 }

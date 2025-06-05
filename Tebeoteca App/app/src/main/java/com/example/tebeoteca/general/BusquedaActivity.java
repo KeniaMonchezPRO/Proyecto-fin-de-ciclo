@@ -1,6 +1,7 @@
 package com.example.tebeoteca.general;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Rect;
 import android.graphics.Typeface;
 import android.os.Bundle;
@@ -19,8 +20,12 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.tebeoteca.BaseActivity;
 import com.example.tebeoteca.R;
 import com.example.tebeoteca.api.ApiService;
+import com.example.tebeoteca.cliente.ClienteAdapter;
+import com.example.tebeoteca.cliente.PerfilClienteActivity;
 import com.example.tebeoteca.cliente.comic.ComicActivity;
 import com.example.tebeoteca.cliente.comic.ComicAdapter;
+import com.example.tebeoteca.lector.LectorAdapter;
+import com.example.tebeoteca.lector.PerfilLectorActivity;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -118,6 +123,36 @@ public class BusquedaActivity extends BaseActivity {
             });
             mostrarSeccion("Comics", resultado.getComics(), adapter);
         }
+        if(!resultado.getLectores().isEmpty()) {
+            LectorAdapter adapter = new LectorAdapter(resultado.getLectores(), lector -> {
+                Intent intent = new Intent(this, PerfilLectorActivity.class);
+                intent.putExtra("lector", lector);
+                //añadir sharepreferences para que no salga por ejemplo el boton de editarperfil del lector o se le reemplaze por "seguir"
+                startActivity(intent);
+            });
+            mostrarSeccion("Lectores", resultado.getComics(), adapter);
+
+        }
+        if (!resultado.getClientes().isEmpty()) {
+            ClienteAdapter adapter = new ClienteAdapter(resultado.getClientes(), cliente -> {
+                Intent intent = new Intent(this, PerfilClienteActivity.class);
+                intent.putExtra("cliente", cliente);
+                //añadir sharepreferences para que no salga por ejemplo el boton de editarperfil del lector o se le reemplaze por "seguir"
+                startActivity(intent);
+            });
+            mostrarSeccion("Clientes", resultado.getClientes(), adapter);
+        }
+
+
+        /*if (!resultado.getLectores().isEmpty()) {
+            LectorAdapter adapter = new LectorAdapter(resultado.getLectores(), lector -> {
+                // Aquí puedes abrir una nueva activity o mostrar info del lector
+                Toast.makeText(this, "Seleccionaste a " + lector.getNombreUsuario(), Toast.LENGTH_SHORT).show();
+            });
+            mostrarSeccion("Lectores", resultado.getLectores(), adapter);
+        }*/
+
+
         /*Cuando tenga lista estas activities descomentar
         if (!resultado.getEventos().isEmpty()) {
             mostrarSeccion("Eventos", resultado.getEventos());

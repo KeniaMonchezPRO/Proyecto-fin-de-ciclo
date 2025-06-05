@@ -15,6 +15,8 @@ public class LoginResponseDTO {
     private String banner;
     private String fechaCreacionEmpresa;
     private String fotoPerfil;
+    private String apellidos;
+    private String fechaNacimiento;
 
     public int getId() {
         return id;
@@ -62,5 +64,13 @@ public class LoginResponseDTO {
 
     public String getFotoPerfil() {
         return fotoPerfil;
+    }
+
+    public String getApellidos() {
+        return apellidos;
+    }
+
+    public String getFechaNacimiento() {
+        return fechaNacimiento;
     }
 }
