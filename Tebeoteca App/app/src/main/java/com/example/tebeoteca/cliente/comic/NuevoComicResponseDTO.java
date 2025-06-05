@@ -1,8 +1,7 @@
 package com.example.tebeoteca.cliente.comic;
 
-import java.time.LocalDate;
-
-public class AnadirComicRequest {
+public class NuevoComicResponseDTO {
+    private int id;
     private String portada;
     private int clienteId;
     private String titulo;
@@ -16,9 +15,39 @@ public class AnadirComicRequest {
     private String idiomaOriginal;
     private String categorias;
 
-    public AnadirComicRequest() {
+    public NuevoComicResponseDTO(){}
+    public NuevoComicResponseDTO(int id, String portada,
+                                 int clienteId,
+                                 String titulo,
+                                 String audiencia,
+                                 String selloEditorial,
+                                 String fechaLanzamiento,
+                                 String estado,
+                                 String autores,
+                                 String descripcion,
+                                 String paisOrigen,
+                                 String idiomaOriginal,
+                                 String categorias) {
+        this.id = id;
+        this.portada = portada;
+        this.clienteId = clienteId;
+        this.titulo = titulo;
+        this.audiencia = audiencia;
+        this.selloEditorial = selloEditorial;
+        this.fechaLanzamiento = fechaLanzamiento;
+        this.estado = estado;
+        this.autores = autores;
+        this.descripcion = descripcion;
+        this.paisOrigen = paisOrigen;
+        this.idiomaOriginal = idiomaOriginal;
+        this.categorias = categorias;
     }
-
+    public int getId() {
+        return id;
+    }
+    public void setId(int id) {
+        this.id = id;
+    }
     public String getPortada() {
         return portada;
     }
@@ -113,23 +142,5 @@ public class AnadirComicRequest {
 
     public void setCategorias(String categorias) {
         this.categorias = categorias;
-    }
-
-    @Override
-    public String toString() {
-        return "AnadirComicRequest{" +
-                "portada='" + portada + '\'' +
-                ", clienteId=" + clienteId +
-                ", titulo='" + titulo + '\'' +
-                ", audiencia='" + audiencia + '\'' +
-                ", selloEditorial='" + selloEditorial + '\'' +
-                ", fechaLanzamiento='" + fechaLanzamiento + '\'' +
-                ", estado='" + estado + '\'' +
-                ", autores='" + autores + '\'' +
-                ", descripcion='" + descripcion + '\'' +
-                ", paisOrigen='" + paisOrigen + '\'' +
-                ", idiomaOriginal='" + idiomaOriginal + '\'' +
-                ", categorias='" + categorias + '\'' +
-                '}';
     }
 }

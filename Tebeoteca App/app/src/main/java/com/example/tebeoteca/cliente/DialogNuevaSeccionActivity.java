@@ -7,13 +7,13 @@ import android.view.View;
 import android.view.Window;
 import android.widget.FrameLayout;
 
-import androidx.appcompat.app.AppCompatActivity;
-
-import com.example.tebeoteca.ConfiguracionActivity;
 import com.example.tebeoteca.R;
-import com.example.tebeoteca.cliente.comic.AnadirComicActivity;
+import com.example.tebeoteca.cliente.comic.NuevoComicActivity;
+import com.example.tebeoteca.cliente.evento.NuevoEventoActivity;
+import com.example.tebeoteca.cliente.ruta.NuevaRutaActivity;
+import com.example.tebeoteca.cliente.wiki.NuevaEntradaWikiActivity;
 
-public class DialogAnadirSeccionActivity extends Activity {
+public class DialogNuevaSeccionActivity extends Activity {
 
     FrameLayout lyAnadirNuevaRuta, lyAnadirNuevoEvento, lyAnadirNuevoComic, lyAnadirNuevaEntradaWiki;
 
@@ -25,29 +25,29 @@ public class DialogAnadirSeccionActivity extends Activity {
     }
 
     public void finishDialog(View v) {
-        DialogAnadirSeccionActivity.this.finish();
+        DialogNuevaSeccionActivity.this.finish();
     }
 
-    public void startAnadirNuevoComicActivity(View view) {
-        Intent intent = new Intent(this, AnadirComicActivity.class);
+    public void startNuevoComicActivity(View view) {
+        Intent intent = new Intent(this, NuevoComicActivity.class);
         startActivity(intent);
         finishDialog(view);
     }
 
-    public void startAnadirNuevaRutaActivity(View view) {
-        Intent intent = new Intent(this, AnadirComicActivity.class);
+    public void startNuevaRutaActivity(View view) {
+        Intent intent = new Intent(this, NuevaRutaActivity.class);
         startActivity(intent);
         finishDialog(view);
     }
 
-    public void startAnadirNuevoEventoActivity(View view) {
-        Intent intent = new Intent(this, AnadirComicActivity.class);
+    public void startNuevoEventoActivity(View view) {
+        Intent intent = new Intent(this, NuevoEventoActivity.class);
         startActivity(intent);
         finishDialog(view);
     }
 
-    public void startAnadirNuevaEntradaWikiActivity(View view) {
-        Intent intent = new Intent(this, AnadirComicActivity.class);
+    public void startNuevaEntradaWikiActivity(View view) {
+        Intent intent = new Intent(this, NuevaEntradaWikiActivity.class);
         startActivity(intent);
         finishDialog(view);
     }

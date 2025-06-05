@@ -45,7 +45,7 @@ public class ComicActivity extends BaseActivity {
         String activityContext = sharedPreferences.getString("activity","none");
 
         //Log.d("DEBUG", "activityContext: " + activityContext);
-        if(activityContext.equals("AnadirComicActivity")) {
+        if(activityContext.equals("NuevoComicActivity")) {
             //Log.d("DEBUG", "entró en el if");
             String portada = sharedPreferences.getString("portada","null");
             int idImagen = 0;

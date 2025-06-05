@@ -56,29 +56,6 @@ public class BusquedaActivity extends BaseActivity {
         });
 
         resultados = findViewById(R.id.rv_resultados_container);
-
-
-/*
-        recycler.setLayoutManager(new LinearLayoutManager(this));
-        adapter = new BusquedaAdapter(resultados, this::onResultadoClick);
-        recycler.setAdapter(adapter);
-
-        ArrayAdapter<String> spinnerAdapter = new ArrayAdapter<>(
-                this,
-                android.R.layout.simple_spinner_item,
-                Arrays.asList("Cómics", "Clientes", "Lectores", "Eventos", "Wiki", "Rutas")
-        );
-        spinnerTipoBusqueda.setAdapter(spinnerAdapter);
-
-        etBuscar.addTextChangedListener(new TextWatcher() {
-            @Override public void onTextChanged(CharSequence s, int start, int before, int count) {
-                buscar(s.toString(), spinnerTipoBusqueda.getSelectedItem().toString());
-            }
-
-            @Override public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
-            @Override public void afterTextChanged(Editable s) {}
-        });
-*/
     }
 
     @Override
@@ -158,10 +135,9 @@ public class BusquedaActivity extends BaseActivity {
     private void mostrarSeccion(String titulo, List<?> lista, RecyclerView.Adapter<?> adapter) {
         TextView tvTitulo = new TextView(this);
         tvTitulo.setText(titulo);
-        tvTitulo.setTextSize(20);
+        tvTitulo.setTextSize(14);
         tvTitulo.setTextColor(ContextCompat.getColor(this, android.R.color.white));
         tvTitulo.setTypeface(null, Typeface.BOLD);
-        tvTitulo.setPadding(0, 30, 0, 20);
 
         RecyclerView recyclerView = new RecyclerView(this);
         recyclerView.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false));

@@ -19,7 +19,7 @@
         android:hardwareAccelerated="true">
 
         <activity
-            android:name=".general.BusquedaActivity"
+            android:name=".MainActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -27,18 +27,35 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
+        <activity android:name=".BaseActivity" />
+        <activity android:name=".BaseActivityAntes" />
+
         <activity android:name=".login.LoginActivity" />
         <activity android:name=".registro.RegistroClienteActivity"/>
         <activity android:name=".registro.RegistroLectorActivity"/>
+        <activity android:name=".ConfiguracionActivity"/>
+        <activity android:name=".NotificacionesActivity"/>
+        <activity android:name=".general.BusquedaActivity"/>
+
         <activity android:name=".lector.PerfilLectorActivity"/>
+
         <activity android:name=".cliente.PerfilClienteActivity"/>
+
+        <activity android:name=".cliente.DialogNuevaSeccionActivity" android:theme="@style/Theme.VinetaVirtual.BottomSheetDialogActivity"/>
+
         <activity android:name=".cliente.comic.ComicActivity"/>
         <activity android:name=".cliente.comic.ComicsActivity"/>
-        <activity android:name=".cliente.comic.AnadirComicActivity"/>
-        <activity android:name=".ConfiguracionActivity"/>
-        <activity android:name=".cliente.DialogAnadirSeccionActivity" android:theme="@style/Theme.VinetaVirtual.BottomSheetDialogActivity"/>
-        <activity android:name=".NotificacionesActivity"/>
-        <activity android:name=".BaseActivity" />
-        <activity android:name=".BaseActivityAntes" />
+        <activity android:name=".cliente.comic.NuevoComicActivity"/>
+
+        <activity android:name=".cliente.evento.NuevoEventoActivity"/>
+        <activity android:name=".cliente.evento.EventosActivity"/>
+
+        <activity android:name=".cliente.ruta.NuevaRutaActivity"/>
+        <activity android:name=".cliente.ruta.RutasActivity"/>
+
+        <activity android:name=".cliente.wiki.NuevaEntradaWikiActivity"/>
+        <activity android:name=".cliente.wiki.EntradasWikiActivity"/>
+
     </application>
 </manifest>

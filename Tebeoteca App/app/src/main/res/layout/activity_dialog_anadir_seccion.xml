@@ -29,7 +29,8 @@
             android:background="@drawable/bg_cards"
             android:elevation="10dp"
             android:clickable="true"
-            android:focusable="true">
+            android:focusable="true"
+            android:onClick="startNuevoEventoActivity">
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -47,7 +48,8 @@
             android:background="@drawable/bg_cards"
             android:elevation="10dp"
             android:clickable="true"
-            android:focusable="true">
+            android:focusable="true"
+            android:onClick="startNuevaRutaActivity">
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -66,7 +68,7 @@
             android:elevation="10dp"
             android:clickable="true"
             android:focusable="true"
-            android:onClick="startAnadirNuevoComicActivity">
+            android:onClick="startNuevoComicActivity">
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -84,7 +86,8 @@
             android:background="@drawable/bg_cards"
             android:elevation="10dp"
             android:clickable="true"
-            android:focusable="true">
+            android:focusable="true"
+            android:onClick="startNuevaEntradaWikiActivity">
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"

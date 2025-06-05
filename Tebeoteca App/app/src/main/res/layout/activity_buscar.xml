@@ -8,7 +8,7 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:paddingTop="70dp"
+        android:paddingTop="80dp"
         android:paddingHorizontal="20dp"
         android:orientation="vertical">
         <FrameLayout
@@ -19,13 +19,15 @@
             android:background="@drawable/bg_cards"
             android:elevation="10dp">
             <EditText
-                android:id="@+id/etSearch"
+                android:id="@+id/et_buscar"
                 android:layout_width="300dp"
                 android:layout_height="wrap_content"
                 android:hint="Buscar..."
                 android:textColorHint="@color/teal_200"
-                android:textSize="14dp"/>
+                android:textSize="14dp"
+                android:textColor="@color/white"/>
             <ImageButton
+                android:id="@+id/ib_buscar"
                 android:layout_width="40dp"
                 android:layout_height="40dp"
                 android:layout_gravity="center|end"
@@ -33,11 +35,12 @@
                 android:background="@android:color/transparent"/>
         </FrameLayout>
 
+        <!-- SI QUEDA TIEMPO PARA FILTRAR
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/spinner_buscar_layout"
             android:layout_width="match_parent"
             android:layout_height="40dp"
-            android:layout_marginVertical="10dp"
+            android:layout_marginVertical="20dp"
             android:hint="Tipo de búsqueda"
             app:hintTextColor="@color/teal_200"
             android:textColorHint="@color/teal_200"
@@ -55,12 +58,12 @@
                 android:textCursorDrawable="@null"
                 android:backgroundTint="@android:color/transparent"
                 android:completionThreshold="1" />
-        </com.google.android.material.textfield.TextInputLayout>
+        </com.google.android.material.textfield.TextInputLayout>-->
 
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/recyclerResultados"
+        <LinearLayout
+            android:id="@+id/rv_resultados_container"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_marginTop="10dp"/>
+            android:orientation="vertical"/>
     </LinearLayout>
 </ScrollView>

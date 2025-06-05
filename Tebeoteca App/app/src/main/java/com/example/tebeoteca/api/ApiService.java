@@ -1,7 +1,7 @@
 package com.example.tebeoteca.api;
 
-import com.example.tebeoteca.cliente.comic.AnadirComicRequest;
-import com.example.tebeoteca.cliente.comic.AnadirComicResponseDTO;
+import com.example.tebeoteca.cliente.comic.NuevoComicRequest;
+import com.example.tebeoteca.cliente.comic.NuevoComicResponseDTO;
 import com.example.tebeoteca.cliente.comic.Comic;
 import com.example.tebeoteca.general.BusquedaRequest;
 import com.example.tebeoteca.login.LoginRequest;
@@ -32,7 +32,7 @@ public interface ApiService {
     Call<RegistroClienteResponseDTO> registrarCliente(@Body RegistroClienteRequest request);
 
     @POST("/api/comics/anadir")
-    Call<AnadirComicResponseDTO> crearComic(@Body AnadirComicRequest request);
+    Call<NuevoComicResponseDTO> crearComic(@Body NuevoComicRequest request);
 
     @GET("/api/comics/categoria/{categoria}")
     Call<List<Comic>> obtenerComicsPorCategoria(@Path("categoria") String categoria);

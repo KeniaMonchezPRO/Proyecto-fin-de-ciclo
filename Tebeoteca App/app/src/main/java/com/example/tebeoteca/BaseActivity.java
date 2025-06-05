@@ -2,21 +2,23 @@ package com.example.tebeoteca;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.FrameLayout;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
-import android.widget.Toast;
 
 import androidx.annotation.IdRes;
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.example.tebeoteca.cliente.DialogAnadirSeccionActivity;
+import com.example.tebeoteca.cliente.DialogNuevaSeccionActivity;
 import com.example.tebeoteca.cliente.PerfilClienteActivity;
 import com.example.tebeoteca.cliente.comic.ComicsActivity;
+import com.example.tebeoteca.cliente.evento.EventosActivity;
+import com.example.tebeoteca.cliente.ruta.RutasActivity;
+import com.example.tebeoteca.cliente.wiki.EntradasWikiActivity;
 import com.example.tebeoteca.general.BusquedaActivity;
-import com.example.tebeoteca.login.LoginActivity;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 public class BaseActivity extends AppCompatActivity {
@@ -59,9 +61,9 @@ public class BaseActivity extends AppCompatActivity {
         btnAnadir = findViewById(R.id.btn_anadir);
 
         //Bottom menu:
-        btnRutas = findViewById(R.id.btn_ruta);
+        /*btnRutas = findViewById(R.id.btn_ruta);
         btnWiki = findViewById(R.id.btn_wiki);
-        btnEventos = findViewById(R.id.btn_eventos);
+        btnEventos = findViewById(R.id.btn_eventos);*/
 
         floatingSubmenu = findViewById(R.id.submenu_layout);
         floatingSubmenu.setVisibility(View.GONE);
@@ -123,28 +125,22 @@ public class BaseActivity extends AppCompatActivity {
 
         btnAnadir.setOnClickListener(v -> startDialogAnadirSeccionActivity());
 
-        btnRutas.setOnClickListener(v -> {
-            Toast.makeText(this, "Ir a Rutas", Toast.LENGTH_SHORT).show();
-        });
+        /*btnRutas.setOnClickListener(v -> startRutasActivity());
 
-        btnWiki.setOnClickListener(v -> {
-            Toast.makeText(this, "Ir a Wiki", Toast.LENGTH_SHORT).show();
-        });
+        btnWiki.setOnClickListener(v -> startEntradasWikiActivity());
 
-        btnEventos.setOnClickListener(v -> {
-            Toast.makeText(this, "Ir a Eventos", Toast.LENGTH_SHORT).show();
-        });
+        btnEventos.setOnClickListener(v -> startEventosActivity());*/
     }
 
     protected void setCustomContent(int layoutResId) {
         LayoutInflater.from(this).inflate(layoutResId, contentContainer, true);
     }
 
-    public void startEspecialesActivity(View view) {
+    /*public void startEspecialesActivity(View view) {
         Intent intent = new Intent(this, LoginActivity.class);
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
         startActivity(intent);
-    }
+    }*/
 
     public void startConfiguracionActivity() {
         Intent intent = new Intent(this, ConfiguracionActivity.class);
@@ -153,12 +149,31 @@ public class BaseActivity extends AppCompatActivity {
     }
 
     public void startDialogAnadirSeccionActivity() {
-        Intent intent = new Intent(this, DialogAnadirSeccionActivity.class);
+        Intent intent = new Intent(this, DialogNuevaSeccionActivity.class);
         startActivity(intent);
     }
 
     public void startNotificacionesActivity() {
         Intent intent = new Intent(this, NotificacionesActivity.class);
+        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
+        startActivity(intent);
+    }
+
+    public void startRutasActivity(View view) {
+        Intent intent = new Intent(this, RutasActivity.class);
+        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
+        startActivity(intent);
+
+    }
+
+    public void startEventosActivity(View view) {
+        Intent intent = new Intent(this, EventosActivity.class);
+        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
+        startActivity(intent);
+    }
+
+    public void startEntradasWikiActivity(View view) {
+        Intent intent = new Intent(this, EntradasWikiActivity.class);
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
         startActivity(intent);
     }

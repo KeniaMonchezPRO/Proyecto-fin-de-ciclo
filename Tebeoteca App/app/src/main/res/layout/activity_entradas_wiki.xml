@@ -10,7 +10,7 @@
     android:paddingVertical="12dp"
     android:scrollbars="none">
     <LinearLayout
-        android:id="@+id/ly_eventos"
+        android:id="@+id/ly_entradas_wiki"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
@@ -30,20 +30,20 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center|start"
-                    android:text="Eventos"
+                    android:text="Wiki"
                     android:textSize="20sp"
                     android:textColor="@android:color/white"
                     android:textStyle="bold"/>
                 <TextView
-                    android:id="@+id/tv_anadir_evento"
+                    android:id="@+id/tv_anadir_entrada_wiki"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center|end"
-                    android:text="+ Añadir Evento"
+                    android:text="+ Añadir Entrada a la wiki"
                     android:textStyle="bold"
                     android:textSize="12sp"
                     android:textColor="@color/teal_200"
-                    android:onClick="startNuevoEventoActivity"/>
+                    android:onClick="startNuevaEntradaWikiActivity"/>
             </FrameLayout>
         </LinearLayout>
         <!--FOOTER-->

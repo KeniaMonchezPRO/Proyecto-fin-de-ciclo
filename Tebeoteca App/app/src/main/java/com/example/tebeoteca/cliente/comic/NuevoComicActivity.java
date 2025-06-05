@@ -4,48 +4,36 @@ import android.app.DatePickerDialog;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.res.ColorStateList;
-import android.os.Build;
 import android.os.Bundle;
 
 import com.example.tebeoteca.BaseActivity;
 import com.example.tebeoteca.R;
 
-import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.inputmethod.EditorInfo;
-import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
-import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
-import android.widget.Spinner;
 import android.widget.Toast;
-import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 
 import androidx.core.content.ContextCompat;
 
 import com.example.tebeoteca.api.ApiService;
-import com.example.tebeoteca.registro.RegistroLectorActivity;
 import com.google.android.material.chip.Chip;
 import com.google.android.material.chip.ChipGroup;
-import com.google.android.material.datepicker.MaterialDatePicker;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textfield.TextInputLayout;
 
-import java.text.SimpleDateFormat;
-import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Calendar;
 import java.util.HashSet;
 import java.util.List;
-import java.util.Locale;
 import java.util.Set;
-import java.util.TimeZone;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -53,7 +41,7 @@ import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
-public class AnadirComicActivity extends BaseActivity {
+public class NuevoComicActivity extends BaseActivity {
     private ApiService apiService;
     private Button btnAnadirComic;
     private ImageView ivPortada;
@@ -230,18 +218,18 @@ public class AnadirComicActivity extends BaseActivity {
 
     }
     private void anadirNuevoComic() {
-        AnadirComicRequest anadirComicRequest = new AnadirComicRequest();
+        NuevoComicRequest nuevoComicRequest = new NuevoComicRequest();
 
-        anadirComicRequest.setClienteId(idCliente);
+        nuevoComicRequest.setClienteId(idCliente);
 
         String titulo = etTitulo.getText().toString().trim();
-        anadirComicRequest.setTitulo(titulo);
+        nuevoComicRequest.setTitulo(titulo);
 
         String sello = etSello.getText().toString().trim();
-        anadirComicRequest.setSelloEditorial(sello);
+        nuevoComicRequest.setSelloEditorial(sello);
 
         String fechaLanz = fechaLanzamiento.getText().toString().trim();
-        anadirComicRequest.setFechaLanzamiento(fechaLanz);
+        nuevoComicRequest.setFechaLanzamiento(fechaLanz);
 
         String audiencia = etAudiencia.getText().toString().trim();
         if(audiencia.contains("12")) {
@@ -253,36 +241,36 @@ public class AnadirComicActivity extends BaseActivity {
         } else {
             audiencia = "";
         }
-        anadirComicRequest.setAudiencia(audiencia);
+        nuevoComicRequest.setAudiencia(audiencia);
 
         int selectedRadioId = rgEstado.getCheckedRadioButtonId();
         RadioButton selectedOption = findViewById(selectedRadioId);
         String estado = selectedOption.getText().toString().trim().toLowerCase();
-        anadirComicRequest.setEstado(estado);
+        nuevoComicRequest.setEstado(estado);
 
         String autores = getSelectedAuthorsList().toString();
-        anadirComicRequest.setAutores(autores);
+        nuevoComicRequest.setAutores(autores);
 
         String descripcion = etDescripcion.getText().toString().trim();
-        anadirComicRequest.setDescripcion(descripcion);
+        nuevoComicRequest.setDescripcion(descripcion);
 
         String paisOrigen = etPaisOrigen.getText().toString().trim();
-        anadirComicRequest.setPaisOrigen(paisOrigen);
+        nuevoComicRequest.setPaisOrigen(paisOrigen);
 
         String idiomaOriginal = etIdiomaOriginal.getText().toString().trim();
-        anadirComicRequest.setIdiomaOriginal(idiomaOriginal);
+        nuevoComicRequest.setIdiomaOriginal(idiomaOriginal);
 
         String categorias = getSelectedCategoriesList().toString();
-        anadirComicRequest.setCategorias(categorias);
-        //Log.d("COMIC_DEBUG", "Comic: " + anadirComicRequest);
+        nuevoComicRequest.setCategorias(categorias);
+        //Log.d("COMIC_DEBUG", "Comic: " + nuevoComicRequest);
 
-        Call<AnadirComicResponseDTO> call = apiService.crearComic(anadirComicRequest);
-        call.enqueue(new Callback<AnadirComicResponseDTO>() {
+        Call<NuevoComicResponseDTO> call = apiService.crearComic(nuevoComicRequest);
+        call.enqueue(new Callback<NuevoComicResponseDTO>() {
             @Override
-            public void onResponse(Call<AnadirComicResponseDTO> call, Response<AnadirComicResponseDTO> response) {
+            public void onResponse(Call<NuevoComicResponseDTO> call, Response<NuevoComicResponseDTO> response) {
                 if (response.isSuccessful()) {
                     //Log.d("LOGIN_DEBUG", "response is successful");
-                    AnadirComicResponseDTO comicData = response.body();
+                    NuevoComicResponseDTO comicData = response.body();
 
                     SharedPreferences prefs = getSharedPreferences("comicPrefs", MODE_PRIVATE);
                     SharedPreferences.Editor editor = prefs.edit();
@@ -298,10 +286,10 @@ public class AnadirComicActivity extends BaseActivity {
                     editor.putString("paisOrigen", comicData.getPaisOrigen());
                     editor.putString("idiomaOriginal", comicData.getIdiomaOriginal());
                     editor.putString("categorias", comicData.getCategorias());
-                    editor.putString("activity", "AnadirComicActivity");
+                    editor.putString("activity", "NuevoComicActivity");
                     editor.apply();
 
-                    startActivity(new Intent(AnadirComicActivity.this, ComicActivity.class));
+                    startActivity(new Intent(NuevoComicActivity.this, ComicActivity.class));
                     finish();
                 } else {
                     Toast.makeText(getApplicationContext(), "Error al crear comic", Toast.LENGTH_SHORT).show();
@@ -309,7 +297,7 @@ public class AnadirComicActivity extends BaseActivity {
             }
 
             @Override
-            public void onFailure(Call<AnadirComicResponseDTO> call, Throwable t) {
+            public void onFailure(Call<NuevoComicResponseDTO> call, Throwable t) {
                 Toast.makeText(getApplicationContext(), "Fallo en la conexión", Toast.LENGTH_SHORT).show();
             }
         });
@@ -336,7 +324,7 @@ public class AnadirComicActivity extends BaseActivity {
         int day = calendar.get(Calendar.DAY_OF_MONTH);
 
         DatePickerDialog datePickerDialog = new DatePickerDialog(
-                AnadirComicActivity.this,
+                NuevoComicActivity.this,
                 (view1, selectedYear, selectedMonth, selectedDay) -> {
                     String fecha = String.format("%04d-%02d-%02d", selectedYear, selectedMonth + 1, selectedDay);
                     inputEditText.setText(fecha);

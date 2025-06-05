@@ -84,7 +84,7 @@ public class ComicsActivity extends BaseActivity {
     }
 
     private void startAnadirComicActivity() {
-        Intent intent = new Intent(this, AnadirComicActivity.class);
+        Intent intent = new Intent(this, NuevoComicActivity.class);
         startActivity(intent);
     }
 
