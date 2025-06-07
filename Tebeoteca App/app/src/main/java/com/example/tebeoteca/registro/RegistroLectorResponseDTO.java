@@ -5,6 +5,7 @@ public class RegistroLectorResponseDTO {
     private int id;
     private String nombreUsuario;
     private String email;
+    private String fechaNac;
 
     public RegistroLectorResponseDTO(int id, String nombreUsuario, String email) {
         this.id = id;
@@ -34,5 +35,9 @@ public class RegistroLectorResponseDTO {
 
     public void setEmail(String email) {
         this.email = email;
+    }
+
+    public String getFechaNac() {
+        return fechaNac;
     }
 }

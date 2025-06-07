@@ -32,13 +32,11 @@ android {
 }
 
 dependencies {
-
     implementation(libs.appcompat)
     implementation(libs.material)
     implementation(libs.material3)
     implementation(libs.retrofit)
     implementation(libs.gson)
-    implementation(libs.okhttplogging)
     implementation(libs.okhttplogging)
     testImplementation(libs.junit)
     androidTestImplementation(libs.ext.junit)

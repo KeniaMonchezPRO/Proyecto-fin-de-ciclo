@@ -15,7 +15,7 @@
             android:visibility="gone"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginRight="70dp"
+            android:layout_marginEnd="70dp"
             android:layout_marginTop="12dp"
             android:layout_gravity="end"
             android:orientation="horizontal">
@@ -208,7 +208,18 @@
         <FrameLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="30dp">
+            android:layout_marginTop="30dp"
+            android:layout_marginEnd="20dp">
+            <Button
+                android:id="@+id/btn_previewComic"
+                android:visibility="gone"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="end"
+                android:layout_marginRight="210dp"
+                android:text="Previsualizar"
+                android:backgroundTint="#9003DAC5"
+                android:elevation="10dp"/>
             <Button
                 android:id="@+id/btn_eliminarComic"
                 android:layout_width="wrap_content"

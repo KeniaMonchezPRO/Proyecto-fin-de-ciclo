@@ -42,7 +42,8 @@
         <!--Lector-->
         <activity android:name=".lector.PerfilLectorActivity"/>
         <activity android:name=".lector.SeccionesLectorActivity"/>
-
+        <activity android:name=".lector.DialogMetodoPagoActivity" android:theme="@style/Theme.VinetaVirtual.BottomSheetDialogActivity"/>
+        <activity android:name=".lector.ColeccionActivity"/>
         <!--Cliente-->
         <activity android:name=".cliente.PerfilClienteActivity"/>
         <activity android:name=".cliente.DialogNuevaSeccionActivity" android:theme="@style/Theme.VinetaVirtual.BottomSheetDialogActivity"/>

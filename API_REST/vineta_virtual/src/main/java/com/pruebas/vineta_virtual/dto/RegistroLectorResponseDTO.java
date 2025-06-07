@@ -7,7 +7,7 @@ public class RegistroLectorResponseDTO {
 	private String nombreUsuario;
     private String email;
     private String contrasena;
-    private LocalDate fechaNacc;
+    private LocalDate fechaNac;
     
 	public int getId() {
 		return id;
@@ -33,11 +33,11 @@ public class RegistroLectorResponseDTO {
 	public void setContrasena(String contrasena) {
 		this.contrasena = contrasena;
 	}
-	public LocalDate getFechaNacc() {
-		return fechaNacc;
+	public LocalDate getFechaNac() {
+		return fechaNac;
 	}
-	public void setFechaNac(LocalDate fechaNacc) {
-		this.fechaNacc = fechaNacc;
+	public void setFechaNac(LocalDate fechaNac) {
+		this.fechaNac = fechaNac;
 	}
     
     

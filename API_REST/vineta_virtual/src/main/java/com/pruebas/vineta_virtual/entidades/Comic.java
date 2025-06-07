@@ -64,4 +64,8 @@ public class Comic {
     /*@JsonIgnore
     @ManyToMany(mappedBy = "favoritos")
     private List<Lector> lectoresFavoritos;*/
+    @Column(name = "precio_compra")
+    private double precioCompra;
+    @Column(name = "precio_alquiler")
+    private double precioAlquiler;
 }

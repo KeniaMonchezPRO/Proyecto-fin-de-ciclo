@@ -1,5 +1,6 @@
 package com.example.tebeoteca.cliente.comic;
 
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
@@ -16,6 +17,8 @@ import androidx.core.content.ContextCompat;
 import com.example.tebeoteca.BaseActivity;
 import com.example.tebeoteca.R;
 import com.example.tebeoteca.api.ApiService;
+import com.example.tebeoteca.cliente.DialogNuevaSeccionActivity;
+import com.example.tebeoteca.lector.DialogMetodoPagoActivity;
 
 import okhttp3.ResponseBody;
 import retrofit2.Call;
@@ -28,7 +31,7 @@ public class ComicActivity extends BaseActivity {
     int verde, azul, rojo, naranja;
     private ImageView ivPortada;
     private TextView tvTitulo, tvDescripcion, tvSelloEditorial, tvAudiencia, tvFechaLanzamiento, tvEstado, tvAutores, tvPaisOrigen, tvIdiomaOriginal, tvCategorias;
-    private Button btnEliminar, btnEditar;
+    private Button btnEliminar, btnEditar, btnPreviewComic;
     private ImageButton btnFav, btnDel;
     private LinearLayout lyFichaComicContenedor, lyBotonesLector;
     int idUsuario;
@@ -57,12 +60,17 @@ public class ComicActivity extends BaseActivity {
         lyBotonesLector = findViewById(R.id.ly_botonesLector);
         btnEliminar = findViewById(R.id.btn_eliminarComic);
         btnEditar = findViewById(R.id.btn_editarComic);
+        btnPreviewComic = findViewById(R.id.btn_previewComic);
         btnFav = findViewById(R.id.btn_favorito);
         btnDel = findViewById(R.id.btn_eliminarFav);
+
         if(perfil.equals("lector")) {
             lyBotonesLector.setVisibility(View.VISIBLE);
+            btnPreviewComic.setVisibility(View.VISIBLE);
             btnEliminar.setText("Comprar");
-            btnEditar.setText("Leer");
+            btnEditar.setText("Alquilar");
+            btnEliminar.setOnClickListener(v -> startDialogMetodoPagoActivity());
+            btnEditar.setOnClickListener(v -> startDialogMetodoPagoActivity());
         } else {
             lyFichaComicContenedor.setPadding(12,20,12,20);
         }
@@ -337,5 +345,10 @@ public class ComicActivity extends BaseActivity {
                 .build();
 
         apiService = retrofit.create(ApiService.class);
+    }
+
+    public void startDialogMetodoPagoActivity() {
+        Intent intent = new Intent(this, DialogMetodoPagoActivity.class);
+        startActivity(intent);
     }
 }

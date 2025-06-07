@@ -169,7 +169,9 @@ public class RegistroLectorActivity extends ComponentActivity {
                     // Guardar en SharedPreferences:
                     SharedPreferences prefs = getSharedPreferences("usuarioPrefs", MODE_PRIVATE);
                     SharedPreferences.Editor editor = prefs.edit();
+                    editor.putInt("idUsuario", registroData.getId());
                     editor.putString("nombreUsuario", registroData.getNombreUsuario());
+                    editor.putString("fechaNacimiento", registroData.getFechaNac());
                     editor.apply();
 
                     //abre la pantalla de inicio:

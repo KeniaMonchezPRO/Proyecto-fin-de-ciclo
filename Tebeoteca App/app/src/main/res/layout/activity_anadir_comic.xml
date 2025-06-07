@@ -392,11 +392,20 @@
                         android:layout_marginTop="8dp"
                         app:chipSpacingHorizontal="8dp"
                         app:chipSpacingVertical="4dp" />
+                    <Button
+                        android:id="@+id/btn_subirComic"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:layout_marginTop="20dp"
+                        android:text="Subir previsualizacion"
+                        android:backgroundTint="#8003DAC5"/>
                 </LinearLayout>
+                <!--Botones-->
                 <FrameLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="40dp">
+                    android:layout_marginTop="30dp">
                     <Button
                         android:id="@+id/btn_agregarMasDetalles"
                         android:layout_width="wrap_content"
@@ -414,7 +423,6 @@
                         android:backgroundTint="#8003DAC5"
                         android:onClick="anadirNuevoComic"/>
                 </FrameLayout>
-
             </LinearLayout>
             <!--FOOTER-->
             <LinearLayout

@@ -85,7 +85,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="start|center"
-                        android:text="Cambiar contraseá"
+                        android:text="Cambiar contraseña"
                         android:textColor="@color/white"
                         android:textSize="15sp"/>
                     <ImageView

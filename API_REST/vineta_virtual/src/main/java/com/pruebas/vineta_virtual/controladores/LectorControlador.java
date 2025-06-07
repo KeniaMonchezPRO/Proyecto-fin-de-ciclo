@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.pruebas.vineta_virtual.entidades.Comic;
+import com.pruebas.vineta_virtual.servicios.ICompraServicio;
 import com.pruebas.vineta_virtual.servicios.ILectorServicio;
 
 @RestController
@@ -20,8 +21,11 @@ public class LectorControlador {
 	
 	private ILectorServicio lectorServicio;
 	
-	public LectorControlador(ILectorServicio lectorServicio) {
+	private ICompraServicio compraServicio;
+	
+	public LectorControlador(ILectorServicio lectorServicio, ICompraServicio compraServicio) {
 		this.lectorServicio = lectorServicio;
+		this.compraServicio= compraServicio;
 	}
 	
 	@GetMapping("/{idLector}/favoritos")
@@ -63,5 +67,18 @@ public class LectorControlador {
 		}*/
 		return ResponseEntity.ok().body("Favorito eliminado");
 	}
+	
+	@PostMapping("/{idLector}/comprar/{idComic}")
+    public ResponseEntity<Void> comprarComic(@PathVariable int idLector, @PathVariable int idComic) {
+		compraServicio.generarCompra(idLector, idComic);
+        return ResponseEntity.ok().build();
+    }
+
+    @GetMapping("/{idLector}/compras")
+    public ResponseEntity<List<Comic>> getComprados(@PathVariable int idLector) {
+        return ResponseEntity.ok(compraServicio.obtenerCompras(idLector));
+    }
+	
+	
 
 }

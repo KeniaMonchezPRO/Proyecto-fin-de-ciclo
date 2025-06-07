@@ -62,7 +62,7 @@ public class PerfilLectorActivity extends BaseActivity {
         String nombreUsuario = "@"+(sharedPreferences.getString("nombreUsuario", "Usuario"));
         String nombreLector = (sharedPreferences.getString("nombreLector", "Nombre")) + " " + (sharedPreferences.getString("apellidos", "Apellidos"));
         String fechaNacimiento = sharedPreferences.getString("fechaNacimiento", "1997-10-31");
-        idUsuario = sharedPreferences.getInt("idUsuario",1);
+        idUsuario = sharedPreferences.getInt("idUsuario",2);
 
         TextView tv_nombreLector = findViewById(R.id.tv_displayNombreLector);
         TextView tv_nombreUsuario = findViewById(R.id.tv_displayNombreUsuario);
