@@ -18,7 +18,7 @@ public class EntradasWikiActivity extends BaseActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setCustomContent(R.layout.activity_entradas_wiki);
-        setupMenus(R.id.nav_inicio);
+        setupMenus(R.id.nav_inicio, "cliente");
 
         tvAnadirEntradaWiki = findViewById(R.id.tv_anadir_entrada_wiki);
         tvAnadirEntradaWiki.setOnClickListener(view -> { startNuevaEntradaWikiActivity(); });

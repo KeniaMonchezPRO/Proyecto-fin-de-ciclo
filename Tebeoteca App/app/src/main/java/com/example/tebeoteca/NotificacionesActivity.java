@@ -8,7 +8,7 @@ public class NotificacionesActivity extends BaseActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setCustomContent(R.layout.activity_notificaciones);
-        setupMenus(R.id.nav_inicio);
+        setupMenus(R.id.nav_inicio, "lector");
     }
     @Override
     protected void onResume() {

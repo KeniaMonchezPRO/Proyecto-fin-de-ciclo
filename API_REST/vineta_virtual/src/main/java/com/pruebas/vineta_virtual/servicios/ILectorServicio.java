@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Optional;
 
 import com.pruebas.vineta_virtual.entidades.Cliente;
+import com.pruebas.vineta_virtual.entidades.Comic;
 import com.pruebas.vineta_virtual.entidades.Lector;
 
 public interface ILectorServicio {
@@ -17,5 +18,13 @@ public interface ILectorServicio {
     void eliminarLector(int id);
     
     List<Lector> buscarPorNombreUsuario(String nombreUsuario);
+    
+    boolean agregarFavorito(int idLector, int idComic);
+    
+    boolean eliminarFavorito(int idLector, int idComic);
+    
+    List<Comic> obtenerFavoritos(int idLector);
+    
+    
 
 }

@@ -44,11 +44,24 @@ public class BusquedaActivity extends BaseActivity {
     private ApiService apiService;
     LinearLayout resultados;
 
+    SharedPreferences perfilPrefs;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setCustomContent(R.layout.activity_buscar);
-        setupMenus(R.id.nav_buscar);
+
+        //obtengo el tipo de perfil que ingresa a esta activity para settear el menu:
+        perfilPrefs = getSharedPreferences("perfilPrefs", MODE_PRIVATE);
+        String perfil = perfilPrefs.getString("perfil", "cliente");
+
+        setupMenus(R.id.nav_buscar, perfil);
+
+        //guardo en pregs el tipo de perfil y cuando le den a un comic se le envie el perfil a ComicActivity
+        /*perfilPrefs = getSharedPreferences("perfilPrefs", MODE_PRIVATE);
+        SharedPreferences.Editor editor = perfilPrefs.edit();
+        editor.putString("perfil", perfil);
+        editor.apply();*/
 
         etBuscar = findViewById(R.id.et_buscar);
 

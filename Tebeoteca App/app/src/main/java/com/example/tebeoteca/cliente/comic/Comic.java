@@ -3,6 +3,7 @@ package com.example.tebeoteca.cliente.comic;
 import java.io.Serializable;
 
 public class Comic implements Serializable {
+    private int id;
     private String titulo;
     private String autores;
     private String categorias;
@@ -56,5 +57,9 @@ public class Comic implements Serializable {
 
     public String getIdiomaOriginal() {
         return idiomaOriginal;
+    }
+
+    public int getId() {
+        return id;
     }
 }

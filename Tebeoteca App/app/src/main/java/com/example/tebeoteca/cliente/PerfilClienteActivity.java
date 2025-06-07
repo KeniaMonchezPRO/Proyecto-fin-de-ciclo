@@ -55,7 +55,7 @@ public class PerfilClienteActivity extends BaseActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setCustomContent(R.layout.activity_perfil_cliente);
-        setupMenus(R.id.nav_inicio);
+        setupMenus(R.id.nav_inicio, "cliente");
 
         //Conexion con api:
         Retrofit retrofit = new Retrofit.Builder()
@@ -63,6 +63,12 @@ public class PerfilClienteActivity extends BaseActivity {
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
         apiService = retrofit.create(ApiService.class);
+
+        //para enviar el tipo de perfil a las demas activities
+        SharedPreferences perfilPrefs = getSharedPreferences("perfilPrefs", MODE_PRIVATE);
+        SharedPreferences.Editor editor = perfilPrefs.edit();
+        editor.putString("perfil","cliente");
+        editor.apply();
 
         SharedPreferences sharedPreferences = getSharedPreferences("usuarioPrefs", MODE_PRIVATE);
         String nombreEmpresa = sharedPreferences.getString("nombreEmpresa", "Cliente");
@@ -114,7 +120,7 @@ public class PerfilClienteActivity extends BaseActivity {
 
     @Override
     protected void onResume() {
-        setupMenus(R.id.nav_inicio);
+        setupMenus(R.id.nav_inicio, "cliente");
         super.onResume();
         //Conexion con api:
         Retrofit retrofit = new Retrofit.Builder()
@@ -235,6 +241,7 @@ public class PerfilClienteActivity extends BaseActivity {
                 SharedPreferences prefs = getSharedPreferences("comicPrefs", MODE_PRIVATE);
                 SharedPreferences.Editor editor = prefs.edit();
                 editor.putString("activity", "PerfilClienteActivity");
+                //editor.putString("perfil","cliente");
                 editor.apply();
                 Intent intent = new Intent(PerfilClienteActivity.this, ComicActivity.class);
                 intent.putExtra("comic", comic);

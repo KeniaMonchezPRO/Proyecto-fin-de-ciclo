@@ -1,6 +1,7 @@
 package com.example.tebeoteca;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -8,6 +9,7 @@ import android.view.View;
 import android.widget.FrameLayout;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
+import android.widget.Toast;
 
 import androidx.annotation.IdRes;
 import androidx.appcompat.app.AppCompatActivity;
@@ -19,6 +21,8 @@ import com.example.tebeoteca.cliente.evento.EventosActivity;
 import com.example.tebeoteca.cliente.ruta.RutasActivity;
 import com.example.tebeoteca.cliente.wiki.EntradasWikiActivity;
 import com.example.tebeoteca.general.BusquedaActivity;
+import com.example.tebeoteca.lector.PerfilLectorActivity;
+import com.example.tebeoteca.lector.SeccionesLectorActivity;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 public class BaseActivity extends AppCompatActivity {
@@ -45,13 +49,14 @@ public class BaseActivity extends AppCompatActivity {
                 finish();
             }
         });
+
     }
 
     public void volverAtras(View view) {
         finish(); // ¡Esto cierra la Activity actual y regresa a la anterior!
     }
 
-    protected void setupMenus(@IdRes int activeMenuItemId) {
+    protected void setupMenus(@IdRes int activeMenuItemId, String perfil) {
         overlay = findViewById(R.id.overlay);
 
         //Top menu:
@@ -66,49 +71,78 @@ public class BaseActivity extends AppCompatActivity {
         btnEventos = findViewById(R.id.btn_eventos);*/
 
         floatingSubmenu = findViewById(R.id.submenu_layout);
-        floatingSubmenu.setVisibility(View.GONE);
-
-        overlay.setOnClickListener(v -> {
-            overlay.setVisibility(View.GONE);
-            hideSubMenu(floatingSubmenu);
-        });
-
         bottomMenu = findViewById(R.id.bottom_nav);
-        bottomMenu.setSelectedItemId(activeMenuItemId);
-        bottomMenu.setOnItemSelectedListener(item -> {
-            int id = item.getItemId();
-            if (id == R.id.nav_inicio && !(this instanceof PerfilClienteActivity)) {
-                startActivity(new Intent(this, PerfilClienteActivity.class));
-            } else if (id == R.id.nav_buscar && !(this instanceof BusquedaActivity)) {
-                startActivity(new Intent(this, BusquedaActivity.class));
-            } else if (id == R.id.nav_comics && !(this instanceof ComicsActivity)) {
-                startActivity(new Intent(this, ComicsActivity.class));
-            }
-            if(item.getItemId() == R.id.nav_menu) {
-                if(isSubMenuVisible && !(overlay.getVisibility() == View.GONE)) {
-                    overlay.animate()
-                            .alpha(0f)
-                            .setDuration(300)
-                            .withEndAction(() -> overlay.setVisibility(View.GONE))
-                            .start();
-                    hideSubMenu(floatingSubmenu);
-                } else {
-                    overlay.setAlpha(0f);
-                    overlay.setVisibility(View.VISIBLE);
-                    overlay.animate()
-                            .alpha(0.5f)
-                            .setDuration(300)
-                            .start();
-                    showSubMenu(floatingSubmenu);
-                }
-                isSubMenuVisible = !isSubMenuVisible;
-                return true;
-            } else {
+
+        if(perfil.equals("cliente")) {
+            floatingSubmenu.setVisibility(View.GONE);
+            overlay.setOnClickListener(v -> {
+                overlay.setVisibility(View.GONE);
                 hideSubMenu(floatingSubmenu);
-                isSubMenuVisible = false;
+            });
+
+            bottomMenu.setSelectedItemId(activeMenuItemId);
+            bottomMenu.setOnItemSelectedListener(item -> {
+                int id = item.getItemId();
+                if (id == R.id.nav_inicio && !(this instanceof PerfilClienteActivity)) {
+                    startActivity(new Intent(this, PerfilClienteActivity.class));
+                } else if (id == R.id.nav_buscar && !(this instanceof BusquedaActivity)) {
+                    startActivity(new Intent(this, BusquedaActivity.class));
+                } else if (id == R.id.nav_comics && !(this instanceof ComicsActivity)) {
+                    startActivity(new Intent(this, ComicsActivity.class));
+                }
+                if(item.getItemId() == R.id.nav_menu) {
+                    if(isSubMenuVisible && !(overlay.getVisibility() == View.GONE)) {
+                        overlay.animate()
+                                .alpha(0f)
+                                .setDuration(300)
+                                .withEndAction(() -> overlay.setVisibility(View.GONE))
+                                .start();
+                        hideSubMenu(floatingSubmenu);
+                    } else {
+                        overlay.setAlpha(0f);
+                        overlay.setVisibility(View.VISIBLE);
+                        overlay.animate()
+                                .alpha(0.5f)
+                                .setDuration(300)
+                                .start();
+                        showSubMenu(floatingSubmenu);
+                    }
+                    isSubMenuVisible = !isSubMenuVisible;
+                    return true;
+                } else {
+                    hideSubMenu(floatingSubmenu);
+                    isSubMenuVisible = false;
+                    return true;
+                }
+            });
+
+            btnAnadir.setOnClickListener(v -> startDialogAnadirSeccionActivity());
+
+            /*btnRutas.setOnClickListener(v -> startRutasActivity());
+
+            btnWiki.setOnClickListener(v -> startEntradasWikiActivity());
+
+            btnEventos.setOnClickListener(v -> startEventosActivity());*/
+
+        } else if(perfil.equals("lector")) {
+            floatingSubmenu.setVisibility(View.GONE);
+            overlay.setVisibility(View.GONE);
+            btnAnadir.setVisibility(View.GONE);
+            bottomMenu.setSelectedItemId(activeMenuItemId);
+            bottomMenu.setOnItemSelectedListener(item -> {
+                int id = item.getItemId();
+                if (id == R.id.nav_inicio && !(this instanceof PerfilLectorActivity)) {
+                    startActivity(new Intent(this, PerfilLectorActivity.class));
+                } else if (id == R.id.nav_buscar && !(this instanceof BusquedaActivity)) {
+                    startActivity(new Intent(this, BusquedaActivity.class));
+                } else if (id == R.id.nav_comics) { //cambiar por ColeccionActivity
+                    Toast.makeText(BaseActivity.this, "Abrir ColeccionActivity", Toast.LENGTH_SHORT).show();
+                } else if(id == R.id.nav_menu) {
+                    startActivity(new Intent(this, SeccionesLectorActivity.class));
+                }
                 return true;
-            }
-        });
+            });
+        }
 
         //funcionalidades botones
         btnConfig.setOnClickListener(v -> {
@@ -123,13 +157,6 @@ public class BaseActivity extends AppCompatActivity {
             }
         });
 
-        btnAnadir.setOnClickListener(v -> startDialogAnadirSeccionActivity());
-
-        /*btnRutas.setOnClickListener(v -> startRutasActivity());
-
-        btnWiki.setOnClickListener(v -> startEntradasWikiActivity());
-
-        btnEventos.setOnClickListener(v -> startEventosActivity());*/
     }
 
     protected void setCustomContent(int layoutResId) {

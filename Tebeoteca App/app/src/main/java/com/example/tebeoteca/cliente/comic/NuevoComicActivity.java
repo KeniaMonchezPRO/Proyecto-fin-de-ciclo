@@ -60,7 +60,7 @@ public class NuevoComicActivity extends BaseActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setCustomContent(R.layout.activity_anadir_comic);
-        setupMenus(R.id.nav_comics);
+        setupMenus(R.id.nav_comics, "cliente");
 
         //obtener info de cliente:
         SharedPreferences sharedPreferences = getSharedPreferences("usuarioPrefs", MODE_PRIVATE);

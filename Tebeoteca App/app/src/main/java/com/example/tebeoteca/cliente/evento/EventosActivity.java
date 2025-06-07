@@ -16,7 +16,7 @@ public class EventosActivity extends BaseActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setCustomContent(R.layout.activity_eventos);
-        setupMenus(R.id.nav_inicio);
+        setupMenus(R.id.nav_inicio, "cliente");
 
         tvAnadirEvento = findViewById(R.id.tv_anadir_evento);
         tvAnadirEvento.setOnClickListener(view -> { startNuevoEventoActivity(); });

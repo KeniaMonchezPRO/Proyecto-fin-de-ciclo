@@ -10,6 +10,6 @@ public class NuevoEventoActivity extends BaseActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setCustomContent(R.layout.activity_anadir_evento);
-        setupMenus(R.id.nav_menu);
+        setupMenus(R.id.nav_menu, "cliente");
     }
 }

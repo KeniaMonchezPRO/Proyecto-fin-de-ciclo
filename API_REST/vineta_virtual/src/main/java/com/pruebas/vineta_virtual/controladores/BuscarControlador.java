@@ -41,9 +41,7 @@ public class BuscarControlador {
 	        //resultado.setWiki(comicServicio.findByTituloContainingIgnoreCase(titulo));
 	        //resultado.setRutas(comicServicio.findByTituloContainingIgnoreCase(titulo));
 	        resultado.setLectores(lectorServicio.buscarPorNombreUsuario(titulo));
-	        //resultado.setClientes(Collections.emptyList()); // vacíos
 	        resultado.setClientes(clienteServicio.buscarPorNombreUsuario(titulo));
-	        //resultado.setLectores(Collections.emptyList());
 	        return ResponseEntity.ok(resultado);
 		} catch (Exception e) {
 			 return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("ENTRADA:" + resultado + "Error al hacer la búsqueda: " + e.getMessage());

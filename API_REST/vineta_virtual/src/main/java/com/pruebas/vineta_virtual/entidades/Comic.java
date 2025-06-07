@@ -1,7 +1,9 @@
 package com.pruebas.vineta_virtual.entidades;
 
 import java.time.LocalDate;
+import java.util.List;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.pruebas.vineta_virtual.entidades.enums.Audiencia;
 import com.pruebas.vineta_virtual.entidades.enums.EstadoComic;
@@ -18,6 +20,7 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToMany;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
@@ -58,5 +61,7 @@ public class Comic {
     @Column(name = "idioma_original")
     private IdiomaOriginal idiomaOriginal;
     private String categorias;
-    
+    /*@JsonIgnore
+    @ManyToMany(mappedBy = "favoritos")
+    private List<Lector> lectoresFavoritos;*/
 }

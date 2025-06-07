@@ -4,12 +4,12 @@
     android:layout_height="match_parent"
     xmlns:tools="http://schemas.android.com/tools"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:id="@+id/perfil_cliente"
+    android:id="@+id/perfil_lector"
     android:background="@drawable/bg_gradient"
     android:scrollbars="none">
 
     <LinearLayout
-        android:id="@+id/ly_perfil_cliente"
+        android:id="@+id/ly_perfil_lector"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
@@ -57,7 +57,7 @@
                 android:elevation="10dp">
 
                 <TextView
-                    android:id="@+id/tv_displayNombreEmpresa"
+                    android:id="@+id/tv_displayNombreLector"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
@@ -189,7 +189,7 @@
                 android:layout_height="wrap_content"
                 android:orientation="vertical">
                 <LinearLayout
-                    android:id="@+id/coleccion_container"
+                    android:id="@+id/miColeccion_container"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="vertical"
@@ -198,7 +198,7 @@
                     android:elevation="5dp">
                 </LinearLayout>
                 <LinearLayout
-                    android:id="@+id/favoritos_container"
+                    android:id="@+id/misRutas_container"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="vertical"
@@ -207,25 +207,7 @@
                     android:elevation="5dp">
                 </LinearLayout>
                 <LinearLayout
-                    android:id="@+id/resenas_container"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="vertical"
-                    android:paddingVertical="10dp"
-                    android:paddingHorizontal="20dp"
-                    android:elevation="5dp">
-                </LinearLayout>
-                <LinearLayout
-                    android:id="@+id/wiki_container"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="vertical"
-                    android:paddingVertical="10dp"
-                    android:paddingHorizontal="20dp"
-                    android:elevation="5dp">
-                </LinearLayout>
-                <LinearLayout
-                    android:id="@+id/novedades_container"
+                    android:id="@+id/misFavoritos_container"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="vertical"

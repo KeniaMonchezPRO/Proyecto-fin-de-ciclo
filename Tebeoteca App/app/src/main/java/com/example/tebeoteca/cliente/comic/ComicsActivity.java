@@ -16,6 +16,8 @@ import com.example.tebeoteca.BaseActivity;
 import com.example.tebeoteca.R;
 import com.example.tebeoteca.api.ApiService;
 
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -27,18 +29,33 @@ import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
 public class ComicsActivity extends BaseActivity {
-
+    String perfil;
     private ApiService apiService;
     private TextView tvAnadirComic;
+    Map<String, LinearLayout> contenedoresPorCategoria;
+    String[] categorias;
     LinearLayout contMisteiro, contAccion, contAventura, contComedia, contCrimen, contDrama, contFantasia, contRealista, contSciFi, contSuper;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setCustomContent(R.layout.activity_comics);
-        setupMenus(R.id.nav_comics);
+
+        SharedPreferences perfilPrefs = getSharedPreferences("perfilPrefs", MODE_PRIVATE);
+        perfil = perfilPrefs.getString("perfil", "cliente");
+        Log.d("DEBUG COMICS ACTIVITY", "PERFIL: " + perfil);
+        /*if(perfil.equals("lector")) {
+            Log.d("DEBUG COMICS ACTIVITY", "entró lector");
+            setupMenus(R.id.nav_menu, "lector");
+        } else {
+            Log.d("DEBUG COMICS ACTIVITY", "entró cliente");
+            setupMenus(R.id.nav_comics, "cliente");
+        }*/
+
+        tvAnadirComic = findViewById(R.id.tv_anadir_comic);
 
         Log.d("DEBUG","onCreate()");
+
         contMisteiro = findViewById(R.id.misterio_container);
         contAccion = findViewById(R.id.accion_container);
         contAventura = findViewById(R.id.aventura_container);
@@ -52,17 +69,45 @@ public class ComicsActivity extends BaseActivity {
         //limpiarContenedores();
         //cargarComicsDesdeApi();
 
-        tvAnadirComic = findViewById(R.id.tv_anadir_comic);
+        int idResArrayItems = R.array.spinner_categorias_array;
+        categorias = getResources().getStringArray(idResArrayItems);
+        contenedoresPorCategoria = new HashMap<>();
+        contenedoresPorCategoria.put(categorias[0], contAccion);
+        contenedoresPorCategoria.put(categorias[1], contAventura);
+        contenedoresPorCategoria.put(categorias[2], contComedia);
+        contenedoresPorCategoria.put(categorias[3], contCrimen);
+        contenedoresPorCategoria.put(categorias[4], contDrama);
+        contenedoresPorCategoria.put(categorias[5], contFantasia);
+        contenedoresPorCategoria.put(categorias[6], contMisteiro);
+        contenedoresPorCategoria.put(categorias[7], contRealista);
+        contenedoresPorCategoria.put(categorias[8], contSciFi);
+        contenedoresPorCategoria.put(categorias[9], contSuper);
+
+        List<Comic> listaFavoritos = (List<Comic>) getIntent().getSerializableExtra("listaFavoritos");
+
+        Log.d("DEBUG LISTAFAVS", "listaFavoritos: " + listaFavoritos);
+
+        if(perfil.equals("lector") && !listaFavoritos.isEmpty()) {
+            //setupMenus(R.id.nav_menu,perfil);
+            tvAnadirComic.setVisibility(View.GONE);
+            Log.d("DEBUG LISTAFAVS", "mostrarComicsFavs()");
+            mostrarComicsFavs(listaFavoritos, contenedoresPorCategoria);
+        }
+
         tvAnadirComic.setOnClickListener(view -> { startAnadirComicActivity(); });
     }
 
     @Override
     protected void onResume() {
-        setupMenus(R.id.nav_comics);
+        setupMenus(R.id.nav_menu, perfil);
         super.onResume();
         Log.d("DEBUG","onResume()");
-        limpiarContenedores();
-        cargarComicsDesdeApi();
+        if(!perfil.equals("lector")) {
+            limpiarContenedores();
+            cargarComicsDesdeApi();
+            setupMenus(R.id.nav_comics, perfil);
+        }
+
     }
 
     @Override
@@ -96,20 +141,6 @@ public class ComicsActivity extends BaseActivity {
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
         apiService = retrofit.create(ApiService.class);
-
-        int idResArrayItems = R.array.spinner_categorias_array;
-        String[] categorias = getResources().getStringArray(idResArrayItems);
-        Map<String, LinearLayout> contenedoresPorCategoria = new HashMap<>();
-        contenedoresPorCategoria.put(categorias[0], contAccion);
-        contenedoresPorCategoria.put(categorias[1], contAventura);
-        contenedoresPorCategoria.put(categorias[2], contComedia);
-        contenedoresPorCategoria.put(categorias[3], contCrimen);
-        contenedoresPorCategoria.put(categorias[4], contDrama);
-        contenedoresPorCategoria.put(categorias[5], contFantasia);
-        contenedoresPorCategoria.put(categorias[6], contMisteiro);
-        contenedoresPorCategoria.put(categorias[7], contRealista);
-        contenedoresPorCategoria.put(categorias[8], contSciFi);
-        contenedoresPorCategoria.put(categorias[9], contSuper);
 
         obtenerComicsPorCategoria(categorias, contenedoresPorCategoria);
 
@@ -155,6 +186,7 @@ public class ComicsActivity extends BaseActivity {
     private void mostrarComics(List<Comic> comics, String categoria, Map<String, LinearLayout> contenedoresPorCategoria) {
         for (Comic comic : comics) {
             Log.d("DEBUG","Comic: " + comic.getPais_origen() + " " + comic.getCategorias());
+
             int idImagen = 0;
             String nombrePortada = comic.getPortada();
             if(nombrePortada != null) {
@@ -203,6 +235,59 @@ public class ComicsActivity extends BaseActivity {
                     startActivity(intent);
                 });
             }
+        }
+    }
+
+    private void mostrarComicsFavs(List<Comic> comics, Map<String, LinearLayout> contenedoresPorCategoria) {
+        for (Comic comic : comics) {
+            Log.d("DEBUG FAVS","Comic: " + comic.getId() + ", " + comic.getTitulo() + ", " + comic.getCategorias());
+            int idImagen = 0;
+            String nombrePortada = comic.getPortada();
+            if(nombrePortada != null) {
+                idImagen = this.getResources().getIdentifier(
+                        nombrePortada, "drawable", this.getPackageName()
+                );
+            }
+            List<String> cats = new ArrayList<String>(Arrays.asList(comic.getCategorias().split(",")));
+            for (String categoria : cats) {
+                Log.d("DEBUG FAVS","Categoria: " + categoria);
+                LinearLayout contenedor = contenedoresPorCategoria.get(categoria);
+                if (contenedor != null) {
+                    View vistaComic = LayoutInflater.from(this).inflate(R.layout.item_comic, contenedor, false);
+
+                    TextView tvNombre = vistaComic.findViewById(R.id.tvTitulo);
+                    ImageView ivImagen = vistaComic.findViewById(R.id.iv_portada);
+                    TextView tvAutores = vistaComic.findViewById(R.id.tvAutores);
+                    TextView tvSelloEditorial = vistaComic.findViewById(R.id.tvSelloEditorial);
+
+                    LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(
+                            ViewGroup.LayoutParams.WRAP_CONTENT,
+                            ViewGroup.LayoutParams.WRAP_CONTENT
+                    );
+                    params.setMargins(0,20,40,0);
+                    vistaComic.setLayoutParams(params);
+
+                    if (idImagen != 0) {
+                        ivImagen.setImageResource(idImagen);
+                    } else {
+                        ivImagen.setImageResource(R.drawable.sin_foto); //imagen por defecto
+                    }
+                    tvNombre.setText(comic.getTitulo());
+                    tvAutores.setText(comic.getAutores());
+                    tvSelloEditorial.setText(comic.getSelloEditorial());
+
+                    contenedor.addView(vistaComic);
+
+                    vistaComic.setOnClickListener(v -> {
+                        Log.d("DEBUG", "comic enviado: " + comic.getTitulo() + " categoria: " + comic.getCategorias() + " paisOrigen: " + comic.getPais_origen());
+
+                        Intent intent = new Intent(this, ComicActivity.class);
+                        intent.putExtra("comic", comic);
+                        startActivity(intent);
+                    });
+                }
+            }
+
         }
     }
 }

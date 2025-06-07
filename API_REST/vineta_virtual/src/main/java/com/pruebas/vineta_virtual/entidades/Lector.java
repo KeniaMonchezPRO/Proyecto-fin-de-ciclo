@@ -2,11 +2,17 @@ package com.pruebas.vineta_virtual.entidades;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 
 import com.pruebas.vineta_virtual.entidades.enums.TipoUsuario;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.JoinColumns;
+import jakarta.persistence.JoinTable;
+import jakarta.persistence.ManyToMany;
 import jakarta.persistence.PrePersist;
 import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
@@ -35,6 +41,14 @@ public class Lector extends Usuario {
 		this.setFechaRegistro(LocalDateTime.now());
 		this.setFechaModificacion(LocalDateTime.now());
 	}
+	
+	@ManyToMany
+	@JoinTable(
+			name = "lector_comic_favoritos",
+			joinColumns = @JoinColumn(name = "id_lector"),
+			inverseJoinColumns = @JoinColumn(name = "id_comic")
+	)
+	private List<Comic> favoritos = new ArrayList<>();
 	
 	/*public Lector() {
 		

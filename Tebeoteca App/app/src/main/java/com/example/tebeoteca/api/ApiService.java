@@ -13,8 +13,10 @@ import com.example.tebeoteca.registro.RegistroLectorResponseDTO;
 
 import java.util.List;
 
+import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.http.Body;
+import retrofit2.http.DELETE;
 import retrofit2.http.GET;
 import retrofit2.http.POST;
 import retrofit2.http.Path;
@@ -42,6 +44,15 @@ public interface ApiService {
 
     @GET("/api/buscar/todo")
     Call<BusquedaRequest> buscarTodo(@Query("titulo") String titulo);
+
+    @POST("/api/lector/{idLector}/favoritos/{idComic}")
+    Call<ResponseBody> agregarFavorito(@Path("idLector") int idLector, @Path("idComic") int idComic);
+
+    @DELETE("/api/lector/{idLector}/favoritos/{idComic}")
+    Call<ResponseBody> eliminarFavorito(@Path("idLector") int idLector, @Path("idComic") int idComic);
+
+    @GET("/api/lector/{idLector}/favoritos")
+    Call<List<Comic>> obtenerFavoritos(@Path("idLector") int idLector);
 
     //@GET("/api/usuarios/{id}")
     //Call<UsuarioResponseDTO> obtenerUsuario(@Path("id") int usuarioId);
