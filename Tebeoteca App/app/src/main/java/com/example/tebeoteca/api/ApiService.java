@@ -54,6 +54,12 @@ public interface ApiService {
     @GET("/api/lector/{idLector}/favoritos")
     Call<List<Comic>> obtenerFavoritos(@Path("idLector") int idLector);
 
+    @POST("/api/lector/{idLector}/comprar/{idComic}")
+    Call<ResponseBody> comprarComic(@Path("idLector") int idLector, @Path("idComic") int idComic);
+
+    @GET("/api/lector/{idLector}/compras")
+    Call<List<Comic>> obtenerCompras(@Path("idLector") int idLector);
+
     //@GET("/api/usuarios/{id}")
     //Call<UsuarioResponseDTO> obtenerUsuario(@Path("id") int usuarioId);
 

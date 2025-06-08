@@ -14,6 +14,8 @@ public class NuevoComicResponseDTO {
     private String paisOrigen;
     private String idiomaOriginal;
     private String categorias;
+    private String precioCompra;
+    private String precioAlquiler;
 
     public NuevoComicResponseDTO(){}
     public NuevoComicResponseDTO(int id, String portada,
@@ -27,7 +29,9 @@ public class NuevoComicResponseDTO {
                                  String descripcion,
                                  String paisOrigen,
                                  String idiomaOriginal,
-                                 String categorias) {
+                                 String categorias,
+                                 String precioCompra,
+                                 String precioAlquiler) {
         this.id = id;
         this.portada = portada;
         this.clienteId = clienteId;
@@ -41,6 +45,8 @@ public class NuevoComicResponseDTO {
         this.paisOrigen = paisOrigen;
         this.idiomaOriginal = idiomaOriginal;
         this.categorias = categorias;
+        this.precioCompra = precioCompra;
+        this.precioAlquiler = precioAlquiler;
     }
     public int getId() {
         return id;
@@ -142,5 +148,21 @@ public class NuevoComicResponseDTO {
 
     public void setCategorias(String categorias) {
         this.categorias = categorias;
+    }
+
+    public String getPrecioCompra() {
+        return precioCompra;
+    }
+
+    public void setPrecioCompra(String precioCompra) {
+        this.precioCompra = precioCompra;
+    }
+
+    public String getPrecioAlquiler() {
+        return precioAlquiler;
+    }
+
+    public void setPrecioAlquiler(String precioAlquiler) {
+        this.precioAlquiler = precioAlquiler;
     }
 }

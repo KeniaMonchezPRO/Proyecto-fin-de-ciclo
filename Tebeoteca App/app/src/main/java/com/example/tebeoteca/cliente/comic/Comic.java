@@ -15,6 +15,9 @@ public class Comic implements Serializable {
     private String descripcion;
     private String pais_origen;
     private String idiomaOriginal;
+    private String precioCompra;
+    private String precioAlquiler;
+
 
     public Comic() {}
 
@@ -61,5 +64,13 @@ public class Comic implements Serializable {
 
     public int getId() {
         return id;
+    }
+
+    public String getPrecioCompra() {
+        return precioCompra;
+    }
+
+    public String getPrecioAlquiler() {
+        return precioAlquiler;
     }
 }

@@ -262,6 +262,12 @@ public class NuevoComicActivity extends BaseActivity {
 
         String categorias = getSelectedCategoriesList().toString();
         nuevoComicRequest.setCategorias(categorias);
+
+        String precioCompra = "0.00";
+        nuevoComicRequest.setPrecioCompra(precioCompra);
+
+        String precioAlquiler = "0.00";
+        nuevoComicRequest.setPrecioAlquiler(precioAlquiler);
         //Log.d("COMIC_DEBUG", "Comic: " + nuevoComicRequest);
 
         Call<NuevoComicResponseDTO> call = apiService.crearComic(nuevoComicRequest);
@@ -286,6 +292,8 @@ public class NuevoComicActivity extends BaseActivity {
                     editor.putString("paisOrigen", comicData.getPaisOrigen());
                     editor.putString("idiomaOriginal", comicData.getIdiomaOriginal());
                     editor.putString("categorias", comicData.getCategorias());
+                    editor.putString("precioCompra", comicData.getPrecioCompra());
+                    editor.putString("precioAlquiler", comicData.getPrecioAlquiler());
                     editor.putString("activity", "NuevoComicActivity");
                     editor.apply();
 

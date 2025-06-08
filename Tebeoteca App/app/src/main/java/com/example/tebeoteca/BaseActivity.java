@@ -21,6 +21,7 @@ import com.example.tebeoteca.cliente.evento.EventosActivity;
 import com.example.tebeoteca.cliente.ruta.RutasActivity;
 import com.example.tebeoteca.cliente.wiki.EntradasWikiActivity;
 import com.example.tebeoteca.general.BusquedaActivity;
+import com.example.tebeoteca.lector.ColeccionActivity;
 import com.example.tebeoteca.lector.PerfilLectorActivity;
 import com.example.tebeoteca.lector.SeccionesLectorActivity;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
@@ -135,8 +136,8 @@ public class BaseActivity extends AppCompatActivity {
                     startActivity(new Intent(this, PerfilLectorActivity.class));
                 } else if (id == R.id.nav_buscar && !(this instanceof BusquedaActivity)) {
                     startActivity(new Intent(this, BusquedaActivity.class));
-                } else if (id == R.id.nav_comics) { //cambiar por ColeccionActivity
-                    Toast.makeText(BaseActivity.this, "Abrir ColeccionActivity", Toast.LENGTH_SHORT).show();
+                } else if (id == R.id.nav_comics) {
+                    startActivity(new Intent(this, ColeccionActivity.class));
                 } else if(id == R.id.nav_menu) {
                     startActivity(new Intent(this, SeccionesLectorActivity.class));
                 }

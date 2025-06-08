@@ -42,7 +42,7 @@ public class BusquedaActivity extends BaseActivity {
     private ImageButton ibBuscar;
     //private List<Object> resultados = new ArrayList<>();
     private ApiService apiService;
-    LinearLayout resultados;
+    LinearLayout resultadosComics, resultadosLectores, resultadosClientes;
 
     SharedPreferences perfilPrefs;
 
@@ -73,7 +73,9 @@ public class BusquedaActivity extends BaseActivity {
             }
         });
 
-        resultados = findViewById(R.id.rv_resultados_container);
+        resultadosComics = findViewById(R.id.rv_resultados_comicsContainer);
+        resultadosLectores = findViewById(R.id.rv_resultados_lectoresContainer);
+        resultadosClientes = findViewById(R.id.rv_resultados_clientesContainer);
     }
 
     @Override
@@ -116,7 +118,7 @@ public class BusquedaActivity extends BaseActivity {
                 if (response.isSuccessful()) {
                     BusquedaRequest resultado = response.body();
                     mostrarResultados(resultado);
-                    Log.e("API RESPONSE", "Success: " + resultado.getComics());
+                    //Log.e("API RESPONSE", "Success: " + resultado.getComics());
                 }
             }
 
@@ -129,31 +131,38 @@ public class BusquedaActivity extends BaseActivity {
 
     public void mostrarResultados(BusquedaRequest resultado) {
         if (!resultado.getComics().isEmpty()) {
+            Log.d("DEBUG BusquedaActivity","Mostrar comics");
             ComicAdapter adapter = new ComicAdapter(resultado.getComics(), comic -> {
+                SharedPreferences prefs = getSharedPreferences("comicPrefs", MODE_PRIVATE);
+                SharedPreferences.Editor editor = prefs.edit();
+                editor.putString("activity", "BusquedaActivity");
+                editor.apply();
                 Intent intent = new Intent(this, ComicActivity.class);
                 intent.putExtra("comic", comic);
                 startActivity(intent);
             });
-            mostrarSeccion("Comics", resultado.getComics(), adapter);
+            mostrarSeccion("Comics", resultado.getComics(), adapter,resultadosComics);
         }
         if(!resultado.getLectores().isEmpty()) {
+            Log.d("DEBUG BusquedaActivity","Mostrar lectores");
             LectorAdapter adapter = new LectorAdapter(resultado.getLectores(), lector -> {
                 Intent intent = new Intent(this, PerfilLectorActivity.class);
                 intent.putExtra("lector", lector);
                 //añadir sharepreferences para que no salga por ejemplo el boton de editarperfil del lector o se le reemplaze por "seguir"
                 startActivity(intent);
             });
-            mostrarSeccion("Lectores", resultado.getComics(), adapter);
+            mostrarSeccion("Lectores", resultado.getLectores(), adapter, resultadosLectores);
 
         }
         if (!resultado.getClientes().isEmpty()) {
+            Log.d("DEBUG BusquedaActivity","Mostrar clientes");
             ClienteAdapter adapter = new ClienteAdapter(resultado.getClientes(), cliente -> {
                 Intent intent = new Intent(this, PerfilClienteActivity.class);
                 intent.putExtra("cliente", cliente);
                 //añadir sharepreferences para que no salga por ejemplo el boton de editarperfil del lector o se le reemplaze por "seguir"
                 startActivity(intent);
             });
-            mostrarSeccion("Clientes", resultado.getClientes(), adapter);
+            mostrarSeccion("Clientes", resultado.getClientes(), adapter,resultadosClientes);
         }
 
 
@@ -180,7 +189,7 @@ public class BusquedaActivity extends BaseActivity {
         }*/
     }
 
-    private void mostrarSeccion(String titulo, List<?> lista, RecyclerView.Adapter<?> adapter) {
+    private void mostrarSeccion(String titulo, List<?> lista, RecyclerView.Adapter<?> adapter, LinearLayout resultados) {
         TextView tvTitulo = new TextView(this);
         tvTitulo.setText(titulo);
         tvTitulo.setTextSize(14);

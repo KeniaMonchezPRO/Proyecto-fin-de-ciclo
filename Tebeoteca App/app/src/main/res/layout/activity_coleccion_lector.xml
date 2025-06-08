@@ -36,7 +36,8 @@
             android:id="@+id/ly_coleccionLector"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal" />
+            android:orientation="vertical"
+            android:layout_marginTop="20dp"/>
     </LinearLayout>
         <!--FOOTER-->
         <LinearLayout

@@ -12,8 +12,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        android:gravity="center"
-        >
+        android:gravity="center">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -392,14 +391,26 @@
                         android:layout_marginTop="8dp"
                         app:chipSpacingHorizontal="8dp"
                         app:chipSpacingVertical="4dp" />
-                    <Button
-                        android:id="@+id/btn_subirComic"
-                        android:layout_width="wrap_content"
+                    <FrameLayout
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_gravity="center"
-                        android:layout_marginTop="20dp"
-                        android:text="Subir previsualizacion"
-                        android:backgroundTint="#8003DAC5"/>
+                        android:layout_gravity="center">
+                        <Button
+                            android:id="@+id/btn_subirComic"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="start"
+                            android:layout_marginTop="20dp"
+                            android:text="Subir archivo"
+                            android:backgroundTint="#8003DAC5"/>
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center|end"
+                            android:text="Nombre archivo"/>
+                    </FrameLayout>
+
+
                 </LinearLayout>
                 <!--Botones-->
                 <FrameLayout

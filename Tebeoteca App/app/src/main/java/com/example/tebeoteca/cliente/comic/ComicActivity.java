@@ -17,7 +17,6 @@ import androidx.core.content.ContextCompat;
 import com.example.tebeoteca.BaseActivity;
 import com.example.tebeoteca.R;
 import com.example.tebeoteca.api.ApiService;
-import com.example.tebeoteca.cliente.DialogNuevaSeccionActivity;
 import com.example.tebeoteca.lector.DialogMetodoPagoActivity;
 
 import okhttp3.ResponseBody;
@@ -30,8 +29,8 @@ import retrofit2.converter.gson.GsonConverterFactory;
 public class ComicActivity extends BaseActivity {
     int verde, azul, rojo, naranja;
     private ImageView ivPortada;
-    private TextView tvTitulo, tvDescripcion, tvSelloEditorial, tvAudiencia, tvFechaLanzamiento, tvEstado, tvAutores, tvPaisOrigen, tvIdiomaOriginal, tvCategorias;
-    private Button btnEliminar, btnEditar, btnPreviewComic;
+    private TextView tvTitulo, tvDescripcion, tvSelloEditorial, tvAudiencia, tvFechaLanzamiento, tvEstado, tvAutores, tvPaisOrigen, tvIdiomaOriginal, tvCategorias, tvPrecioCompra, tvPrecioAlquiler;
+    private Button btnEliminar, btnEditar, btnLeerComic, btnPreviewComic;
     private ImageButton btnFav, btnDel;
     private LinearLayout lyFichaComicContenedor, lyBotonesLector;
     int idUsuario;
@@ -50,7 +49,7 @@ public class ComicActivity extends BaseActivity {
         conexionApi();
 
         SharedPreferences sharedPreferences = getSharedPreferences("comicPrefs", MODE_PRIVATE);
-        String activityContext = sharedPreferences.getString("activity","none");
+        String activityContext = sharedPreferences.getString("activity","ComicsActivity");
 
         SharedPreferences usuarioPrefs = getSharedPreferences("usuarioPrefs", MODE_PRIVATE);
         idUsuario = usuarioPrefs.getInt("idUsuario",2);
@@ -60,17 +59,17 @@ public class ComicActivity extends BaseActivity {
         lyBotonesLector = findViewById(R.id.ly_botonesLector);
         btnEliminar = findViewById(R.id.btn_eliminarComic);
         btnEditar = findViewById(R.id.btn_editarComic);
+        btnLeerComic = findViewById(R.id.btn_leerComic);
         btnPreviewComic = findViewById(R.id.btn_previewComic);
         btnFav = findViewById(R.id.btn_favorito);
         btnDel = findViewById(R.id.btn_eliminarFav);
 
         if(perfil.equals("lector")) {
             lyBotonesLector.setVisibility(View.VISIBLE);
-            btnPreviewComic.setVisibility(View.VISIBLE);
-            btnEliminar.setText("Comprar");
-            btnEditar.setText("Alquilar");
-            btnEliminar.setOnClickListener(v -> startDialogMetodoPagoActivity());
+            btnEliminar.setText("Alquilar");
+            btnEditar.setText("Comprar");
             btnEditar.setOnClickListener(v -> startDialogMetodoPagoActivity());
+            btnEliminar.setOnClickListener(v -> startDialogMetodoPagoActivity());
         } else {
             lyFichaComicContenedor.setPadding(12,20,12,20);
         }
@@ -86,15 +85,18 @@ public class ComicActivity extends BaseActivity {
         tvIdiomaOriginal = findViewById(R.id.tv_detalle_idiomaOriginal);
         tvCategorias = findViewById(R.id.tv_detalle_categorias);
         tvDescripcion = findViewById(R.id.tv_detalle_descripcion);
+        tvPrecioCompra = findViewById(R.id.tv_detalle_precioCompra);
+        tvPrecioAlquiler = findViewById(R.id.tv_detalle_precioAlquiler);
+
 
         verde = ContextCompat.getColor(this,android.R.color.holo_green_light);
         azul = ContextCompat.getColor(this,android.R.color.holo_blue_light);
         rojo = ContextCompat.getColor(this,android.R.color.holo_red_light);
         naranja = ContextCompat.getColor(this,android.R.color.holo_orange_light);
 
-            //Log.d("DEBUG", "activityContext: " + activityContext);
+        Log.d("DEBUG ComicActivity", "activityContext: " + activityContext);
             if(activityContext.equals("NuevoComicActivity")) {
-                //Log.d("DEBUG", "entró en el if");
+                Log.d("DEBUG ComicActivity", "entró desde Añadir Comic");
                 String portada = sharedPreferences.getString("portada","null");
                 int idImagen = 0;
                 if(portada != null) {
@@ -108,13 +110,13 @@ public class ComicActivity extends BaseActivity {
                     ivPortada.setImageResource(R.drawable.sin_foto);
                 }
 
-                String titulo = sharedPreferences.getString("titulo", "Añadir título");
+                String titulo = sharedPreferences.getString("titulo", "Título");
                 tvTitulo.setText(titulo);
 
-                String descripcion = sharedPreferences.getString("descripcion", "Añadir descripción");
+                String descripcion = sharedPreferences.getString("descripcion", "");
                 tvDescripcion.setText(descripcion);
 
-                String audiencia = sharedPreferences.getString("audiencia","Añadir audiencia");
+                String audiencia = sharedPreferences.getString("audiencia","Audiencia");
                 if(audiencia.contains("niños")) {
                     audiencia = "Niños (3-12)";
                 } else if (audiencia.contains("jovenes")) {
@@ -122,18 +124,18 @@ public class ComicActivity extends BaseActivity {
                 } else if (audiencia.contains("adultos")) {
                     audiencia = "Adultos (18+)";
                 } else {
-                    audiencia = "Añadir audiencia";
+                    audiencia = "Audiencia";
                 }
                 tvAudiencia.setText(audiencia);
 
-                String selloEditorial = sharedPreferences.getString("selloEditorial", "Añadir sello editorial");
+                String selloEditorial = sharedPreferences.getString("selloEditorial", "Sello editorial");
                 tvSelloEditorial.setText(selloEditorial);
 
-                String fechaLanzamiento = sharedPreferences.getString("fechaLanzamiento", "Añadir fecha de lanzamiento");
+                String fechaLanzamiento = sharedPreferences.getString("fechaLanzamiento", "Fecha de lanzamiento");
                 tvFechaLanzamiento.setText(fechaLanzamiento);
 
-                String estado = sharedPreferences.getString("estado","Añadir estado");
-                if(estado.equals("Añadir estado")) {
+                String estado = sharedPreferences.getString("estado","Estado");
+                if(estado.equals("Estado")) {
                     tvEstado.setText(estado);
                 } else {
                     tvEstado.setText(estado.toUpperCase());
@@ -148,24 +150,31 @@ public class ComicActivity extends BaseActivity {
                     }
                 }
 
-                String autores = sharedPreferences.getString("autores", "Añadir autores");
+                String autores = sharedPreferences.getString("autores", "Autores");
                 tvAutores.setText(autores);
 
-                String paisOrigen = sharedPreferences.getString("paisOrigen","Añadir país de origen");
+                String paisOrigen = sharedPreferences.getString("paisOrigen","");
                 tvPaisOrigen.setText(paisOrigen);
 
-                String idiomaOriginal = sharedPreferences.getString("idiomaOriginal", "Añadir idioma original");
+                String idiomaOriginal = sharedPreferences.getString("idiomaOriginal", "");
                 tvIdiomaOriginal.setText(idiomaOriginal);
 
-                String categorias = sharedPreferences.getString("categorias","Añadir categorías");
+                String categorias = sharedPreferences.getString("categorias","");
                 tvCategorias.setText(categorias);
 
-            } else if (activityContext.equals("ComicsActivity") || activityContext.equals(("PerfilClienteActivity")) || perfil.equals("lector")) {
+                String precioCompra = sharedPreferences.getString("precioCompra","Precio de compra: 0.00€");
+                tvPrecioCompra.setText(precioCompra);
+
+                String precioAlquiler = sharedPreferences.getString("precioAlquiler","Precio de alquiler: 0.00€");
+                tvPrecioAlquiler.setText(precioAlquiler);
+
+            } else if (activityContext.equals("ComicsActivity") || activityContext.equals(("PerfilClienteActivity")) || perfil.equals("lector") || activityContext.equals("BusquedaActivity")) {
                 Comic comic = (Comic) getIntent().getSerializableExtra("comic");
-                //Log.d("DEBUG", "Cómic recibido else: " + comic.getTitulo());
+                Log.d("DEBUG ComicActivity", "Entró desde ComicsActivity, PerfilClienteActivity o como lector: " + comic.getTitulo());
+                Log.d("DEBUG ComicActivity", "Cómic : " + comic.getTitulo() + " " + comic.getPais_origen());
                 if (comic != null) {
                     idComic = comic.getId();
-                    Log.d("DEBUG", "Cómic recibido else: id: " + idComic + " titulo " + comic.getTitulo());
+                    Log.d("DEBUG ComicActivity", "Cómic recibido else: id: " + idComic + " titulo " + comic.getTitulo());
                     int idImagen = 0;
                     String nombrePortada = comic.getPortada();
                     if(nombrePortada != null) {
@@ -190,10 +199,10 @@ public class ComicActivity extends BaseActivity {
                         } else if (audiencia.contains("adultos")) {
                             audiencia = audienciaArray[2];
                         } else {
-                            audiencia = "Añadir audiencia";
+                            audiencia = "Audiencia";
                         }
                     } else {
-                        audiencia = "Añadir audiencia";
+                        audiencia = "Audiencia";
                     }
                     tvAudiencia.setText(audiencia);
 
@@ -201,28 +210,42 @@ public class ComicActivity extends BaseActivity {
                     if(sello != null) {
                         tvSelloEditorial.setText(sello);
                     } else {
-                        tvSelloEditorial.setText("Añadir sello editorial");
+                        tvSelloEditorial.setText("Sello editorial");
                     }
 
                     String fechaLanz = comic.getFechaLanzamiento();
                     if(fechaLanz != null) {
                         tvFechaLanzamiento.setText(fechaLanz);
                     } else {
-                        tvFechaLanzamiento.setText("Añadir fecha lanzamiento");
+                        tvFechaLanzamiento.setText("Fecha lanzamiento");
                     }
 
                     String titulo = comic.getTitulo();
                     if(titulo != null) {
                         tvTitulo.setText(titulo);
                     } else {
-                        tvTitulo.setText("Añadir título");
+                        tvTitulo.setText("Título");
                     }
 
                     String descripcion = comic.getDescripcion();
                     if(descripcion != null) {
                         tvDescripcion.setText(descripcion);
                     } else {
-                        tvDescripcion.setText("Añadir descripción");
+                        tvDescripcion.setText("");
+                    }
+
+                    String precioCompra = comic.getPrecioCompra();
+                    if(precioCompra != null) {
+                        tvPrecioCompra.setText("Precio compra: "+precioCompra+"€");
+                    } else {
+                        tvPrecioCompra.setText("Precio de compra: 0.00€");
+                    }
+
+                    String precioAlquiler = comic.getPrecioAlquiler();
+                    if(precioAlquiler != null) {
+                        tvPrecioAlquiler.setText("Precio alquiler: "+precioAlquiler+"€");
+                    } else {
+                        tvPrecioAlquiler.setText("Precio de alquiler: 0.00€");
                     }
 
                     String estado = comic.getEstado();
@@ -239,35 +262,35 @@ public class ComicActivity extends BaseActivity {
                         }
                         tvEstado.setText(estadoUp);
                     } else {
-                        tvEstado.setText("Añadir Estado");
+                        tvEstado.setText("Estado");
                     }
 
                     String autores = comic.getAutores();
                     if(autores != null) {
                         tvAutores.setText(autores);
                     } else {
-                        tvAutores.setText("Añadir autores");
+                        tvAutores.setText("Autores");
                     }
 
                     String paisOrigen = comic.getPais_origen();
                     if(paisOrigen != null) {
                         tvPaisOrigen.setText(paisOrigen);
                     } else {
-                        tvPaisOrigen.setText("Añadir país de origen");
+                        tvPaisOrigen.setText("");
                     }
 
                     String idiomaOriginal = comic.getIdiomaOriginal();
                     if(idiomaOriginal != null) {
                         tvIdiomaOriginal.setText(idiomaOriginal);
                     } else {
-                        tvIdiomaOriginal.setText("Añadir idioma original");
+                        tvIdiomaOriginal.setText("");
                     }
 
                     String categorias = comic.getCategorias();
                     if(categorias != null) {
                         tvCategorias.setText(categorias);
                     } else {
-                        tvCategorias.setText("Añadir categorías");
+                        tvCategorias.setText("");
                     }
 
                     btnFav.setOnClickListener(v -> {
@@ -348,6 +371,11 @@ public class ComicActivity extends BaseActivity {
     }
 
     public void startDialogMetodoPagoActivity() {
+        SharedPreferences comicId = getSharedPreferences("idComic",MODE_PRIVATE);
+        SharedPreferences.Editor editor = comicId.edit();
+        editor.putInt("comicId",idComic);
+        editor.apply();
+        Log.d("DEBUG LECTOR", "Cómic guardado en sharedprefs: " + idComic);
         Intent intent = new Intent(this, DialogMetodoPagoActivity.class);
         startActivity(intent);
     }

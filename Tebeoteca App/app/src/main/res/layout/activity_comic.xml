@@ -123,6 +123,24 @@
                     android:textSize="12sp"
                     android:text="Autores"
                     android:textColor="@color/white"/>
+                <TextView
+                    android:id="@+id/tv_detalle_precioCompra"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="start"
+                    android:layout_marginTop="10dp"
+                    android:textSize="12sp"
+                    android:text="Precio de compra"
+                    android:textColor="@color/white"/>
+                <TextView
+                    android:id="@+id/tv_detalle_precioAlquiler"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="start"
+                    android:layout_marginTop="10dp"
+                    android:textSize="12sp"
+                    android:text="Precio de alquiler"
+                    android:textColor="@color/white"/>
             </LinearLayout>
         </LinearLayout>
 
@@ -212,27 +230,41 @@
             android:layout_marginEnd="20dp">
             <Button
                 android:id="@+id/btn_previewComic"
-                android:visibility="gone"
-                android:layout_width="wrap_content"
+                android:layout_width="70dp"
+                android:padding="0dp"
                 android:layout_height="wrap_content"
                 android:layout_gravity="end"
-                android:layout_marginRight="210dp"
-                android:text="Previsualizar"
+                android:layout_marginRight="260dp"
+                android:text="Leer"
+                android:alpha="0.5"
+                android:backgroundTint="#9003DAC5"
+                android:elevation="10dp"/>
+            <Button
+                android:id="@+id/btn_leerComic"
+                android:layout_width="80dp"
+                android:layout_height="wrap_content"
+                android:padding="0dp"
+                android:layout_gravity="end"
+                android:layout_marginRight="170dp"
+                android:text="Preview"
+                android:alpha="0.5"
                 android:backgroundTint="#9003DAC5"
                 android:elevation="10dp"/>
             <Button
                 android:id="@+id/btn_eliminarComic"
-                android:layout_width="wrap_content"
+                android:layout_width="80dp"
                 android:layout_height="wrap_content"
+                android:padding="0dp"
                 android:layout_gravity="end"
-                android:layout_marginRight="100dp"
+                android:layout_marginRight="80dp"
                 android:text="Eliminar"
                 android:backgroundTint="#9003DAC5"
                 android:elevation="10dp"/>
             <Button
                 android:id="@+id/btn_editarComic"
-                android:layout_width="wrap_content"
+                android:layout_width="70dp"
                 android:layout_height="wrap_content"
+                android:padding="0dp"
                 android:layout_gravity="end"
                 android:text="Editar"
                 android:backgroundTint="#9003DAC5"

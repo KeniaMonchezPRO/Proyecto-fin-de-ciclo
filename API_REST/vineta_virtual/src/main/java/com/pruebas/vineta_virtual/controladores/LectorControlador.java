@@ -69,9 +69,10 @@ public class LectorControlador {
 	}
 	
 	@PostMapping("/{idLector}/comprar/{idComic}")
-    public ResponseEntity<Void> comprarComic(@PathVariable int idLector, @PathVariable int idComic) {
+    public ResponseEntity<?> comprarComic(@PathVariable int idLector, @PathVariable int idComic) {
+		//System.out.println("datos recibidos: id lector: " + idLector + " comic id: " + idComic);
 		compraServicio.generarCompra(idLector, idComic);
-        return ResponseEntity.ok().build();
+        return ResponseEntity.ok("Compra realizada");
     }
 
     @GetMapping("/{idLector}/compras")
