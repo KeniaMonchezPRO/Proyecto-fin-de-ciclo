@@ -3,6 +3,7 @@ package com.example.tebeoteca.lector;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.Handler;
+import android.util.Log;
 import android.view.View;
 import android.widget.ImageButton;
 import android.widget.ImageView;
@@ -37,11 +38,12 @@ public class PerfilLectorActivity extends BaseActivity {
     private ApiService apiService;
     int idUsuario;
     SharedPreferences perfilPrefs;
+    boolean esCliente;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setupMenus(R.id.nav_inicio, "lector");
+
         setCustomContent(R.layout.activity_perfil_lector);
 
         //Conexion con api:
@@ -54,8 +56,19 @@ public class PerfilLectorActivity extends BaseActivity {
         //para enviar el tipo de perfil a las demas activities
         perfilPrefs = getSharedPreferences("perfilPrefs", MODE_PRIVATE);
         SharedPreferences.Editor editor = perfilPrefs.edit();
-        editor.putString("perfil","lector");
-        editor.apply();
+
+        esCliente = getIntent().getBooleanExtra("esCliente", false);
+        if (esCliente) {
+            setupMenus(R.id.nav_buscar, "cliente");
+            Log.d("DEBUG PerfilLectorActivity", "es cliente");
+            editor.putString("perfil","cliente");
+            editor.apply();
+        } else {
+            Log.d("DEBUG PerfilLectorActivity", "es lector");
+            editor.putString("perfil","lector");
+            editor.apply();
+            //setupMenus(R.id.nav_inicio, "lector");
+        }
 
         //settear el perfil de acuerdo a la info recibida de LoginActivity
         SharedPreferences sharedPreferences = getSharedPreferences("usuarioPrefs", MODE_PRIVATE);
@@ -82,16 +95,16 @@ public class PerfilLectorActivity extends BaseActivity {
 
     @Override
     protected void onResume() {
-        setupMenus(R.id.nav_inicio, "lector");
         super.onResume();
-        //Conexion con api:
+        /*//Conexion con api:
         Retrofit retrofit = new Retrofit.Builder()
                 .baseUrl("http://10.0.2.2:8080/")
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
-        apiService = retrofit.create(ApiService.class);
+        apiService = retrofit.create(ApiService.class);*/
         ImageButton btnAtras = findViewById(R.id.btn_atras);
-        if (btnAtras != null) {
+        if (btnAtras != null && !esCliente) {
+            setupMenus(R.id.nav_inicio, "lector");
             btnAtras.setVisibility(View.GONE);
         }
     }

@@ -50,6 +50,7 @@ public class ComicActivity extends BaseActivity {
 
         SharedPreferences sharedPreferences = getSharedPreferences("comicPrefs", MODE_PRIVATE);
         String activityContext = sharedPreferences.getString("activity","ComicsActivity");
+        Log.d("DEBUG ComicActivity con "+perfil,"activity: " + activityContext);
 
         SharedPreferences usuarioPrefs = getSharedPreferences("usuarioPrefs", MODE_PRIVATE);
         idUsuario = usuarioPrefs.getInt("idUsuario",2);
@@ -73,6 +74,17 @@ public class ComicActivity extends BaseActivity {
         } else {
             lyFichaComicContenedor.setPadding(12,20,12,20);
         }
+
+        btnPreviewComic.setOnClickListener(v -> {
+            Intent intent = new Intent(this, ComicViewActivity.class);
+            intent.putExtra("preview", true);
+            startActivity(intent);
+        });
+
+        btnLeerComic.setOnClickListener(v -> {
+            Intent intent = new Intent(this, ComicViewActivity.class);
+            startActivity(intent);
+        });
 
         ivPortada = findViewById(R.id.iv_detalle_portada);
         tvTitulo = findViewById(R.id.tv_detalle_titulo);

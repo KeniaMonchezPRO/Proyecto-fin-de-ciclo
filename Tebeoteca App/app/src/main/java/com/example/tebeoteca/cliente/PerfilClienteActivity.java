@@ -8,6 +8,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
+import android.widget.Button;
 import android.widget.FrameLayout;
 import android.widget.ImageButton;
 import android.widget.ImageView;
@@ -49,13 +50,29 @@ import retrofit2.converter.gson.GsonConverterFactory;
 public class PerfilClienteActivity extends BaseActivity {
     private ImageView fotoPerfil, banner;
     private ApiService apiService;
-    int idUsuario;
+    int idUsuario, seguidoresCounter = 0;
+    Button btnEditarPerfil;
+    ImageButton btnAtras;
+    boolean esLector;
+    boolean isFollowing = false;
+    TextView tvNombreEmpresa, tvNombreUsuario, tvDescripcion, tvNif, tvFechaCreacionEmpresa, tvNumSeguidores, tvNumComics;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setCustomContent(R.layout.activity_perfil_cliente);
         setupMenus(R.id.nav_inicio, "cliente");
+
+        btnEditarPerfil = findViewById(R.id.btn_editarPerfil);
+        btnAtras = findViewById(R.id.btn_atras);
+
+        tvNombreEmpresa = findViewById(R.id.tv_displayNombreEmpresa);
+        tvNombreUsuario = findViewById(R.id.tv_displayNombreUsuario);
+        tvDescripcion = findViewById(R.id.tv_displayDescripcion);
+        tvNif = findViewById(R.id.tv_nifEmpresa);
+        tvFechaCreacionEmpresa = findViewById(R.id.tv_fechaCreacionEmpresa);
+        tvNumSeguidores = findViewById(R.id.tv_numSeguidores);
+        tvNumComics = findViewById(R.id.tv_numComics);
 
         //Conexion con api:
         Retrofit retrofit = new Retrofit.Builder()
@@ -64,53 +81,68 @@ public class PerfilClienteActivity extends BaseActivity {
                 .build();
         apiService = retrofit.create(ApiService.class);
 
-        //para enviar el tipo de perfil a las demas activities
-        SharedPreferences perfilPrefs = getSharedPreferences("perfilPrefs", MODE_PRIVATE);
-        SharedPreferences.Editor editor = perfilPrefs.edit();
-        editor.putString("perfil","cliente");
-        editor.apply();
+        esLector = getIntent().getBooleanExtra("esLector", false);
+        if (esLector) {
 
-        SharedPreferences sharedPreferences = getSharedPreferences("usuarioPrefs", MODE_PRIVATE);
-        String nombreEmpresa = sharedPreferences.getString("nombreEmpresa", "Cliente");
-        String nombreUsuario = "@"+(sharedPreferences.getString("nombreUsuario", "cliente"));
-        String descripcion = sharedPreferences.getString("descripcion", "Sin descripción");
-        String nif = sharedPreferences.getString("nif", "Y1238900N");
-        String fechaCreacionEmpresa = sharedPreferences.getString("fechaCreacionEmpresa", "1997-10-31");
-        idUsuario = sharedPreferences.getInt("idUsuario",1);
+            btnAtras.setVisibility(View.VISIBLE);
 
-        TextView tv_nombreEmpresa = findViewById(R.id.tv_displayNombreEmpresa);
-        TextView tv_nombreUsuario = findViewById(R.id.tv_displayNombreUsuario);
-        TextView tv_descripcion = findViewById(R.id.tv_displayDescripcion);
-        TextView tv_nif = findViewById(R.id.tv_nifEmpresa);
-        TextView tv_fechaCreacionEmpresa = findViewById(R.id.tv_fechaCreacionEmpresa);
+            Cliente c = (Cliente) getIntent().getSerializableExtra("cliente");
+            tvNombreEmpresa.setText(c.getNombreCliente());
+            tvNombreUsuario.setText("@"+c.getNombreUsuario());
+            tvDescripcion.setText(c.getDescripcion());
+            tvNif.setText(c.getNif());
+            tvFechaCreacionEmpresa.setText(c.getFechaCreacionEmpresa());
 
-        tv_nombreEmpresa.setText(nombreEmpresa);
-        tv_nombreUsuario.setText(nombreUsuario);
-        tv_descripcion.setText(descripcion);
-        tv_nif.setText(nif);
-        tv_fechaCreacionEmpresa.setText(fechaCreacionEmpresa);
+            btnEditarPerfil.setText("Seguir");
+            btnEditarPerfil.setOnClickListener(v -> {
+                if(isFollowing) {
+                    Toast.makeText(PerfilClienteActivity.this, "Dejaste de seguir a " + tvNombreUsuario.getText(), Toast.LENGTH_SHORT).show();
+                    btnEditarPerfil.setText("Seguir");
+                    seguidoresCounter--;
+                    tvNumSeguidores.setText(String.valueOf(seguidoresCounter));
+                    isFollowing = false;
+                } else {
+                    Toast.makeText(PerfilClienteActivity.this, "Ahora sigues a " + tvNombreUsuario.getText(), Toast.LENGTH_SHORT).show();
+                    btnEditarPerfil.setText("Dejar de seguir");
+                    seguidoresCounter++;
+                    tvNumSeguidores.setText(String.valueOf(seguidoresCounter));
+                    isFollowing = true;
+                }
+            });
+            obtenerComicsDelCliente(c.getId());
+            obtenerOtrasSecciones();
+        } else {
+            //para enviar el tipo de perfil a las demas activities
+            SharedPreferences perfilPrefs = getSharedPreferences("perfilPrefs", MODE_PRIVATE);
+            SharedPreferences.Editor editor = perfilPrefs.edit();
+            editor.putString("perfil","cliente");
+            editor.apply();
 
-        //Eventos
-        List<Evento> listaEventos = new ArrayList<>();
-        agregarSeccionEventos(listaEventos);
+            SharedPreferences sharedPreferences = getSharedPreferences("usuarioPrefs", MODE_PRIVATE);
+            String nombreEmpresa = sharedPreferences.getString("nombreEmpresa", "Cliente");
+            String nombreUsuario = "@"+(sharedPreferences.getString("nombreUsuario", "cliente"));
+            String descripcion = sharedPreferences.getString("descripcion", "Sin descripción");
+            String nif = sharedPreferences.getString("nif", "Y1238900N");
+            String fechaCreacionEmpresa = sharedPreferences.getString("fechaCreacionEmpresa", "1997-10-31");
+            idUsuario = sharedPreferences.getInt("idUsuario",1);
 
-        //Rutas
-        List<Ruta> listaRutas = new ArrayList<>();
-        agregarSeccionRutas(listaRutas);
+            tvNombreEmpresa.setText(nombreEmpresa);
+            tvNombreUsuario.setText(nombreUsuario);
+            tvDescripcion.setText(descripcion);
+            tvNif.setText(nif);
+            tvFechaCreacionEmpresa.setText(fechaCreacionEmpresa);
 
-        //Comics:
-        obtenerComicsDelCliente(idUsuario);
-        /*Comic nuevo = new Comic("Flashpoint 1", "Neil Gaiman, Stan Lee", "Misterio", R.drawable.flash);
-        Comic nuevo1 = new Comic("Flashpoint 2", "Neil Gaiman, Stan Lee", "Misterio", R.drawable.flash);
-        Comic nuevo2 = new Comic("Flashpoint 3", "Neil Gaiman, Stan Lee", "Misterio", R.drawable.flash);
-        ComicRepository.agregarComic(nuevo);
-        ComicRepository.agregarComic(nuevo1);
-        ComicRepository.agregarComic(nuevo2);
-        agregarSeccionComics(ComicRepository.getComics());*/
-
-        //Wiki
-        List<Wiki> listaWiki = new ArrayList<>();
-        agregarSeccionWiki(listaWiki);
+            //Comics:
+            obtenerComicsDelCliente(idUsuario);
+            /*Comic nuevo = new Comic("Flashpoint 1", "Neil Gaiman, Stan Lee", "Misterio", R.drawable.flash);
+            Comic nuevo1 = new Comic("Flashpoint 2", "Neil Gaiman, Stan Lee", "Misterio", R.drawable.flash);
+            Comic nuevo2 = new Comic("Flashpoint 3", "Neil Gaiman, Stan Lee", "Misterio", R.drawable.flash);
+            ComicRepository.agregarComic(nuevo);
+            ComicRepository.agregarComic(nuevo1);
+            ComicRepository.agregarComic(nuevo2);
+            agregarSeccionComics(ComicRepository.getComics());*/
+            obtenerOtrasSecciones();
+        }
 
         fotoPerfil = findViewById(R.id.iv_fotoPerfil);
         fotoPerfil.setImageResource(R.drawable.dc);
@@ -122,14 +154,16 @@ public class PerfilClienteActivity extends BaseActivity {
     protected void onResume() {
         setupMenus(R.id.nav_inicio, "cliente");
         super.onResume();
-        //Conexion con api:
+        /*//Conexion con api:
         Retrofit retrofit = new Retrofit.Builder()
                 .baseUrl("http://10.0.2.2:8080/")
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
         apiService = retrofit.create(ApiService.class);
-        ImageButton btnAtras = findViewById(R.id.btn_atras);
-        if (btnAtras != null) {
+
+
+        ImageButton btnAtras = findViewById(R.id.btn_atras);*/
+        if (btnAtras != null && !esLector) {
             btnAtras.setVisibility(View.GONE);
         }
     }
@@ -155,6 +189,19 @@ public class PerfilClienteActivity extends BaseActivity {
         startActivity(intent);
     }
 
+    private void obtenerOtrasSecciones() {
+        //Eventos
+        List<Evento> listaEventos = new ArrayList<>();
+        agregarSeccionEventos(listaEventos);
+
+        //Rutas
+        List<Ruta> listaRutas = new ArrayList<>();
+        agregarSeccionRutas(listaRutas);
+
+        //Wiki
+        List<Wiki> listaWiki = new ArrayList<>();
+        agregarSeccionWiki(listaWiki);
+    }
     private void obtenerComicsDelCliente(int idCliente) {
         Call<List<Comic>> call = apiService.obtenerComicsPorCliente(idCliente);
 
@@ -163,6 +210,7 @@ public class PerfilClienteActivity extends BaseActivity {
             public void onResponse(Call<List<Comic>> call, Response<List<Comic>> response) {
                 if (response.isSuccessful() && response.body() != null) {
                     List<Comic> listaComics = response.body();
+                    tvNumComics.setText(String.valueOf(listaComics.size()));
                     agregarSeccionComics(listaComics);
                 } else {
                     Toast.makeText(PerfilClienteActivity.this, "Error al cargar los cómics", Toast.LENGTH_SHORT).show();
@@ -271,7 +319,9 @@ public class PerfilClienteActivity extends BaseActivity {
         tvTitulo.setText("Eventos");
 
         if (listaEventos == null || listaEventos.isEmpty()) {
-            flAnadirEvento.setVisibility(View.VISIBLE);
+            if(!esLector) {
+                flAnadirEvento.setVisibility(View.VISIBLE);
+            }
             tvVerTodo.setVisibility(View.GONE);
         }
 
@@ -300,7 +350,9 @@ public class PerfilClienteActivity extends BaseActivity {
         tvTitulo.setText("Rutas");
 
         if (listaRutas == null || listaRutas.isEmpty()) {
-            flAnadirRuta.setVisibility(View.VISIBLE);
+            if(!esLector) {
+                flAnadirRuta.setVisibility(View.VISIBLE);
+            }
             tvVerTodo.setVisibility(View.GONE);
         }
 
@@ -329,7 +381,9 @@ public class PerfilClienteActivity extends BaseActivity {
         tvTitulo.setText("Wiki");
 
         if (listaWiki == null || listaWiki.isEmpty()) {
-            flAnadirWiki.setVisibility(View.VISIBLE);
+            if(!esLector) {
+                flAnadirWiki.setVisibility(View.VISIBLE);
+            }
             tvVerTodo.setVisibility(View.GONE);
         }
 

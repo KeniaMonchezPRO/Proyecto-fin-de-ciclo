@@ -8,6 +8,7 @@
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" android:maxSdkVersion="32"/>
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" android:maxSdkVersion="28" />
 
+
     <!-- Permisos para la camara: -->
     <uses-feature android:name="android.hardware.camera" android:required="true"/>
     <uses-permission android:name="android.permission.CAMERA"/>
@@ -32,7 +33,7 @@
         android:hardwareAccelerated="true">
 
         <activity
-            android:name=".cliente.comic.ComicViewActivity"
+            android:name=".MainActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -44,7 +45,7 @@
         <!--Comunes-->
         <activity android:name=".BaseActivity" />
         <activity android:name=".BaseActivityAntes" />
-
+        <activity android:name=".cliente.comic.ComicViewActivity"/>
         <activity android:name=".login.LoginActivity" />
         <activity android:name=".registro.RegistroClienteActivity"/>
         <activity android:name=".registro.RegistroLectorActivity"/>
@@ -57,6 +58,7 @@
         <activity android:name=".lector.SeccionesLectorActivity"/>
         <activity android:name=".lector.DialogMetodoPagoActivity" android:theme="@style/Theme.VinetaVirtual.BottomSheetDialogActivity"/>
         <activity android:name=".lector.ColeccionActivity"/>
+
         <!--Cliente-->
         <activity android:name=".cliente.PerfilClienteActivity"/>
         <activity android:name=".cliente.DialogNuevaSeccionActivity" android:theme="@style/Theme.VinetaVirtual.BottomSheetDialogActivity"/>

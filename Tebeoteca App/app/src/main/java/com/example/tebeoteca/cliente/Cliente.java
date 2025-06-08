@@ -3,7 +3,7 @@ package com.example.tebeoteca.cliente;
 import java.io.Serializable;
 
 public class Cliente implements Serializable {
-    private String id;
+    private int id;
     private String nombreUsuario;
     private String email;
     private String fotoPerfil;
@@ -15,11 +15,11 @@ public class Cliente implements Serializable {
     private String tipoCliente;
     private String nif;
 
-    public String getId() {
+    public int getId() {
         return id;
     }
 
-    public void setId(String id) {
+    public void setId(int id) {
         this.id = id;
     }
 

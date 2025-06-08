@@ -148,7 +148,7 @@ public class BusquedaActivity extends BaseActivity {
             LectorAdapter adapter = new LectorAdapter(resultado.getLectores(), lector -> {
                 Intent intent = new Intent(this, PerfilLectorActivity.class);
                 intent.putExtra("lector", lector);
-                //añadir sharepreferences para que no salga por ejemplo el boton de editarperfil del lector o se le reemplaze por "seguir"
+                intent.putExtra("esCliente", true);
                 startActivity(intent);
             });
             mostrarSeccion("Lectores", resultado.getLectores(), adapter, resultadosLectores);
@@ -159,7 +159,7 @@ public class BusquedaActivity extends BaseActivity {
             ClienteAdapter adapter = new ClienteAdapter(resultado.getClientes(), cliente -> {
                 Intent intent = new Intent(this, PerfilClienteActivity.class);
                 intent.putExtra("cliente", cliente);
-                //añadir sharepreferences para que no salga por ejemplo el boton de editarperfil del lector o se le reemplaze por "seguir"
+                intent.putExtra("esLector", true);
                 startActivity(intent);
             });
             mostrarSeccion("Clientes", resultado.getClientes(), adapter,resultadosClientes);

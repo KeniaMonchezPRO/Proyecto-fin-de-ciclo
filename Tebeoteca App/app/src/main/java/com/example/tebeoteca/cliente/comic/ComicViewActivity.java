@@ -5,7 +5,9 @@ import android.graphics.Bitmap;
 import android.graphics.pdf.PdfRenderer;
 import android.os.Bundle;
 import android.os.ParcelFileDescriptor;
+import android.util.Log;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.Toast;
 
@@ -22,13 +24,14 @@ import java.io.OutputStream;
 public class ComicViewActivity extends AppCompatActivity implements OnSwipeTouchListener.OnSwipeListener {
 
     private PdfRenderer renderer;
-
     private PdfRenderer.Page currentPage;
     private ParcelFileDescriptor fileDescriptor;
-    private ImageView imageView;
+    private ZoomableImageView imageView;
     private int pageIndex = 0;
     private int pageCount = 0;
     OnSwipeTouchListener swipeTouchListener;
+    boolean esPrevisualizacion;
+    int maxPaginasPermitidas = Integer.MAX_VALUE;;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,13 +39,16 @@ public class ComicViewActivity extends AppCompatActivity implements OnSwipeTouch
         setContentView(R.layout.activity_comic_view);
 
         imageView = findViewById(R.id.pdfImageView);
-        Button btnNext = findViewById(R.id.btnNext);
-        Button btnPrev = findViewById(R.id.btnPrev);
+        ImageButton btnNext = findViewById(R.id.btn_next);
+        ImageButton btnPrev = findViewById(R.id.btn_prev);
+        ImageButton btnCerrar = findViewById(R.id.btn_cerrar);
+
+        esPrevisualizacion = getIntent().getBooleanExtra("preview", false);
+        if (esPrevisualizacion) {
+            maxPaginasPermitidas = 5;
+        }
 
         swipeTouchListener = new OnSwipeTouchListener((Context) this, (OnSwipeTouchListener.OnSwipeListener) this);
-
-
-
 
         File pdfFile = copyPdfFromAssets();
         if (pdfFile == null) {
@@ -53,7 +59,8 @@ public class ComicViewActivity extends AppCompatActivity implements OnSwipeTouch
         try {
             fileDescriptor = ParcelFileDescriptor.open(pdfFile, ParcelFileDescriptor.MODE_READ_ONLY);
             renderer = new PdfRenderer(fileDescriptor);
-            pageCount = renderer.getPageCount();
+            //pageCount = renderer.getPageCount();
+            pageCount = Math.min(renderer.getPageCount(), maxPaginasPermitidas);
             showPage(pageIndex);
         } catch (IOException e) {
             e.printStackTrace();
@@ -63,6 +70,7 @@ public class ComicViewActivity extends AppCompatActivity implements OnSwipeTouch
             if (pageIndex < pageCount - 1) {
                 pageIndex++;
                 showPage(pageIndex);
+                Toast.makeText(this, "Página: " + (pageIndex + 1) + "/" + pageCount, Toast.LENGTH_SHORT).show();
             }
         });
 
@@ -70,8 +78,13 @@ public class ComicViewActivity extends AppCompatActivity implements OnSwipeTouch
             if (pageIndex > 0) {
                 pageIndex--;
                 showPage(pageIndex);
+                Toast.makeText(this, "Página: " + (pageIndex + 1) + "/" + pageCount, Toast.LENGTH_SHORT).show();
+            } else {
+                Toast.makeText(this, "Fin del cómic", Toast.LENGTH_SHORT).show();
             }
         });
+
+        btnCerrar.setOnClickListener(v -> finish());
     }
     @Override
     public void onSwipeLeft() {
@@ -86,13 +99,10 @@ public class ComicViewActivity extends AppCompatActivity implements OnSwipeTouch
 
     @Override
     public void onSwipeRight() {
-        // Deslizar a la derecha = ir a la página anterior
         if (pageIndex > 0) {
             pageIndex--;
             showPage(pageIndex);
             Toast.makeText(this, "Página: " + (pageIndex + 1) + "/" + pageCount, Toast.LENGTH_SHORT).show();
-        } else {
-            Toast.makeText(this, "Primera página", Toast.LENGTH_SHORT).show();
         }
     }
 
@@ -108,6 +118,7 @@ public class ComicViewActivity extends AppCompatActivity implements OnSwipeTouch
                 Bitmap.Config.ARGB_8888);
         currentPage.render(bitmap, null, null, PdfRenderer.Page.RENDER_MODE_FOR_DISPLAY);
         imageView.setImageBitmap(bitmap);
+        imageView.post(() -> imageView.resetZoom());
         imageView.setOnTouchListener(swipeTouchListener);
     }
 

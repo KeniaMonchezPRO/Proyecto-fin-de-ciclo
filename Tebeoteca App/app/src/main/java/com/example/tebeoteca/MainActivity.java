@@ -33,7 +33,7 @@ public class MainActivity extends AppCompatActivity {
             return insets;
         });
 
-        new Handler().postDelayed(this::startLoginActivity, 1000);
+        new Handler().postDelayed(this::startLoginActivity, 100);
     }
 
 

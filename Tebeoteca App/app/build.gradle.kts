@@ -32,6 +32,7 @@ android {
 }
 
 dependencies {
+    implementation(libs.androidx.viewpager2)
     implementation(libs.appcompat)
     implementation(libs.material)
     implementation(libs.material3)
