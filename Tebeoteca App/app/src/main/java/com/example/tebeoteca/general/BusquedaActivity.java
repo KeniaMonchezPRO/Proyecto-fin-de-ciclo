@@ -43,8 +43,8 @@ public class BusquedaActivity extends BaseActivity {
     //private List<Object> resultados = new ArrayList<>();
     private ApiService apiService;
     LinearLayout resultadosComics, resultadosLectores, resultadosClientes;
-
     SharedPreferences perfilPrefs;
+    String perfil;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -53,7 +53,9 @@ public class BusquedaActivity extends BaseActivity {
 
         //obtengo el tipo de perfil que ingresa a esta activity para settear el menu:
         perfilPrefs = getSharedPreferences("perfilPrefs", MODE_PRIVATE);
-        String perfil = perfilPrefs.getString("perfil", "cliente");
+        perfil = perfilPrefs.getString("perfil", "cliente");
+
+        Log.d("DEBUG BusquedaAct", "perfil: " + perfil);
 
         setupMenus(R.id.nav_buscar, perfil);
 
@@ -62,6 +64,16 @@ public class BusquedaActivity extends BaseActivity {
         SharedPreferences.Editor editor = perfilPrefs.edit();
         editor.putString("perfil", perfil);
         editor.apply();*/
+
+        //para enviar a ConfiguracionActivity:
+        SharedPreferences activityAndTabContext = getSharedPreferences("activityAndTabContext", MODE_PRIVATE);
+        SharedPreferences.Editor editorAct = activityAndTabContext.edit();
+        editorAct.putString("activity", "BusquedaActivity");
+        editorAct.putString("tab", "buscar");
+        if(perfil.equals("lector")) {
+            editorAct.putBoolean("esLector",true);
+        }
+        editorAct.apply();
 
         etBuscar = findViewById(R.id.et_buscar);
 
@@ -148,7 +160,14 @@ public class BusquedaActivity extends BaseActivity {
             LectorAdapter adapter = new LectorAdapter(resultado.getLectores(), lector -> {
                 Intent intent = new Intent(this, PerfilLectorActivity.class);
                 intent.putExtra("lector", lector);
-                intent.putExtra("esCliente", true);
+                //intent.putExtra("esCliente", false);
+                if(perfil.equals("lector")) {
+                    intent.putExtra("esLector", true);
+                    intent.putExtra("esCliente", false);
+                } else {
+                    intent.putExtra("esLector", false);
+                    intent.putExtra("esCliente", true);
+                }
                 startActivity(intent);
             });
             mostrarSeccion("Lectores", resultado.getLectores(), adapter, resultadosLectores);
@@ -159,7 +178,11 @@ public class BusquedaActivity extends BaseActivity {
             ClienteAdapter adapter = new ClienteAdapter(resultado.getClientes(), cliente -> {
                 Intent intent = new Intent(this, PerfilClienteActivity.class);
                 intent.putExtra("cliente", cliente);
-                intent.putExtra("esLector", true);
+                if(perfil.equals("lector")) {
+                    intent.putExtra("esLector", true);
+                } else {
+                    intent.putExtra("esLector", false);
+                }
                 startActivity(intent);
             });
             mostrarSeccion("Clientes", resultado.getClientes(), adapter,resultadosClientes);

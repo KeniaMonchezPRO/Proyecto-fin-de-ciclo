@@ -43,6 +43,14 @@ public class ComicsActivity extends BaseActivity {
 
         SharedPreferences perfilPrefs = getSharedPreferences("perfilPrefs", MODE_PRIVATE);
         perfil = perfilPrefs.getString("perfil", "cliente");
+
+        //para enviar a ConfiguracionActivity:
+        SharedPreferences activityAndTabContext = getSharedPreferences("activityAndTabContext", MODE_PRIVATE);
+        SharedPreferences.Editor editorAct = activityAndTabContext.edit();
+        editorAct.putString("activity", "ComicsActivity");
+        editorAct.putString("tab", "comics");
+        editorAct.apply();
+
         Log.d("DEBUG COMICS ACTIVITY", "PERFIL: " + perfil);
         /*if(perfil.equals("lector")) {
             Log.d("DEBUG COMICS ACTIVITY", "entró lector");

@@ -48,6 +48,19 @@ public class ComicActivity extends BaseActivity {
 
         conexionApi();
 
+        //para enviar a ConfiguracionActivity:
+        SharedPreferences activityAndTabContext = getSharedPreferences("activityAndTabContext", MODE_PRIVATE);
+        SharedPreferences.Editor editorAct = activityAndTabContext.edit();
+        editorAct.putString("activity", "ComicActivity");
+        editorAct.putString("tab", "comics");
+        Log.d("DEBUG ComicActivity", "perfil: " + perfil);
+        if(perfil.equals("lector")) {
+            editorAct.putBoolean("esLector",true);
+        } else {
+            editorAct.putBoolean("esLector",false);
+        }
+        editorAct.apply();
+
         SharedPreferences sharedPreferences = getSharedPreferences("comicPrefs", MODE_PRIVATE);
         String activityContext = sharedPreferences.getString("activity","ComicsActivity");
         Log.d("DEBUG ComicActivity con "+perfil,"activity: " + activityContext);
@@ -184,6 +197,7 @@ public class ComicActivity extends BaseActivity {
                 Comic comic = (Comic) getIntent().getSerializableExtra("comic");
                 Log.d("DEBUG ComicActivity", "Entró desde ComicsActivity, PerfilClienteActivity o como lector: " + comic.getTitulo());
                 Log.d("DEBUG ComicActivity", "Cómic : " + comic.getTitulo() + " " + comic.getPais_origen());
+                Log.d("DEBUG ComicActivity", "tipo : " + perfil);
                 if (comic != null) {
                     idComic = comic.getId();
                     Log.d("DEBUG ComicActivity", "Cómic recibido else: id: " + idComic + " titulo " + comic.getTitulo());

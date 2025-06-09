@@ -61,7 +61,6 @@ public class PerfilClienteActivity extends BaseActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setCustomContent(R.layout.activity_perfil_cliente);
-        setupMenus(R.id.nav_inicio, "cliente");
 
         btnEditarPerfil = findViewById(R.id.btn_editarPerfil);
         btnAtras = findViewById(R.id.btn_atras);
@@ -82,9 +81,19 @@ public class PerfilClienteActivity extends BaseActivity {
         apiService = retrofit.create(ApiService.class);
 
         esLector = getIntent().getBooleanExtra("esLector", false);
-        if (esLector) {
+        Log.d("DEBUG PerfClienteAct", "esLectorExtra? " + esLector);
 
+        if (esLector) {
+            setupMenus(R.id.nav_buscar, "lector");
             btnAtras.setVisibility(View.VISIBLE);
+
+            //para enviar a configuracion activity
+            SharedPreferences activityAndTabContext = getSharedPreferences("activityAndTabContext", MODE_PRIVATE);
+            SharedPreferences.Editor editorAct = activityAndTabContext.edit();
+            editorAct.putString("activity","PerfilClienteActivity");
+            editorAct.putString("tab","buscar");
+            editorAct.putBoolean("esLector",true);
+            editorAct.apply();
 
             Cliente c = (Cliente) getIntent().getSerializableExtra("cliente");
             tvNombreEmpresa.setText(c.getNombreCliente());
@@ -112,11 +121,22 @@ public class PerfilClienteActivity extends BaseActivity {
             obtenerComicsDelCliente(c.getId());
             obtenerOtrasSecciones();
         } else {
+            Log.d("DEBUG PerfClienteAct", "entonces será cliente?");
+            setupMenus(R.id.nav_inicio, "cliente");
+            btnAtras.setVisibility(View.GONE);
             //para enviar el tipo de perfil a las demas activities
             SharedPreferences perfilPrefs = getSharedPreferences("perfilPrefs", MODE_PRIVATE);
             SharedPreferences.Editor editor = perfilPrefs.edit();
             editor.putString("perfil","cliente");
             editor.apply();
+
+            //para enviar a configuracion activity
+            SharedPreferences activityAndTabContext = getSharedPreferences("activityAndTabContext", MODE_PRIVATE);
+            SharedPreferences.Editor editorAct = activityAndTabContext.edit();
+            editorAct.putString("activity","PerfilClienteActivity");
+            editorAct.putString("tab","inicio");
+            editorAct.putBoolean("esLector",false);
+            editorAct.apply();
 
             SharedPreferences sharedPreferences = getSharedPreferences("usuarioPrefs", MODE_PRIVATE);
             String nombreEmpresa = sharedPreferences.getString("nombreEmpresa", "Cliente");
@@ -152,7 +172,6 @@ public class PerfilClienteActivity extends BaseActivity {
 
     @Override
     protected void onResume() {
-        setupMenus(R.id.nav_inicio, "cliente");
         super.onResume();
         /*//Conexion con api:
         Retrofit retrofit = new Retrofit.Builder()
@@ -163,15 +182,24 @@ public class PerfilClienteActivity extends BaseActivity {
 
 
         ImageButton btnAtras = findViewById(R.id.btn_atras);*/
-        if (btnAtras != null && !esLector) {
+        /*if (btnAtras != null && !esLector) {
             btnAtras.setVisibility(View.GONE);
+            setupMenus(R.id.nav_inicio, "cliente");
+        } else {
+            setupMenus(R.id.nav_buscar, "lector");
         }
+        //para enviar a configuracion activity
+        SharedPreferences activityAndTabContext = getSharedPreferences("activityAndTabContext", MODE_PRIVATE);
+        SharedPreferences.Editor editorAct = activityAndTabContext.edit();
+        editorAct.putString("activity","PerfilClienteActivity");
+        editorAct.putString("tab","inicio");
+        editorAct.apply();*/
     }
 
     @Override
     protected void onRestart() {
         super.onRestart();
-        obtenerComicsDelCliente(idUsuario);
+        //obtenerComicsDelCliente(idUsuario);
     }
 
     @Override
@@ -256,7 +284,7 @@ public class PerfilClienteActivity extends BaseActivity {
     }
 
     private void agregarSeccionComics(List<Comic> listaComics) {
-        Log.d("DEBUG", "ENTRO EN AGREGAR SECCION COMICS");
+        Log.d("DEBUG PerfClienteAct", "ENTRO EN AGREGAR SECCION COMICS");
         LinearLayout contenedor = findViewById(R.id.comics_container);
 
         View seccionView = LayoutInflater.from(this).inflate(R.layout.seccion_comics, null);
@@ -271,13 +299,13 @@ public class PerfilClienteActivity extends BaseActivity {
         TextView tvVerTodo = seccionView.findViewById(R.id.tv_verTodo);
 
         if (listaComics == null || listaComics.isEmpty()) {
-            Log.d("DEBUG", "set visibility");
+            Log.d("DEBUG PerfClienteAct", "set visibility");
             flAnadirComic.setVisibility(View.VISIBLE);
             tvVerTodo.setVisibility(View.GONE);
             recycler.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false));
             recycler.setAdapter(null);
         }
-            Log.d("DEBUG", "else");
+            Log.d("DEBUG PerfClienteAct", "else");
             tvVerTodo.setOnClickListener(view -> startComicsActivity());
             if (listaComics.size() > 6) {
                 listaComics.subList(0, 6);

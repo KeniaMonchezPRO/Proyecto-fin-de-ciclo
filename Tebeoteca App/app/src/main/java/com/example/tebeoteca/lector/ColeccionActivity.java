@@ -52,6 +52,16 @@ public class ColeccionActivity extends BaseActivity {
         perfil = perfilPrefs.getString("perfil", "cliente");
         setupMenus(R.id.nav_comics, perfil);
 
+        //para enviar a ConfigActivity:
+        SharedPreferences activityAndTabContext = getSharedPreferences("activityAndTabContext", MODE_PRIVATE);
+        SharedPreferences.Editor editorAct = activityAndTabContext.edit();
+        editorAct.putString("activity", "ColeccionActivity");
+        editorAct.putString("tab", "buscar");
+        if(perfil.equals("lector")) {
+            editorAct.putBoolean("esLector",true);
+        }
+        editorAct.apply();
+
         SharedPreferences usuarioPrefs = getSharedPreferences("usuarioPrefs", MODE_PRIVATE);
         idUsuario = usuarioPrefs.getInt("idUsuario",2);
         Log.d("DEBUG LECTOR ColeccionActivity", "idUsuario: " + idUsuario);

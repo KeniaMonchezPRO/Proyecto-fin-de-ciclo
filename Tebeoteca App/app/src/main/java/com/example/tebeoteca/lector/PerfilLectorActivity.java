@@ -58,16 +58,33 @@ public class PerfilLectorActivity extends BaseActivity {
         SharedPreferences.Editor editor = perfilPrefs.edit();
 
         esCliente = getIntent().getBooleanExtra("esCliente", false);
+        Log.d("DEBUG PerfilLectorAct", "es cliente? " + esCliente);
         if (esCliente) {
             setupMenus(R.id.nav_buscar, "cliente");
             Log.d("DEBUG PerfilLectorActivity", "es cliente");
             editor.putString("perfil","cliente");
             editor.apply();
+
+            //para enviar a ConfiguracionActivity:
+            SharedPreferences activityAndTabContext = getSharedPreferences("activityAndTabContext", MODE_PRIVATE);
+            SharedPreferences.Editor editorAct = activityAndTabContext.edit();
+            editorAct.putString("activity", "PerfilLectorActivity");
+            editorAct.putString("tab", "buscar");
+            editorAct.putBoolean("esLector", false);
+            editorAct.apply();
         } else {
             Log.d("DEBUG PerfilLectorActivity", "es lector");
             editor.putString("perfil","lector");
             editor.apply();
             //setupMenus(R.id.nav_inicio, "lector");
+
+            //para enviar a ConfiguracionActivity:
+            SharedPreferences activityAndTabContext = getSharedPreferences("activityAndTabContext", MODE_PRIVATE);
+            SharedPreferences.Editor editorAct = activityAndTabContext.edit();
+            editorAct.putString("activity", "PerfilLectorActivity");
+            editorAct.putString("tab", "inicio");
+            editorAct.putBoolean("esLector",true);
+            editorAct.apply();
         }
 
         //settear el perfil de acuerdo a la info recibida de LoginActivity
