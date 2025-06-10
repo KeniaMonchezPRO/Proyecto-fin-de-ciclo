@@ -1,15 +1,23 @@
 package com.example.tebeoteca;
 
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
+import android.widget.ImageButton;
 
-public class NotificacionesActivity extends BaseActivity {
+import androidx.appcompat.app.AppCompatActivity;
+
+public class NotificacionesActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setCustomContent(R.layout.activity_notificaciones);
-        setupMenus(R.id.nav_inicio, "lector");
+        setContentView(R.layout.activity_notificaciones);
+
+        ImageButton btnCerrar = findViewById(R.id.btn_cerrar);
+        btnCerrar.setOnClickListener(v -> finish());
     }
+
     @Override
     protected void onResume() {
         super.onResume();
@@ -30,7 +38,4 @@ public class NotificacionesActivity extends BaseActivity {
         super.onStop();
     }
 
-    public void volverAtras(View view) {
-        this.finish();
-    }
 }

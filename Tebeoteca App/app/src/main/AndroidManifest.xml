@@ -70,7 +70,6 @@
         <activity android:name=".cliente.evento.NuevoEventoActivity"/>
         <activity android:name=".cliente.evento.EventosActivity"/>
 
-        <activity android:name=".cliente.ruta.NuevaRutaActivity"/>
         <activity android:name=".cliente.ruta.RutasActivity"/>
 
         <activity android:name=".cliente.wiki.NuevaEntradaWikiActivity"/>

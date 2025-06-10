@@ -1,12 +1,17 @@
 package com.example.tebeoteca.registro;
 
-public class RegistroClienteResponseDTO {
+import com.example.tebeoteca.cliente.Cliente;
+
+import java.io.Serializable;
+
+public class RegistroClienteResponseDTO implements Serializable {
 
     private int id;
     private String nombreUsuario;
     private String email;
     private String nombreEmpresa;
     private String tipo;
+    private Cliente cliente;
 
     public RegistroClienteResponseDTO(int id, String nombreUsuario, String email, String nombreEmpresa, String tipo) {
         this.id = id;
@@ -54,5 +59,13 @@ public class RegistroClienteResponseDTO {
 
     public void setTipo(String tipo) {
         this.tipo = tipo;
+    }
+
+    public Cliente getCliente() {
+        return cliente;
+    }
+
+    public void setCliente(Cliente cliente) {
+        this.cliente = cliente;
     }
 }

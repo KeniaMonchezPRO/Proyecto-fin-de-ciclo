@@ -18,7 +18,7 @@ public class RutasActivity extends BaseActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setCustomContent(R.layout.activity_rutas);
-        setupMenus(R.id.nav_inicio, "cliente");
+        setupMenus(R.id.nav_menu, "cliente");
 
         tvAnadirRuta = findViewById(R.id.tv_anadir_ruta);
         tvAnadirRuta.setOnClickListener(view -> { startNuevaRutaActivity(); });
@@ -52,7 +52,4 @@ public class RutasActivity extends BaseActivity {
         super.onStop();
     }
 
-    public void volverAtras(View view) {
-        this.finish();
-    }
 }

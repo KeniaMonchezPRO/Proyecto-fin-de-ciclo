@@ -22,10 +22,10 @@
                 android:orientation="horizontal"
                 android:layout_marginTop="5dp">
                 <TextView
-                    android:layout_width="150dp"
+                    android:layout_width="170dp"
                     android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:text="Añadir Nueva Entrada a la Wiki"
+                    android:layout_marginStart="70dp"
+                    android:text="Nueva Entrada a la Wiki"
                     android:textSize="20sp"
                     android:textColor="@android:color/white"
                     android:textStyle="bold"/>
@@ -47,8 +47,7 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="end"
                     android:text="Añadir"
-                    android:backgroundTint="#8003DAC5"
-                    android:onClick="startNuevaEntradaWikiActivity"/>
+                    android:backgroundTint="#8003DAC5"/>
             </FrameLayout>
             <!--FOOTER-->
             <LinearLayout

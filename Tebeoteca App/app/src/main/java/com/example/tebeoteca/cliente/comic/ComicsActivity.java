@@ -38,6 +38,7 @@ public class ComicsActivity extends BaseActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        Log.d("ComicsAct","onCreate()");
         super.onCreate(savedInstanceState);
         setCustomContent(R.layout.activity_comics);
 
@@ -107,9 +108,9 @@ public class ComicsActivity extends BaseActivity {
 
     @Override
     protected void onResume() {
-        setupMenus(R.id.nav_menu, perfil);
         super.onResume();
-        Log.d("DEBUG","onResume()");
+        Log.d("ComicsAct","onResume()");
+        setupMenus(R.id.nav_menu, perfil);
         if(!perfil.equals("lector")) {
             limpiarContenedores();
             cargarComicsDesdeApi();
@@ -121,19 +122,19 @@ public class ComicsActivity extends BaseActivity {
     @Override
     protected void onRestart() {
         super.onRestart();
+        Log.d("ComicsAct","onRestart()");
     }
 
     @Override
     protected void onPause() {
         super.onPause();
+        Log.d("ComicsAct","onPause()");
     }
 
     @Override
     protected void onStop() {
         super.onStop();
-    }
-    public void volverAtras(View view) {
-        this.finish();
+        Log.d("ComicsAct","onPause()");
     }
 
     private void startAnadirComicActivity() {

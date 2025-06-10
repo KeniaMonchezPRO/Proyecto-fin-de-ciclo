@@ -21,7 +21,16 @@ public class ConfiguracionActivity extends BaseActivity {
 
         Log.d("DEBUG ConfigAct", "esLectorExtra? " + esLector + "; activity context: " + activity + "; tab: " + tab + "; lector?: " + lector );
 
-        if(lector && activity.equals("BusquedaActivity")) {
+        if(esLector || lector) {
+            setupMenus(R.id.nav_inicio,"lector");
+            btnConfig.setVisibility(View.GONE);
+        } else {
+            setupMenus(R.id.nav_inicio,"cliente");
+            btnConfig.setVisibility(View.GONE);
+        }
+
+
+        /*if(lector && activity.equals("BusquedaActivity")) {
             setupMenus(R.id.nav_buscar, "lector"); //done
             Log.d("DEBUG ConfigAct", "es lector desde busqueda");
         } else if(!esLector && activity.equals("BusquedaActivity")) {
@@ -40,7 +49,7 @@ public class ConfiguracionActivity extends BaseActivity {
             setupMenus(R.id.nav_buscar, "cliente");
             Log.d("DEBUG ConfigAct", "es cliente desde busqueda y desde perfil lector"); //done
         } else if((!esLector && !lector) && (activity.equals("PerfilClienteActivity"))) {
-            Log.d("DEBUG ConfigAct", "es cliente desde su propio perfil");
+            Log.d("DEBUG ConfigAct", "es cliente desde su propio perfil"); //done
             setupMenus(R.id.nav_inicio, "cliente");
         } else if(esLector && (activity.equals("PerfilLectorActivity") && tab.equals("buscar"))) {
             setupMenus(R.id.nav_buscar, "lector");
@@ -48,7 +57,7 @@ public class ConfiguracionActivity extends BaseActivity {
         } else if(lector && (activity.equals("PerfilClienteActivity") && tab.equals("buscar"))) {
             setupMenus(R.id.nav_buscar, "lector");
             Log.d("DEBUG ConfigAct", "es lector desde su busqueda para ver perfil de cliente"); //DONE
-        }
+        }*/
 
 
 
@@ -76,7 +85,4 @@ public class ConfiguracionActivity extends BaseActivity {
         super.onStop();
     }
 
-    public void volverAtras(View view) {
-        this.finish();
-    }
 }

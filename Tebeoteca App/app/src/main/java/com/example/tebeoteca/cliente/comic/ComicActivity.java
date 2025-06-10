@@ -41,6 +41,7 @@ public class ComicActivity extends BaseActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setCustomContent(R.layout.activity_comic);
+        Log.d("ComicActivity","onCreate()");
 
         SharedPreferences perfilPrefs = getSharedPreferences("perfilPrefs", MODE_PRIVATE);
         String perfil = perfilPrefs.getString("perfil", "cliente");
@@ -339,21 +340,25 @@ public class ComicActivity extends BaseActivity {
     @Override
     protected void onResume() {
         super.onResume();
+        Log.d("ComicActivity","onResume()");
     }
 
     @Override
     protected void onRestart() {
         super.onRestart();
+        Log.d("ComicActivity","onRestart()");
     }
 
     @Override
     protected void onPause() {
         super.onPause();
+        Log.d("ComicActivity","onPause()");
     }
 
     @Override
     protected void onStop() {
         super.onStop();
+        Log.d("ComicActivity","onStop()");
     }
 
     public void agregarFavorito(int idLector, int idComic) {

@@ -27,13 +27,16 @@ import com.example.tebeoteca.cliente.comic.Comic;
 import com.example.tebeoteca.cliente.comic.ComicActivity;
 import com.example.tebeoteca.cliente.evento.Evento;
 import com.example.tebeoteca.cliente.evento.EventoAdapter;
+import com.example.tebeoteca.cliente.evento.NuevoEventoActivity;
 import com.example.tebeoteca.cliente.novedad.Novedad;
 import com.example.tebeoteca.cliente.novedad.NovedadAdapter;
 import com.example.tebeoteca.cliente.comic.ComicAdapter;
 import com.example.tebeoteca.cliente.comic.ComicRepository;
 import com.example.tebeoteca.cliente.comic.ComicsActivity;
+import com.example.tebeoteca.cliente.ruta.NuevaRutaActivity;
 import com.example.tebeoteca.cliente.ruta.Ruta;
 import com.example.tebeoteca.cliente.ruta.RutaAdapter;
+import com.example.tebeoteca.cliente.wiki.NuevaEntradaWikiActivity;
 import com.example.tebeoteca.cliente.wiki.Wiki;
 import com.example.tebeoteca.cliente.wiki.WikiAdapter;
 
@@ -52,7 +55,7 @@ public class PerfilClienteActivity extends BaseActivity {
     private ApiService apiService;
     int idUsuario, seguidoresCounter = 0;
     Button btnEditarPerfil;
-    ImageButton btnAtras;
+    ImageButton btnAtras, btnConfig;
     boolean esLector;
     boolean isFollowing = false;
     TextView tvNombreEmpresa, tvNombreUsuario, tvDescripcion, tvNif, tvFechaCreacionEmpresa, tvNumSeguidores, tvNumComics;
@@ -61,9 +64,12 @@ public class PerfilClienteActivity extends BaseActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setCustomContent(R.layout.activity_perfil_cliente);
-
+        Log.d("PerfClientAct", "ONCREATE()");
+        Cliente cliente = (Cliente) getIntent().getSerializableExtra("clienteRegistrado");
+        Log.d("PerfClientAct", "Cliente: " + cliente.getNombreUsuario() + "; " + cliente);
         btnEditarPerfil = findViewById(R.id.btn_editarPerfil);
         btnAtras = findViewById(R.id.btn_atras);
+        btnConfig = findViewById(R.id.btn_configuracion);
 
         tvNombreEmpresa = findViewById(R.id.tv_displayNombreEmpresa);
         tvNombreUsuario = findViewById(R.id.tv_displayNombreUsuario);
@@ -124,6 +130,7 @@ public class PerfilClienteActivity extends BaseActivity {
             Log.d("DEBUG PerfClienteAct", "entonces será cliente?");
             setupMenus(R.id.nav_inicio, "cliente");
             btnAtras.setVisibility(View.GONE);
+            btnConfig.setVisibility(View.VISIBLE);
             //para enviar el tipo de perfil a las demas activities
             SharedPreferences perfilPrefs = getSharedPreferences("perfilPrefs", MODE_PRIVATE);
             SharedPreferences.Editor editor = perfilPrefs.edit();
@@ -139,11 +146,11 @@ public class PerfilClienteActivity extends BaseActivity {
             editorAct.apply();
 
             SharedPreferences sharedPreferences = getSharedPreferences("usuarioPrefs", MODE_PRIVATE);
-            String nombreEmpresa = sharedPreferences.getString("nombreEmpresa", "Cliente");
-            String nombreUsuario = "@"+(sharedPreferences.getString("nombreUsuario", "cliente"));
-            String descripcion = sharedPreferences.getString("descripcion", "Sin descripción");
-            String nif = sharedPreferences.getString("nif", "Y1238900N");
-            String fechaCreacionEmpresa = sharedPreferences.getString("fechaCreacionEmpresa", "1997-10-31");
+            String nombreEmpresa = sharedPreferences.getString("nombreEmpresa", "Añadir Nombre o razón social");
+            String nombreUsuario = "@"+(sharedPreferences.getString("nombreUsuario", "Añadir nombre de usuario"));
+            String descripcion = sharedPreferences.getString("descripcion", "Añadir descripción");
+            String nif = sharedPreferences.getString("nif", "Añadir NIF");
+            String fechaCreacionEmpresa = sharedPreferences.getString("fechaCreacionEmpresa", "Añadir fecha de fundación");
             idUsuario = sharedPreferences.getInt("idUsuario",1);
 
             tvNombreEmpresa.setText(nombreEmpresa);
@@ -173,6 +180,7 @@ public class PerfilClienteActivity extends BaseActivity {
     @Override
     protected void onResume() {
         super.onResume();
+        Log.d("PerfClientAct", "ONRESUME()");
         /*//Conexion con api:
         Retrofit retrofit = new Retrofit.Builder()
                 .baseUrl("http://10.0.2.2:8080/")
@@ -194,26 +202,50 @@ public class PerfilClienteActivity extends BaseActivity {
         editorAct.putString("activity","PerfilClienteActivity");
         editorAct.putString("tab","inicio");
         editorAct.apply();*/
+        if(esLector) {
+            Log.d("PerfClientAct", "ES LECTOR ON RESUME");
+        } else {
+            Log.d("PerfClientAct", "ES CLIENTE ON RESUME");
+            setupMenus(R.id.nav_inicio,"cliente");
+        }
     }
 
     @Override
     protected void onRestart() {
         super.onRestart();
+        Log.d("PerfClientAct", "ONRESTART()");
         //obtenerComicsDelCliente(idUsuario);
     }
 
     @Override
     protected void onPause() {
         super.onPause();
+        Log.d("PerfClientAct", "ONPAUSE()");
     }
 
     @Override
     protected void onStop() {
         super.onStop();
+        Log.d("PerfClientAct", "ONSTOP()");
     }
 
     private void startComicsActivity() {
         Intent intent = new Intent(this, ComicsActivity.class);
+        startActivity(intent);
+    }
+
+    private void startNuevoEventoActivity() {
+        Intent intent = new Intent(this, NuevoEventoActivity.class);
+        startActivity(intent);
+    }
+
+    private void startNuevaRutaActivity() {
+        Intent intent = new Intent(this, NuevaRutaActivity.class);
+        startActivity(intent);
+    }
+
+    private void startNuevaEntradaWikiActivity() {
+        Intent intent = new Intent(this, NuevaEntradaWikiActivity.class);
         startActivity(intent);
     }
 
@@ -305,34 +337,36 @@ public class PerfilClienteActivity extends BaseActivity {
             recycler.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false));
             recycler.setAdapter(null);
         }
-            Log.d("DEBUG PerfClienteAct", "else");
-            tvVerTodo.setOnClickListener(view -> startComicsActivity());
-            if (listaComics.size() > 6) {
-                listaComics.subList(0, 6);
+
+        Log.d("DEBUG PerfClienteAct", "else");
+        tvVerTodo.setOnClickListener(view -> startComicsActivity());
+
+        if (listaComics.size() > 6) {
+            listaComics.subList(0, 6);
+        }
+
+        recycler.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false));
+
+        ComicAdapter adapter = new ComicAdapter(listaComics, comic -> {
+            SharedPreferences prefs = getSharedPreferences("comicPrefs", MODE_PRIVATE);
+            SharedPreferences.Editor editor = prefs.edit();
+            editor.putString("activity", "PerfilClienteActivity");
+            //editor.putString("perfil","cliente");
+            editor.apply();
+            Intent intent = new Intent(PerfilClienteActivity.this, ComicActivity.class);
+            intent.putExtra("comic", comic);
+            startActivity(intent);
+            this.finish();
+        });
+        recycler.setAdapter(adapter);
+
+        recycler.addItemDecoration(new RecyclerView.ItemDecoration() {
+            @Override
+            public void getItemOffsets(@NonNull Rect outRect, @NonNull View view,
+                                       @NonNull RecyclerView parent, @NonNull RecyclerView.State state) {
+                outRect.right = 30;
             }
-
-            recycler.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false));
-
-            ComicAdapter adapter = new ComicAdapter(listaComics, comic -> {
-                SharedPreferences prefs = getSharedPreferences("comicPrefs", MODE_PRIVATE);
-                SharedPreferences.Editor editor = prefs.edit();
-                editor.putString("activity", "PerfilClienteActivity");
-                //editor.putString("perfil","cliente");
-                editor.apply();
-                Intent intent = new Intent(PerfilClienteActivity.this, ComicActivity.class);
-                intent.putExtra("comic", comic);
-                startActivity(intent);
-            });
-            recycler.setAdapter(adapter);
-
-            recycler.addItemDecoration(new RecyclerView.ItemDecoration() {
-                @Override
-                public void getItemOffsets(@NonNull Rect outRect, @NonNull View view,
-                                           @NonNull RecyclerView parent, @NonNull RecyclerView.State state) {
-                    outRect.right = 30;
-                }
-            });
-
+        });
 
         contenedor.removeAllViews();
         contenedor.addView(seccionView);
@@ -349,9 +383,12 @@ public class PerfilClienteActivity extends BaseActivity {
         if (listaEventos == null || listaEventos.isEmpty()) {
             if(!esLector) {
                 flAnadirEvento.setVisibility(View.VISIBLE);
+                flAnadirEvento.setOnClickListener(view -> startNuevoEventoActivity());
             }
             tvVerTodo.setVisibility(View.GONE);
         }
+
+        //tvVerTodo.setOnClickListener(view -> startEventosActivity());
 
         RecyclerView recycler = seccionView.findViewById(R.id.seccion_recycler);
         recycler.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false));
@@ -380,6 +417,7 @@ public class PerfilClienteActivity extends BaseActivity {
         if (listaRutas == null || listaRutas.isEmpty()) {
             if(!esLector) {
                 flAnadirRuta.setVisibility(View.VISIBLE);
+                flAnadirRuta.setOnClickListener(view -> startNuevaRutaActivity());
             }
             tvVerTodo.setVisibility(View.GONE);
         }
@@ -411,6 +449,7 @@ public class PerfilClienteActivity extends BaseActivity {
         if (listaWiki == null || listaWiki.isEmpty()) {
             if(!esLector) {
                 flAnadirWiki.setVisibility(View.VISIBLE);
+                flAnadirWiki.setOnClickListener(view -> startNuevaEntradaWikiActivity());
             }
             tvVerTodo.setVisibility(View.GONE);
         }

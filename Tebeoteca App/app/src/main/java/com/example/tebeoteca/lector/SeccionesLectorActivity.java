@@ -96,9 +96,6 @@ public class SeccionesLectorActivity extends BaseActivity {
     protected void onStop() {
         super.onStop();
     }*/
-    public void volverAtras(View view) {
-        this.finish();
-    }
 
     private void limpiarContenedores() {
         contFavs.removeAllViews();

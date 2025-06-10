@@ -50,7 +50,7 @@ public class BusquedaActivity extends BaseActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setCustomContent(R.layout.activity_buscar);
-
+        Log.d("BusquedaAct", "ONCREATE()");
         //obtengo el tipo de perfil que ingresa a esta activity para settear el menu:
         perfilPrefs = getSharedPreferences("perfilPrefs", MODE_PRIVATE);
         perfil = perfilPrefs.getString("perfil", "cliente");
@@ -93,25 +93,25 @@ public class BusquedaActivity extends BaseActivity {
     @Override
     protected void onResume() {
         super.onResume();
+        Log.d("BusquedaAct", "onResume()");
     }
 
     @Override
     protected void onRestart() {
         super.onRestart();
+        Log.d("BusquedaAct", "onRestart()");
     }
 
     @Override
     protected void onPause() {
         super.onPause();
+        Log.d("BusquedaAct", "onPause()");
     }
 
     @Override
     protected void onStop() {
         super.onStop();
-    }
-
-    public void volverAtras(View view) {
-        this.finish();
+        Log.d("BusquedaAct", "onStop()");
     }
 
     private void buscarTodo(String titulo) {

@@ -5,6 +5,7 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.FrameLayout;
 import android.widget.ImageButton;
@@ -39,25 +40,29 @@ public class BaseActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_base2);
+        Log.d("BaseActivity","onCreate()");
 
         contentContainer = findViewById(R.id.content_container);
-        //setupMenus();
 
         btnAtras = findViewById(R.id.btn_atras);
-        btnAtras.setOnClickListener(new View.OnClickListener() { // Establece un OnClickListener
+        /*btnAtras.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                Log.d("BaseActivity","btnAtras()");
                 finish();
             }
-        });
+        });*/
 
     }
 
     public void volverAtras(View view) {
-        finish(); // ¡Esto cierra la Activity actual y regresa a la anterior!
+        Log.d("BaseActivity","volverAtras()");
+        finish();
     }
 
     protected void setupMenus(@IdRes int activeMenuItemId, String perfil) {
+        Log.d("BaseActivity","setupMenus() " + perfil);
+
         overlay = findViewById(R.id.overlay);
 
         //Top menu:
@@ -75,6 +80,7 @@ public class BaseActivity extends AppCompatActivity {
         bottomMenu = findViewById(R.id.bottom_nav);
 
         if(perfil.equals("cliente")) {
+            Log.d("BaseActivity","es clienteeee");
             floatingSubmenu.setVisibility(View.GONE);
             overlay.setOnClickListener(v -> {
                 overlay.setVisibility(View.GONE);
@@ -85,14 +91,21 @@ public class BaseActivity extends AppCompatActivity {
             bottomMenu.setOnItemSelectedListener(item -> {
                 int id = item.getItemId();
                 if (id == R.id.nav_inicio && !(this instanceof PerfilClienteActivity)) {
+                    Log.d("BaseActivity","1");
                     startActivity(new Intent(this, PerfilClienteActivity.class));
                 } else if (id == R.id.nav_buscar && !(this instanceof BusquedaActivity)) {
+                    Log.d("BaseActivity","2");
                     startActivity(new Intent(this, BusquedaActivity.class));
                 } else if (id == R.id.nav_comics && !(this instanceof ComicsActivity)) {
+                    Log.d("BaseActivity","3");
                     startActivity(new Intent(this, ComicsActivity.class));
                 }
                 if(item.getItemId() == R.id.nav_menu) {
+                    mostrarMenuFlotante(item);
+                    return false;
+                    /*Log.d("BaseActivity","4");
                     if(isSubMenuVisible && !(overlay.getVisibility() == View.GONE)) {
+                        Log.d("BaseActivity","5");
                         overlay.animate()
                                 .alpha(0f)
                                 .setDuration(300)
@@ -100,6 +113,7 @@ public class BaseActivity extends AppCompatActivity {
                                 .start();
                         hideSubMenu(floatingSubmenu);
                     } else {
+                        Log.d("BaseActivity","6");
                         overlay.setAlpha(0f);
                         overlay.setVisibility(View.VISIBLE);
                         overlay.animate()
@@ -109,8 +123,9 @@ public class BaseActivity extends AppCompatActivity {
                         showSubMenu(floatingSubmenu);
                     }
                     isSubMenuVisible = !isSubMenuVisible;
-                    return true;
+                    return true;*/
                 } else {
+                    Log.d("BaseActivity","7");
                     hideSubMenu(floatingSubmenu);
                     isSubMenuVisible = false;
                     return true;
@@ -153,11 +168,36 @@ public class BaseActivity extends AppCompatActivity {
         });
 
         btnNotificaciones.setOnClickListener(v -> {
-            if (!(this instanceof NotificacionesActivity)) {
+            /*if (!(this instanceof NotificacionesActivity)) {
                 startNotificacionesActivity();
-            }
+            }*/
+            Intent intent = new Intent(this, NotificacionesActivity.class);
+            startActivity(intent);
         });
 
+    }
+
+    public void mostrarMenuFlotante(MenuItem item) {
+            Log.d("BaseActivity","es menú flotante");
+            if(isSubMenuVisible && !(overlay.getVisibility() == View.GONE)) {
+                Log.d("BaseActivity","5");
+                overlay.animate()
+                        .alpha(0f)
+                        .setDuration(300)
+                        .withEndAction(() -> overlay.setVisibility(View.GONE))
+                        .start();
+                hideSubMenu(floatingSubmenu);
+            } else {
+                Log.d("BaseActivity","6");
+                overlay.setAlpha(0f);
+                overlay.setVisibility(View.VISIBLE);
+                overlay.animate()
+                        .alpha(0.5f)
+                        .setDuration(300)
+                        .start();
+                showSubMenu(floatingSubmenu);
+            }
+            isSubMenuVisible = !isSubMenuVisible;
     }
 
     protected void setCustomContent(int layoutResId) {
@@ -188,6 +228,7 @@ public class BaseActivity extends AppCompatActivity {
     }
 
     public void startRutasActivity(View view) {
+        Log.d("BaseActivity","startRutasAct()");
         Intent intent = new Intent(this, RutasActivity.class);
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
         startActivity(intent);
@@ -195,18 +236,21 @@ public class BaseActivity extends AppCompatActivity {
     }
 
     public void startEventosActivity(View view) {
+        Log.d("BaseActivity","startEventosAct()");
         Intent intent = new Intent(this, EventosActivity.class);
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
         startActivity(intent);
     }
 
     public void startEntradasWikiActivity(View view) {
+        Log.d("BaseActivity","startEntradasWikiAct()");
         Intent intent = new Intent(this, EntradasWikiActivity.class);
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
         startActivity(intent);
     }
 
     private void showSubMenu(LinearLayout submenu) {
+        Log.d("BaseActivity","showSubMenu()");
         submenu.setVisibility(View.VISIBLE);
 
         for (int i = 0; i < submenu.getChildCount(); i++) {
@@ -224,6 +268,7 @@ public class BaseActivity extends AppCompatActivity {
     }
 
     private void hideSubMenu(LinearLayout submenu) {
+        Log.d("BaseActivity","hideSubMenu()");
         for (int i = 0; i < submenu.getChildCount(); i++) {
             View fab = submenu.getChildAt(i);
 
@@ -241,4 +286,6 @@ public class BaseActivity extends AppCompatActivity {
                     .start();
         }
     }
+
+
 }

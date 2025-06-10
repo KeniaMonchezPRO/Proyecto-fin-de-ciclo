@@ -16,5 +16,6 @@
         android:id="@+id/nav_menu"
         android:icon="@drawable/ic_submenu"
         android:title="Más"
-        app:tint="@android:color/white"/>
+        app:tint="@android:color/white"
+        />
 </menu>

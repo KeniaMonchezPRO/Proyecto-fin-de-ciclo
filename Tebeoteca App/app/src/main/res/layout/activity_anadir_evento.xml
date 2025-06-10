@@ -24,8 +24,9 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:text="Añadir Evento"
+                    android:layout_gravity="start"
+                    android:layout_marginStart="70dp"
+                    android:text="Nuevo Evento"
                     android:textSize="20sp"
                     android:textColor="@android:color/white"
                     android:textStyle="bold"/>
@@ -47,8 +48,7 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="end"
                     android:text="Añadir"
-                    android:backgroundTint="#8003DAC5"
-                    android:onClick="startNuevoEventoActivity"/>
+                    android:backgroundTint="#8003DAC5"/>
             </FrameLayout>
             <!--FOOTER-->
             <LinearLayout

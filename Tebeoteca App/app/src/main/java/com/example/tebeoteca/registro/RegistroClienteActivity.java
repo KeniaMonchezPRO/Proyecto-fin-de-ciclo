@@ -16,6 +16,7 @@ import androidx.activity.ComponentActivity;
 
 import com.example.tebeoteca.R;
 import com.example.tebeoteca.api.ApiService;
+import com.example.tebeoteca.cliente.ClienteAdapter;
 import com.example.tebeoteca.cliente.PerfilClienteActivity;
 import com.example.tebeoteca.lector.PerfilLectorActivity;
 import com.example.tebeoteca.login.LoginActivity;
@@ -120,26 +121,29 @@ public class RegistroClienteActivity extends ComponentActivity {
             public void onResponse(Call<RegistroClienteResponseDTO> call, Response<RegistroClienteResponseDTO> response) {
                 if (response.isSuccessful()) {
                     Log.d("LOGIN_DEBUG", "response is successful");
-                    //capturamos la response del proceso de registro:
                     RegistroClienteResponseDTO registroData = response.body();
-
+                    Log.d("RegClientAct", "response: " + registroData);
+                    Log.d("RegClientAct", "response: " + registroData.getCliente());
                     // Guardar en SharedPreferences:
                     SharedPreferences prefs = getSharedPreferences("usuarioPrefs", MODE_PRIVATE);
                     SharedPreferences.Editor editor = prefs.edit();
                     editor.putString("nombreEmpresa", registroData.getNombreEmpresa());
                     editor.putString("nombreUsuario", registroData.getNombreUsuario());
+                    editor.putInt("idUsuario", registroData.getId());
                     editor.apply();
 
-                    //abre la pantalla de inicio:
                     startActivity(new Intent(RegistroClienteActivity.this, PerfilClienteActivity.class));
+                    /*Intent intent = new Intent(RegistroClienteActivity.this, PerfilClienteActivity.class);
+                    intent.putExtra("clienteRegistrado", registroData.getCliente());
+                    startActivity(intent);*/
                 } else {
-                    Toast.makeText(RegistroClienteActivity.this, "Hubo un error", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(RegistroClienteActivity.this, "Hubo un error al crear el usuario", Toast.LENGTH_SHORT).show();
                 }
             }
 
             @Override
             public void onFailure(Call<RegistroClienteResponseDTO> call, Throwable t) {
-                Toast.makeText(RegistroClienteActivity.this, "Error de red: " + t.getMessage(), Toast.LENGTH_LONG).show();
+                Toast.makeText(RegistroClienteActivity.this, "Hubo un error", Toast.LENGTH_LONG).show();
             }
         });
     }

@@ -102,4 +102,21 @@ public class Cliente implements Serializable {
     public void setNif(String nif) {
         this.nif = nif;
     }
+
+    @Override
+    public String toString() {
+        return "Cliente{" +
+                "id=" + id +
+                ", nombreUsuario='" + nombreUsuario + '\'' +
+                ", email='" + email + '\'' +
+                ", fotoPerfil='" + fotoPerfil + '\'' +
+                ", tipoUsuario='" + tipoUsuario + '\'' +
+                ", nombreCliente='" + nombreCliente + '\'' +
+                ", fechaCreacionEmpresa='" + fechaCreacionEmpresa + '\'' +
+                ", descripcion='" + descripcion + '\'' +
+                ", banner='" + banner + '\'' +
+                ", tipoCliente='" + tipoCliente + '\'' +
+                ", nif='" + nif + '\'' +
+                '}';
+    }
 }

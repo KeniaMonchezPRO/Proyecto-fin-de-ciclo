@@ -16,7 +16,7 @@ public class EventosActivity extends BaseActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setCustomContent(R.layout.activity_eventos);
-        setupMenus(R.id.nav_inicio, "cliente");
+        setupMenus(R.id.nav_menu, "cliente");
 
         tvAnadirEvento = findViewById(R.id.tv_anadir_evento);
         tvAnadirEvento.setOnClickListener(view -> { startNuevoEventoActivity(); });
@@ -47,8 +47,5 @@ public class EventosActivity extends BaseActivity {
     @Override
     protected void onStop() {
         super.onStop();
-    }
-    public void volverAtras(View view) {
-        this.finish();
     }
 }
