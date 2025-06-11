@@ -22,6 +22,7 @@ public class EntradasWikiActivity extends BaseActivity {
 
         tvAnadirEntradaWiki = findViewById(R.id.tv_anadir_entrada_wiki);
         tvAnadirEntradaWiki.setOnClickListener(view -> { startNuevaEntradaWikiActivity(); });
+        Log.d("WikiAct","onCreate()");
     }
 
     private void startNuevaEntradaWikiActivity() {
@@ -34,21 +35,30 @@ public class EntradasWikiActivity extends BaseActivity {
     protected void onResume() {
         //setupMenus(R.id.nav_inicio);
         super.onResume();
-        Log.d("DEBUG","onResume()");
+        View overlay = findViewById(R.id.overlay);
+        View subMenu = findViewById(R.id.submenu_layout);
+
+        if (overlay != null) overlay.setVisibility(View.GONE);
+        if (subMenu != null) subMenu.setVisibility(View.GONE);
+        Log.d("WikiAct","onResume()");
     }
 
     @Override
     protected void onRestart() {
         super.onRestart();
+        Log.d("WikiAct","onRestart()");
     }
 
     @Override
     protected void onPause() {
         super.onPause();
+        Log.d("WikiAct","onPause()");
+
     }
 
     @Override
     protected void onStop() {
         super.onStop();
+        Log.d("WikiAct","onStop()");
     }
 }

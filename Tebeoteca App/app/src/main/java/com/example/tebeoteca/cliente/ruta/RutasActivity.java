@@ -34,6 +34,11 @@ public class RutasActivity extends BaseActivity {
     protected void onResume() {
         //setupMenus(R.id.nav_inicio);
         super.onResume();
+        View overlay = findViewById(R.id.overlay);
+        View subMenu = findViewById(R.id.submenu_layout);
+
+        if (overlay != null) overlay.setVisibility(View.GONE);
+        if (subMenu != null) subMenu.setVisibility(View.GONE);
         Log.d("DEBUG", "onResume()");
     }
 
@@ -45,6 +50,12 @@ public class RutasActivity extends BaseActivity {
     @Override
     protected void onPause() {
         super.onPause();
+        View overlay = findViewById(R.id.overlay);
+        View subMenu = findViewById(R.id.submenu_layout);
+
+        if (overlay != null) overlay.setVisibility(View.GONE);
+        if (subMenu != null) subMenu.setVisibility(View.GONE);
+        Log.d("ComicsAct","onPause()");
     }
 
     @Override

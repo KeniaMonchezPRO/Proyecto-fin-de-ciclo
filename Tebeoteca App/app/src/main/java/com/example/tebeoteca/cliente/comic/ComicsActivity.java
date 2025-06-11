@@ -116,6 +116,12 @@ public class ComicsActivity extends BaseActivity {
             cargarComicsDesdeApi();
             setupMenus(R.id.nav_comics, perfil);
         }
+        View overlay = findViewById(R.id.overlay);
+        View subMenu = findViewById(R.id.submenu_layout);
+
+        if (overlay != null) overlay.setVisibility(View.GONE);
+        if (subMenu != null) subMenu.setVisibility(View.GONE);
+        Log.d("ComicsAct","onPause()");
 
     }
 
@@ -128,6 +134,11 @@ public class ComicsActivity extends BaseActivity {
     @Override
     protected void onPause() {
         super.onPause();
+        View overlay = findViewById(R.id.overlay);
+        View subMenu = findViewById(R.id.submenu_layout);
+
+        if (overlay != null) overlay.setVisibility(View.GONE);
+        if (subMenu != null) subMenu.setVisibility(View.GONE);
         Log.d("ComicsAct","onPause()");
     }
 

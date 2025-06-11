@@ -30,24 +30,28 @@ public class DialogNuevaSeccionActivity extends Activity {
 
     public void startNuevoComicActivity(View view) {
         Intent intent = new Intent(this, NuevoComicActivity.class);
+        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
         startActivity(intent);
         finishDialog(view);
     }
 
     public void startNuevaRutaActivity(View view) {
         Intent intent = new Intent(this, NuevaRutaActivity.class);
+        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
         startActivity(intent);
         finishDialog(view);
     }
 
     public void startNuevoEventoActivity(View view) {
         Intent intent = new Intent(this, NuevoEventoActivity.class);
+        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
         startActivity(intent);
         finishDialog(view);
     }
 
     public void startNuevaEntradaWikiActivity(View view) {
         Intent intent = new Intent(this, NuevaEntradaWikiActivity.class);
+        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
         startActivity(intent);
         finishDialog(view);
     }

@@ -40,6 +40,8 @@ public class PerfilLectorActivity extends BaseActivity {
     SharedPreferences perfilPrefs;
     boolean esCliente;
 
+    ImageButton btnAtras, btnConfig, btnLogout;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -53,6 +55,10 @@ public class PerfilLectorActivity extends BaseActivity {
                 .build();
         apiService = retrofit.create(ApiService.class);
 
+        btnAtras = findViewById(R.id.btn_atras);
+        btnConfig = findViewById(R.id.btn_configuracion);
+        btnLogout = findViewById(R.id.btn_logout);
+
         //para enviar el tipo de perfil a las demas activities
         perfilPrefs = getSharedPreferences("perfilPrefs", MODE_PRIVATE);
         SharedPreferences.Editor editor = perfilPrefs.edit();
@@ -61,6 +67,7 @@ public class PerfilLectorActivity extends BaseActivity {
         Log.d("DEBUG PerfilLectorAct", "es cliente? " + esCliente);
         if (esCliente) {
             setupMenus(R.id.nav_buscar, "cliente");
+
             Log.d("DEBUG PerfilLectorActivity", "es cliente");
             editor.putString("perfil","cliente");
             editor.apply();
@@ -74,6 +81,10 @@ public class PerfilLectorActivity extends BaseActivity {
             editorAct.apply();
         } else {
             Log.d("DEBUG PerfilLectorActivity", "es lector");
+            btnAtras.setVisibility(View.GONE);
+            btnConfig.setVisibility(View.VISIBLE);
+            btnLogout.setVisibility(View.VISIBLE);
+
             editor.putString("perfil","lector");
             editor.apply();
             //setupMenus(R.id.nav_inicio, "lector");
@@ -119,7 +130,6 @@ public class PerfilLectorActivity extends BaseActivity {
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
         apiService = retrofit.create(ApiService.class);*/
-        ImageButton btnAtras = findViewById(R.id.btn_atras);
         if (btnAtras != null && !esCliente) {
             setupMenus(R.id.nav_inicio, "lector");
             btnAtras.setVisibility(View.GONE);

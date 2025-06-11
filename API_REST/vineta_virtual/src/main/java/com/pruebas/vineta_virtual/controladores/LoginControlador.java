@@ -55,13 +55,15 @@ public class LoginControlador {
                     response.setNombreLector(lector.getNombreLector());
                     response.setApellidosLector(lector.getApellidosLector());
                     response.setFechaNacimiento(lector.getFechaNac().toString());
+                    response.setLector(lector);
                     return ResponseEntity.ok(response);
                 } else if (u instanceof Cliente cliente) {
                     response.setTipoUsuario("CLIENTE");
                     response.setNombreCliente(cliente.getNombreCliente());
-                    response.setDescripcion(cliente.getDescripcion());
-                    response.setNif(cliente.getNif());
-                    response.setFechaCreacionEmpresa(cliente.getFechaCreacionEmpresa().toString());
+                    response.setCliente(cliente);
+                    //response.setDescripcion(cliente.getDescripcion());
+                    //response.setNif(cliente.getNif());
+                    //response.setFechaCreacionEmpresa(cliente.getFechaCreacionEmpresa().toString());
                     return ResponseEntity.ok(response);
                 } else {
                 	return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("No existe ese tipo de usuario");

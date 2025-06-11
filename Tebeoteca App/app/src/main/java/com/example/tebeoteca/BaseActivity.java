@@ -25,12 +25,14 @@ import com.example.tebeoteca.general.BusquedaActivity;
 import com.example.tebeoteca.lector.ColeccionActivity;
 import com.example.tebeoteca.lector.PerfilLectorActivity;
 import com.example.tebeoteca.lector.SeccionesLectorActivity;
+import com.example.tebeoteca.login.DialogCerrarSesionActivity;
+import com.example.tebeoteca.login.LoginActivity;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 public class BaseActivity extends AppCompatActivity {
     protected FrameLayout contentContainer;
 
-    ImageButton btnConfig, btnNotificaciones, btnAnadir, btnRutas, btnWiki, btnEventos, btnAtras;;
+    ImageButton btnConfig, btnNotificaciones, btnAnadir, btnRutas, btnWiki, btnEventos, btnAtras, btnLogout;
     LinearLayout floatingSubmenu;
     BottomNavigationView bottomMenu;
     private Boolean isSubMenuVisible = false;
@@ -68,7 +70,7 @@ public class BaseActivity extends AppCompatActivity {
         //Top menu:
         btnConfig = findViewById(R.id.btn_configuracion);
         btnNotificaciones = findViewById(R.id.btn_notificaciones);
-
+        btnLogout = findViewById(R.id.btn_logout);
         btnAnadir = findViewById(R.id.btn_anadir);
 
         //Bottom menu:
@@ -175,6 +177,8 @@ public class BaseActivity extends AppCompatActivity {
             startActivity(intent);
         });
 
+        btnLogout.setOnClickListener(v -> startDialogCerrarSesionActivity());
+
     }
 
     public void mostrarMenuFlotante(MenuItem item) {
@@ -218,6 +222,11 @@ public class BaseActivity extends AppCompatActivity {
 
     public void startDialogAnadirSeccionActivity() {
         Intent intent = new Intent(this, DialogNuevaSeccionActivity.class);
+        startActivity(intent);
+    }
+
+    public void startDialogCerrarSesionActivity() {
+        Intent intent = new Intent(this, DialogCerrarSesionActivity.class);
         startActivity(intent);
     }
 
@@ -267,7 +276,7 @@ public class BaseActivity extends AppCompatActivity {
         }
     }
 
-    private void hideSubMenu(LinearLayout submenu) {
+    public void hideSubMenu(LinearLayout submenu) {
         Log.d("BaseActivity","hideSubMenu()");
         for (int i = 0; i < submenu.getChildCount(); i++) {
             View fab = submenu.getChildAt(i);
@@ -286,6 +295,4 @@ public class BaseActivity extends AppCompatActivity {
                     .start();
         }
     }
-
-
 }

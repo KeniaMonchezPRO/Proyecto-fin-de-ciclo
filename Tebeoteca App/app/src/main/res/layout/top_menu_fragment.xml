@@ -12,11 +12,26 @@
         android:orientation="horizontal">
         <ImageButton
             android:visibility="gone"
+            android:id="@+id/btn_logout"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:layout_gravity="start"
+            android:background="@drawable/bg_glass_button"
+            android:src="@drawable/ic_logout"
+            android:contentDescription="atrás"
+            android:scaleType="centerInside"
+            app:tint="#22103b"
+            android:rotation="180"
+            android:onClick="logout"/>
+
+        <ImageButton
+            android:visibility="gone"
             android:id="@+id/btn_configuracion"
             android:elevation="1dp"
             android:layout_width="48dp"
             android:layout_height="48dp"
             android:layout_gravity="start"
+            android:layout_marginStart="10dp"
             android:src="@drawable/ic_settings"
             android:background="@drawable/bg_glass_button"
             android:contentDescription="Configuración"

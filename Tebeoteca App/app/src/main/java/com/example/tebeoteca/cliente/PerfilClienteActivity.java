@@ -25,6 +25,7 @@ import com.example.tebeoteca.R;
 import com.example.tebeoteca.api.ApiService;
 import com.example.tebeoteca.cliente.comic.Comic;
 import com.example.tebeoteca.cliente.comic.ComicActivity;
+import com.example.tebeoteca.cliente.comic.NuevoComicActivity;
 import com.example.tebeoteca.cliente.evento.Evento;
 import com.example.tebeoteca.cliente.evento.EventoAdapter;
 import com.example.tebeoteca.cliente.evento.NuevoEventoActivity;
@@ -39,6 +40,7 @@ import com.example.tebeoteca.cliente.ruta.RutaAdapter;
 import com.example.tebeoteca.cliente.wiki.NuevaEntradaWikiActivity;
 import com.example.tebeoteca.cliente.wiki.Wiki;
 import com.example.tebeoteca.cliente.wiki.WikiAdapter;
+import com.example.tebeoteca.lector.Lector;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -55,21 +57,22 @@ public class PerfilClienteActivity extends BaseActivity {
     private ApiService apiService;
     int idUsuario, seguidoresCounter = 0;
     Button btnEditarPerfil;
-    ImageButton btnAtras, btnConfig;
+    ImageButton btnAtras, btnConfig, btnLogout;
     boolean esLector;
     boolean isFollowing = false;
     TextView tvNombreEmpresa, tvNombreUsuario, tvDescripcion, tvNif, tvFechaCreacionEmpresa, tvNumSeguidores, tvNumComics;
+    Cliente cliente;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setCustomContent(R.layout.activity_perfil_cliente);
         Log.d("PerfClientAct", "ONCREATE()");
-        Cliente cliente = (Cliente) getIntent().getSerializableExtra("clienteRegistrado");
-        Log.d("PerfClientAct", "Cliente: " + cliente.getNombreUsuario() + "; " + cliente);
+
         btnEditarPerfil = findViewById(R.id.btn_editarPerfil);
         btnAtras = findViewById(R.id.btn_atras);
         btnConfig = findViewById(R.id.btn_configuracion);
+        btnLogout = findViewById(R.id.btn_logout);
 
         tvNombreEmpresa = findViewById(R.id.tv_displayNombreEmpresa);
         tvNombreUsuario = findViewById(R.id.tv_displayNombreUsuario);
@@ -87,11 +90,15 @@ public class PerfilClienteActivity extends BaseActivity {
         apiService = retrofit.create(ApiService.class);
 
         esLector = getIntent().getBooleanExtra("esLector", false);
-        Log.d("DEBUG PerfClienteAct", "esLectorExtra? " + esLector);
+        Log.d("PerfClienteAct", "esLectorExtra? " + esLector);
+
+        cliente = (Cliente) getIntent().getSerializableExtra("cliente");
+        Log.d("PerfClienteAct", "datos cliente extra: " + cliente);
 
         if (esLector) {
             setupMenus(R.id.nav_buscar, "lector");
-            btnAtras.setVisibility(View.VISIBLE);
+            Log.d("PerfClienteAct", "entró como lector");
+            //btnAtras.setVisibility(View.VISIBLE);
 
             //para enviar a configuracion activity
             SharedPreferences activityAndTabContext = getSharedPreferences("activityAndTabContext", MODE_PRIVATE);
@@ -101,12 +108,12 @@ public class PerfilClienteActivity extends BaseActivity {
             editorAct.putBoolean("esLector",true);
             editorAct.apply();
 
-            Cliente c = (Cliente) getIntent().getSerializableExtra("cliente");
-            tvNombreEmpresa.setText(c.getNombreCliente());
-            tvNombreUsuario.setText("@"+c.getNombreUsuario());
-            tvDescripcion.setText(c.getDescripcion());
-            tvNif.setText(c.getNif());
-            tvFechaCreacionEmpresa.setText(c.getFechaCreacionEmpresa());
+
+            tvNombreEmpresa.setText(cliente.getNombreCliente());
+            tvNombreUsuario.setText("@"+cliente.getNombreUsuario());
+            tvDescripcion.setText(cliente.getDescripcion());
+            tvNif.setText(cliente.getNif());
+            tvFechaCreacionEmpresa.setText(cliente.getFechaCreacionEmpresa());
 
             btnEditarPerfil.setText("Seguir");
             btnEditarPerfil.setOnClickListener(v -> {
@@ -124,20 +131,22 @@ public class PerfilClienteActivity extends BaseActivity {
                     isFollowing = true;
                 }
             });
-            obtenerComicsDelCliente(c.getId());
+            obtenerComicsDelCliente(cliente.getId());
             obtenerOtrasSecciones();
         } else {
-            Log.d("DEBUG PerfClienteAct", "entonces será cliente?");
             setupMenus(R.id.nav_inicio, "cliente");
             btnAtras.setVisibility(View.GONE);
             btnConfig.setVisibility(View.VISIBLE);
+            btnLogout.setVisibility(View.VISIBLE);
+            Log.d("PerfClienteAct", "entró como cliente");
+
             //para enviar el tipo de perfil a las demas activities
             SharedPreferences perfilPrefs = getSharedPreferences("perfilPrefs", MODE_PRIVATE);
             SharedPreferences.Editor editor = perfilPrefs.edit();
             editor.putString("perfil","cliente");
             editor.apply();
 
-            //para enviar a configuracion activity
+            /*//para enviar a configuracion activity
             SharedPreferences activityAndTabContext = getSharedPreferences("activityAndTabContext", MODE_PRIVATE);
             SharedPreferences.Editor editorAct = activityAndTabContext.edit();
             editorAct.putString("activity","PerfilClienteActivity");
@@ -151,16 +160,32 @@ public class PerfilClienteActivity extends BaseActivity {
             String descripcion = sharedPreferences.getString("descripcion", "Añadir descripción");
             String nif = sharedPreferences.getString("nif", "Añadir NIF");
             String fechaCreacionEmpresa = sharedPreferences.getString("fechaCreacionEmpresa", "Añadir fecha de fundación");
-            idUsuario = sharedPreferences.getInt("idUsuario",1);
+            idUsuario = sharedPreferences.getInt("idUsuario",1);*/
 
-            tvNombreEmpresa.setText(nombreEmpresa);
-            tvNombreUsuario.setText(nombreUsuario);
-            tvDescripcion.setText(descripcion);
-            tvNif.setText(nif);
-            tvFechaCreacionEmpresa.setText(fechaCreacionEmpresa);
+            tvNombreEmpresa.setText(cliente.getNombreCliente());
+            tvNombreUsuario.setText(cliente.getNombreUsuario());
+
+            if(cliente.getDescripcion() == null || cliente.getDescripcion().isEmpty() || cliente.getDescripcion().equals("null")) {
+                tvDescripcion.setText("Añadir descripción");
+            } else {
+                tvDescripcion.setText(cliente.getDescripcion());
+            }
+
+            if(cliente.getNif() == null || cliente.getNif().isEmpty() || cliente.getNif().equals("null")) {
+                tvNif.setText("Añadir NIF");
+            } else {
+                tvNif.setText(cliente.getNif());
+            }
+
+            if(cliente.getFechaCreacionEmpresa() == null || cliente.getFechaCreacionEmpresa().isEmpty() || cliente.getFechaCreacionEmpresa().equals("null")) {
+                tvFechaCreacionEmpresa.setText("Añadir fecha fundación");
+            } else {
+                tvFechaCreacionEmpresa.setText(cliente.getFechaCreacionEmpresa());
+            }
+
 
             //Comics:
-            obtenerComicsDelCliente(idUsuario);
+            obtenerComicsDelCliente(cliente.getId());
             /*Comic nuevo = new Comic("Flashpoint 1", "Neil Gaiman, Stan Lee", "Misterio", R.drawable.flash);
             Comic nuevo1 = new Comic("Flashpoint 2", "Neil Gaiman, Stan Lee", "Misterio", R.drawable.flash);
             Comic nuevo2 = new Comic("Flashpoint 3", "Neil Gaiman, Stan Lee", "Misterio", R.drawable.flash);
@@ -180,7 +205,6 @@ public class PerfilClienteActivity extends BaseActivity {
     @Override
     protected void onResume() {
         super.onResume();
-        Log.d("PerfClientAct", "ONRESUME()");
         /*//Conexion con api:
         Retrofit retrofit = new Retrofit.Builder()
                 .baseUrl("http://10.0.2.2:8080/")
@@ -208,6 +232,11 @@ public class PerfilClienteActivity extends BaseActivity {
             Log.d("PerfClientAct", "ES CLIENTE ON RESUME");
             setupMenus(R.id.nav_inicio,"cliente");
         }
+        View overlay = findViewById(R.id.overlay);
+        View subMenu = findViewById(R.id.submenu_layout);
+
+        if (overlay != null) overlay.setVisibility(View.GONE);
+        if (subMenu != null) subMenu.setVisibility(View.GONE);
     }
 
     @Override
@@ -221,6 +250,11 @@ public class PerfilClienteActivity extends BaseActivity {
     protected void onPause() {
         super.onPause();
         Log.d("PerfClientAct", "ONPAUSE()");
+        View overlay = findViewById(R.id.overlay);
+        View subMenu = findViewById(R.id.submenu_layout);
+
+        if (overlay != null) overlay.setVisibility(View.GONE);
+        if (subMenu != null) subMenu.setVisibility(View.GONE);
     }
 
     @Override
@@ -231,6 +265,11 @@ public class PerfilClienteActivity extends BaseActivity {
 
     private void startComicsActivity() {
         Intent intent = new Intent(this, ComicsActivity.class);
+        startActivity(intent);
+    }
+
+    private void startNuevoComicActivity() {
+        Intent intent = new Intent(this, NuevoComicActivity.class);
         startActivity(intent);
     }
 
@@ -250,6 +289,7 @@ public class PerfilClienteActivity extends BaseActivity {
     }
 
     private void obtenerOtrasSecciones() {
+        Log.d("PerfClienteAct", "datos cliente extra: " + cliente);
         //Eventos
         List<Evento> listaEventos = new ArrayList<>();
         agregarSeccionEventos(listaEventos);
@@ -263,12 +303,14 @@ public class PerfilClienteActivity extends BaseActivity {
         agregarSeccionWiki(listaWiki);
     }
     private void obtenerComicsDelCliente(int idCliente) {
+        Log.d("PerfClienteAct", "obtenerComicsDelCliente()");
         Call<List<Comic>> call = apiService.obtenerComicsPorCliente(idCliente);
 
         call.enqueue(new Callback<List<Comic>>() {
             @Override
             public void onResponse(Call<List<Comic>> call, Response<List<Comic>> response) {
                 if (response.isSuccessful() && response.body() != null) {
+                    Log.d("PerfClienteAct", "response isSuccessful");
                     List<Comic> listaComics = response.body();
                     tvNumComics.setText(String.valueOf(listaComics.size()));
                     agregarSeccionComics(listaComics);
@@ -295,7 +337,7 @@ public class PerfilClienteActivity extends BaseActivity {
         tvTitulo.setText("Novedades");
 
         if (listaNovedades == null || listaNovedades.isEmpty()) {
-            flAnadirNovedad.setVisibility(View.VISIBLE);
+            //flAnadirNovedad.setVisibility(View.VISIBLE);
             tvVerTodo.setVisibility(View.GONE);
         }
 
@@ -316,7 +358,7 @@ public class PerfilClienteActivity extends BaseActivity {
     }
 
     private void agregarSeccionComics(List<Comic> listaComics) {
-        Log.d("DEBUG PerfClienteAct", "ENTRO EN AGREGAR SECCION COMICS");
+        Log.d("PerfClienteAct", "ENTRO EN AGREGAR SECCION COMICS");
         LinearLayout contenedor = findViewById(R.id.comics_container);
 
         View seccionView = LayoutInflater.from(this).inflate(R.layout.seccion_comics, null);
@@ -331,17 +373,19 @@ public class PerfilClienteActivity extends BaseActivity {
         TextView tvVerTodo = seccionView.findViewById(R.id.tv_verTodo);
 
         if (listaComics == null || listaComics.isEmpty()) {
-            Log.d("DEBUG PerfClienteAct", "set visibility");
-            flAnadirComic.setVisibility(View.VISIBLE);
+            Log.d("PerfClienteAct", "listaComics == null; verTodo = GONE");
+            //flAnadirComic.setVisibility(View.VISIBLE);
             tvVerTodo.setVisibility(View.GONE);
+            //flAnadirComic.setOnClickListener(view -> startNuevoComicActivity());
             recycler.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false));
             recycler.setAdapter(null);
         }
 
-        Log.d("DEBUG PerfClienteAct", "else");
+        Log.d("PerfClienteAct", "listaComics == null; verTodo = VIEW");
         tvVerTodo.setOnClickListener(view -> startComicsActivity());
 
         if (listaComics.size() > 6) {
+            Log.d("PerfClienteAct", "listaComics > 6");
             listaComics.subList(0, 6);
         }
 
@@ -355,6 +399,7 @@ public class PerfilClienteActivity extends BaseActivity {
             editor.apply();
             Intent intent = new Intent(PerfilClienteActivity.this, ComicActivity.class);
             intent.putExtra("comic", comic);
+            Log.d("PerfClienteAct", "startComicActivity");
             startActivity(intent);
             this.finish();
         });
@@ -381,10 +426,10 @@ public class PerfilClienteActivity extends BaseActivity {
         tvTitulo.setText("Eventos");
 
         if (listaEventos == null || listaEventos.isEmpty()) {
-            if(!esLector) {
+            /*if(!esLector) {
                 flAnadirEvento.setVisibility(View.VISIBLE);
                 flAnadirEvento.setOnClickListener(view -> startNuevoEventoActivity());
-            }
+            }*/
             tvVerTodo.setVisibility(View.GONE);
         }
 
@@ -415,10 +460,10 @@ public class PerfilClienteActivity extends BaseActivity {
         tvTitulo.setText("Rutas");
 
         if (listaRutas == null || listaRutas.isEmpty()) {
-            if(!esLector) {
+            /*if(!esLector) {
                 flAnadirRuta.setVisibility(View.VISIBLE);
                 flAnadirRuta.setOnClickListener(view -> startNuevaRutaActivity());
-            }
+            }*/
             tvVerTodo.setVisibility(View.GONE);
         }
 
@@ -447,10 +492,10 @@ public class PerfilClienteActivity extends BaseActivity {
         tvTitulo.setText("Wiki");
 
         if (listaWiki == null || listaWiki.isEmpty()) {
-            if(!esLector) {
+            /*if(!esLector) {
                 flAnadirWiki.setVisibility(View.VISIBLE);
                 flAnadirWiki.setOnClickListener(view -> startNuevaEntradaWikiActivity());
-            }
+            }*/
             tvVerTodo.setVisibility(View.GONE);
         }
 

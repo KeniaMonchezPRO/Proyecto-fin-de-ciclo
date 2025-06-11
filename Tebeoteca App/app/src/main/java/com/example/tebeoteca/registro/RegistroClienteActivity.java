@@ -20,6 +20,7 @@ import com.example.tebeoteca.cliente.ClienteAdapter;
 import com.example.tebeoteca.cliente.PerfilClienteActivity;
 import com.example.tebeoteca.lector.PerfilLectorActivity;
 import com.example.tebeoteca.login.LoginActivity;
+import com.google.gson.Gson;
 
 import okhttp3.ResponseBody;
 import retrofit2.Call;
@@ -122,20 +123,21 @@ public class RegistroClienteActivity extends ComponentActivity {
                 if (response.isSuccessful()) {
                     Log.d("LOGIN_DEBUG", "response is successful");
                     RegistroClienteResponseDTO registroData = response.body();
+                    Log.d("RESPONSE_JSON", new Gson().toJson(response.body()));
                     Log.d("RegClientAct", "response: " + registroData);
                     Log.d("RegClientAct", "response: " + registroData.getCliente());
-                    // Guardar en SharedPreferences:
+                    /*// Guardar en SharedPreferences:
                     SharedPreferences prefs = getSharedPreferences("usuarioPrefs", MODE_PRIVATE);
                     SharedPreferences.Editor editor = prefs.edit();
                     editor.putString("nombreEmpresa", registroData.getNombreEmpresa());
                     editor.putString("nombreUsuario", registroData.getNombreUsuario());
                     editor.putInt("idUsuario", registroData.getId());
                     editor.apply();
+                    startActivity(new Intent(RegistroClienteActivity.this, PerfilClienteActivity.class));*/
 
-                    startActivity(new Intent(RegistroClienteActivity.this, PerfilClienteActivity.class));
-                    /*Intent intent = new Intent(RegistroClienteActivity.this, PerfilClienteActivity.class);
-                    intent.putExtra("clienteRegistrado", registroData.getCliente());
-                    startActivity(intent);*/
+                    Intent intent = new Intent(RegistroClienteActivity.this, PerfilClienteActivity.class);
+                    intent.putExtra("cliente", registroData.getCliente());
+                    startActivity(intent);
                 } else {
                     Toast.makeText(RegistroClienteActivity.this, "Hubo un error al crear el usuario", Toast.LENGTH_SHORT).show();
                 }

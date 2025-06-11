@@ -54,6 +54,7 @@ public class RegistroControlador {
 			 response.setEmail(nuevoCliente.getEmail());
 			 response.setTipo(nuevoCliente.getTipoCliente());
 			 response.setNombreEmpresa(nuevoCliente.getNombreCliente());
+			 response.setCliente(nuevoCliente);
 			 return ResponseEntity.ok(response);
 		 } catch (Exception e) { 
 			 return ResponseEntity.status(HttpStatus.CREATED).body(nuevoCliente);

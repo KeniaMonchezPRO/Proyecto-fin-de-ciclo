@@ -1,5 +1,8 @@
 package com.pruebas.vineta_virtual.dto;
 
+import com.pruebas.vineta_virtual.entidades.Cliente;
+import com.pruebas.vineta_virtual.entidades.Lector;
+
 public class LoginResponseDTO {
 	private int id;
 	private String nombreUsuario;
@@ -14,6 +17,8 @@ public class LoginResponseDTO {
 	private String fotoPerfil;
 	private String apellidosLector;
 	private String fechaNacimiento;
+	private Lector lector;
+	private Cliente cliente;
 	
 	public int getId() {
 		return id;
@@ -92,6 +97,18 @@ public class LoginResponseDTO {
 	}
 	public void setFechaNacimiento(String fechaNacimiento) {
 		this.fechaNacimiento = fechaNacimiento;
+	}
+	public Lector getLector() {
+		return lector;
+	}
+	public void setLector(Lector lector) {
+		this.lector = lector;
+	}
+	public Cliente getCliente() {
+		return cliente;
+	}
+	public void setCliente(Cliente cliente) {
+		this.cliente = cliente;
 	}
 	
 	

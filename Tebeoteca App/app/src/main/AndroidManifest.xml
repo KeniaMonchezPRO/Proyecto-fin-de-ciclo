@@ -52,6 +52,7 @@
         <activity android:name=".ConfiguracionActivity"/>
         <activity android:name=".NotificacionesActivity"/>
         <activity android:name=".general.BusquedaActivity"/>
+        <activity android:name=".login.DialogCerrarSesionActivity" android:theme="@style/Theme.VinetaVirtual.BottomSheetDialogActivity"/>
 
         <!--Lector-->
         <activity android:name=".lector.PerfilLectorActivity"/>
@@ -71,6 +72,7 @@
         <activity android:name=".cliente.evento.EventosActivity"/>
 
         <activity android:name=".cliente.ruta.RutasActivity"/>
+        <activity android:name=".cliente.ruta.NuevaRutaActivity"/>
 
         <activity android:name=".cliente.wiki.NuevaEntradaWikiActivity"/>
         <activity android:name=".cliente.wiki.EntradasWikiActivity"/>

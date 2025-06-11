@@ -17,7 +17,9 @@ import com.example.tebeoteca.R;
 import com.example.tebeoteca.api.ApiService;
 import com.example.tebeoteca.cliente.PerfilClienteActivity;
 import com.example.tebeoteca.lector.PerfilLectorActivity;
+import com.example.tebeoteca.registro.RegistroClienteActivity;
 import com.example.tebeoteca.registro.RegistroLectorActivity;
+import com.google.gson.Gson;
 
 import okhttp3.ResponseBody;
 import retrofit2.Call;
@@ -112,8 +114,10 @@ public class LoginActivity extends ComponentActivity {
                 if (response.isSuccessful()) {
                     Log.d("LOGIN_DEBUG", "response is successful");
                     LoginResponseDTO loginData = response.body();
+                    Log.d("RESPONSE_JSON", new Gson().toJson(response.body()));
+                    Log.d("LOGIN_DEBUG", "response: " + loginData);
 
-                    // Guardar en SharedPreferences
+                    /*// Guardar en SharedPreferences
                     SharedPreferences prefs = getSharedPreferences("usuarioPrefs", MODE_PRIVATE);
                     SharedPreferences.Editor editor = prefs.edit();
 
@@ -141,7 +145,18 @@ public class LoginActivity extends ComponentActivity {
                     } else {
                         startActivity(new Intent(LoginActivity.this, PerfilLectorActivity.class));
                     }
+                    finish();*/
+                    if (loginData.getTipoUsuario().equals("CLIENTE")) {
+                        Intent intent = new Intent(LoginActivity.this, PerfilClienteActivity.class);
+                        intent.putExtra("cliente", loginData.getCliente());
+                        startActivity(intent);
+                    } else {
+                        Intent intent = new Intent(LoginActivity.this, PerfilLectorActivity.class);
+                        intent.putExtra("lector", loginData.getLector());
+                        startActivity(intent);
+                    }
                     finish();
+
 
                 } else {
                     Toast.makeText(LoginActivity.this, "Credenciales incorrectas", Toast.LENGTH_SHORT).show();

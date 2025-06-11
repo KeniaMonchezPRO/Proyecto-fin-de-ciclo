@@ -2,6 +2,7 @@ package com.pruebas.vineta_virtual.dto;
 
 import java.time.LocalDate;
 
+import com.pruebas.vineta_virtual.entidades.Cliente;
 import com.pruebas.vineta_virtual.entidades.enums.TipoCliente;
 
 public class RegistroClienteResponseDTO {
@@ -10,6 +11,7 @@ public class RegistroClienteResponseDTO {
     private String email;
     private String nombreEmpresa;
     private TipoCliente tipo;
+    private Cliente cliente;
     
 	public int getId() {
 		return id;
@@ -41,6 +43,13 @@ public class RegistroClienteResponseDTO {
 	public void setTipo(TipoCliente tipo) {
 		this.tipo = tipo;
 	}
+	public Cliente getCliente() {
+		return cliente;
+	}
+	public void setCliente(Cliente cliente) {
+		this.cliente = cliente;
+	}
+	
     
 
 }

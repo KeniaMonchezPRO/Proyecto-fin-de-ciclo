@@ -1,7 +1,13 @@
 package com.example.tebeoteca.login;
 
+import com.example.tebeoteca.cliente.Cliente;
+import com.example.tebeoteca.general.Usuario;
+import com.example.tebeoteca.lector.Lector;
+
+import java.io.Serializable;
+
 //Recibe la respuesta de la API
-public class LoginResponseDTO {
+public class LoginResponseDTO implements Serializable {
     private int id;
     private String nombreUsuario;
     private String tipoUsuario;
@@ -17,6 +23,8 @@ public class LoginResponseDTO {
     private String fotoPerfil;
     private String apellidos;
     private String fechaNacimiento;
+    private Lector lector;
+    private Cliente cliente;
 
     public int getId() {
         return id;
@@ -72,5 +80,21 @@ public class LoginResponseDTO {
 
     public String getFechaNacimiento() {
         return fechaNacimiento;
+    }
+
+    public Lector getLector() {
+        return lector;
+    }
+
+    public Cliente getCliente() {
+        return cliente;
+    }
+
+    public void setCliente(Cliente cliente) {
+        this.cliente = cliente;
+    }
+
+    public void setLector(Lector lector) {
+        this.lector = lector;
     }
 }
