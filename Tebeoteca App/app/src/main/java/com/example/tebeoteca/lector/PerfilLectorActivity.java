@@ -33,7 +33,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
 public class PerfilLectorActivity extends BaseActivity {
 
-    private TextView nombreUsuario, tvNombreUsuarioLector;
+    private TextView nombreUsuario, tvNombreUsuarioLector, tvNumFavs;
     private ImageView fotoPerfil, banner;
     private ApiService apiService;
     int idUsuario;
@@ -47,6 +47,8 @@ public class PerfilLectorActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
 
         setCustomContent(R.layout.activity_perfil_lector);
+
+        tvNumFavs = findViewById(R.id.tv_numComics);
 
         //Conexion con api:
         Retrofit retrofit = new Retrofit.Builder()
@@ -102,7 +104,7 @@ public class PerfilLectorActivity extends BaseActivity {
         SharedPreferences sharedPreferences = getSharedPreferences("usuarioPrefs", MODE_PRIVATE);
         String nombreUsuario = "@"+(sharedPreferences.getString("nombreUsuario", "Usuario"));
         String nombreLector = (sharedPreferences.getString("nombreLector", "Nombre")) + " " + (sharedPreferences.getString("apellidos", "Apellidos"));
-        String fechaNacimiento = sharedPreferences.getString("fechaNacimiento", "1997-10-31");
+        String fechaNacimiento = sharedPreferences.getString("fechaNacimiento", "Añadir ");
         idUsuario = sharedPreferences.getInt("idUsuario",2);
 
         TextView tv_nombreLector = findViewById(R.id.tv_displayNombreLector);

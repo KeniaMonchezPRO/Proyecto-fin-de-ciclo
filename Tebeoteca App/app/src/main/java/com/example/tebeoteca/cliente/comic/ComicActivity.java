@@ -18,6 +18,7 @@ import com.example.tebeoteca.BaseActivity;
 import com.example.tebeoteca.R;
 import com.example.tebeoteca.api.ApiService;
 import com.example.tebeoteca.lector.DialogMetodoPagoActivity;
+import com.example.tebeoteca.lector.SeccionesLectorActivity;
 
 import okhttp3.ResponseBody;
 import retrofit2.Call;
@@ -322,6 +323,8 @@ public class ComicActivity extends BaseActivity {
 
                     btnFav.setOnClickListener(v -> {
                         agregarFavorito(idUsuario, idComic);
+                        Intent intent = new Intent(this, SeccionesLectorActivity.class);
+                        startActivity(intent);
                         this.finish();
                     });
 

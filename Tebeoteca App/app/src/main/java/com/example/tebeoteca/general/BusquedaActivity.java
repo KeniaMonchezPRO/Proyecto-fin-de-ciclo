@@ -60,10 +60,10 @@ public class BusquedaActivity extends BaseActivity {
         setupMenus(R.id.nav_buscar, perfil);
 
         //guardo en pregs el tipo de perfil y cuando le den a un comic se le envie el perfil a ComicActivity
-        /*perfilPrefs = getSharedPreferences("perfilPrefs", MODE_PRIVATE);
+        perfilPrefs = getSharedPreferences("perfilPrefs", MODE_PRIVATE);
         SharedPreferences.Editor editor = perfilPrefs.edit();
         editor.putString("perfil", perfil);
-        editor.apply();*/
+        editor.apply();
 
         //para enviar a ConfiguracionActivity:
         SharedPreferences activityAndTabContext = getSharedPreferences("activityAndTabContext", MODE_PRIVATE);

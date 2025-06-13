@@ -10,6 +10,7 @@ public class Lector implements Serializable {
     private String tipoUsuario;
     private String nombreLector;
     private String apellidosLector;
+    private String fechaNac;
 
     public String getId() {
         return id;

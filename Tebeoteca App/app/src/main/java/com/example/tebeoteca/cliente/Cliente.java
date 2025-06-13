@@ -103,6 +103,7 @@ public class Cliente implements Serializable {
         this.nif = nif;
     }
 
+
     @Override
     public String toString() {
         return "Cliente{" +

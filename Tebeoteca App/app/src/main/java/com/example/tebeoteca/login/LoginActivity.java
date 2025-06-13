@@ -117,7 +117,7 @@ public class LoginActivity extends ComponentActivity {
                     Log.d("RESPONSE_JSON", new Gson().toJson(response.body()));
                     Log.d("LOGIN_DEBUG", "response: " + loginData);
 
-                    /*// Guardar en SharedPreferences
+                    // Guardar en SharedPreferences
                     SharedPreferences prefs = getSharedPreferences("usuarioPrefs", MODE_PRIVATE);
                     SharedPreferences.Editor editor = prefs.edit();
 
@@ -125,7 +125,7 @@ public class LoginActivity extends ComponentActivity {
                     editor.putString("nombreUsuario", loginData.getNombreUsuario());
                     editor.putString("tipoUsuario", loginData.getTipoUsuario());
 
-                    if ("CLIENTE".equals(loginData.getTipoUsuario())) {
+                    /*if ("CLIENTE".equals(loginData.getTipoUsuario())) {
                         editor.putString("nombreEmpresa", loginData.getNombreCliente());
                         editor.putString("nombreUsuario", loginData.getNombreUsuario());
                         editor.putString("descripcion", loginData.getDescripcion());
@@ -146,18 +146,28 @@ public class LoginActivity extends ComponentActivity {
                         startActivity(new Intent(LoginActivity.this, PerfilLectorActivity.class));
                     }
                     finish();*/
+
                     if (loginData.getTipoUsuario().equals("CLIENTE")) {
+                        editor.putString("nombreEmpresa", loginData.getCliente().getNombreCliente());
+                        editor.putString("nombreUsuario", loginData.getCliente().getNombreUsuario());
+                        editor.putString("descripcion", loginData.getCliente().getDescripcion());
+                        editor.putString("nif", loginData.getCliente().getNif());
+                        editor.putString("fechaCreacionEmpresa", loginData.getCliente().getFechaCreacionEmpresa());
+
                         Intent intent = new Intent(LoginActivity.this, PerfilClienteActivity.class);
                         intent.putExtra("cliente", loginData.getCliente());
                         startActivity(intent);
                     } else {
+                        editor.putString("nombreLector", loginData.getLector().getNombreLector());
+                        editor.putString("apellidos", loginData.getLector().getApellidosLector());
+                        editor.putString("fechaNacimiento", loginData.getFechaNacimiento());
+
                         Intent intent = new Intent(LoginActivity.this, PerfilLectorActivity.class);
                         intent.putExtra("lector", loginData.getLector());
                         startActivity(intent);
                     }
+                    editor.apply();
                     finish();
-
-
                 } else {
                     Toast.makeText(LoginActivity.this, "Credenciales incorrectas", Toast.LENGTH_SHORT).show();
                 }

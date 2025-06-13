@@ -94,6 +94,17 @@ public class PerfilClienteActivity extends BaseActivity {
 
         cliente = (Cliente) getIntent().getSerializableExtra("cliente");
         Log.d("PerfClienteAct", "datos cliente extra: " + cliente);
+        if(cliente == null) {
+            SharedPreferences sharedPreferences = getSharedPreferences("usuarioPrefs", MODE_PRIVATE);
+            cliente = new Cliente();
+            cliente.setNombreCliente(sharedPreferences.getString("nombreEmpresa", "Añadir Nombre o razón social"));
+            cliente.setNombreUsuario("@"+(sharedPreferences.getString("nombreUsuario", "Añadir nombre de usuario")));
+            cliente.setDescripcion(sharedPreferences.getString("descripcion", "Añadir descripción"));
+            cliente.setNif(sharedPreferences.getString("nif", "Añadir NIF"));
+            cliente.setFechaCreacionEmpresa(sharedPreferences.getString("fechaCreacionEmpresa", "Añadir fecha de fundación"));
+            cliente.setId(sharedPreferences.getInt("idUsuario",1));
+            Log.d("PerfClienteAct", "datos cliente setteados: " + cliente);
+        }
 
         if (esLector) {
             setupMenus(R.id.nav_buscar, "lector");
@@ -146,21 +157,13 @@ public class PerfilClienteActivity extends BaseActivity {
             editor.putString("perfil","cliente");
             editor.apply();
 
-            /*//para enviar a configuracion activity
+            //para enviar a configuracion activity
             SharedPreferences activityAndTabContext = getSharedPreferences("activityAndTabContext", MODE_PRIVATE);
             SharedPreferences.Editor editorAct = activityAndTabContext.edit();
             editorAct.putString("activity","PerfilClienteActivity");
             editorAct.putString("tab","inicio");
             editorAct.putBoolean("esLector",false);
             editorAct.apply();
-
-            SharedPreferences sharedPreferences = getSharedPreferences("usuarioPrefs", MODE_PRIVATE);
-            String nombreEmpresa = sharedPreferences.getString("nombreEmpresa", "Añadir Nombre o razón social");
-            String nombreUsuario = "@"+(sharedPreferences.getString("nombreUsuario", "Añadir nombre de usuario"));
-            String descripcion = sharedPreferences.getString("descripcion", "Añadir descripción");
-            String nif = sharedPreferences.getString("nif", "Añadir NIF");
-            String fechaCreacionEmpresa = sharedPreferences.getString("fechaCreacionEmpresa", "Añadir fecha de fundación");
-            idUsuario = sharedPreferences.getInt("idUsuario",1);*/
 
             tvNombreEmpresa.setText(cliente.getNombreCliente());
             tvNombreUsuario.setText(cliente.getNombreUsuario());
