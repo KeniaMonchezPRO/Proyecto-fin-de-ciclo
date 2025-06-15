@@ -25,6 +25,7 @@ public interface ILectorServicio {
     
     List<Comic> obtenerFavoritos(int idLector);
     
+    Lector editarLector(int idLector, Lector lector);
     
 
 }

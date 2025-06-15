@@ -11,4 +11,5 @@ public interface IComicServicio {
     List<Comic> obtenerComicsPorCliente(int clienteId);
     List<Comic> obtenerComicsPorCategoria(String categoria);
     Comic obtenerComicPorId(int id);
+    void eliminarComic(int idComic);
 }

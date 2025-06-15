@@ -22,9 +22,9 @@
         android:allowBackup="true"
         android:dataExtractionRules="@xml/data_extraction_rules"
         android:fullBackupContent="@xml/backup_rules"
-        android:icon="@mipmap/ic_launcher"
+        android:icon="@mipmap/ic_vineta_virtual"
         android:label="@string/app_name"
-        android:roundIcon="@mipmap/ic_launcher_round"
+        android:roundIcon="@mipmap/ic_vineta_virtual"
         android:supportsRtl="true"
         android:theme="@style/Theme.VinetaVirtual"
         tools:targetApi="31"
@@ -45,14 +45,16 @@
         <!--Comunes-->
         <activity android:name=".BaseActivity" />
         <activity android:name=".BaseActivityAntes" />
-        <activity android:name=".cliente.comic.ComicViewActivity"/>
-        <activity android:name=".login.LoginActivity" />
-        <activity android:name=".registro.RegistroClienteActivity"/>
-        <activity android:name=".registro.RegistroLectorActivity"/>
         <activity android:name=".ConfiguracionActivity"/>
         <activity android:name=".NotificacionesActivity"/>
+        <activity android:name=".general.TerminosCondicionesActivity"/>
+        <activity android:name=".general.EditarPerfilActivity"/>
         <activity android:name=".general.BusquedaActivity"/>
+        <activity android:name=".login.LoginActivity" />
         <activity android:name=".login.DialogCerrarSesionActivity" android:theme="@style/Theme.VinetaVirtual.BottomSheetDialogActivity"/>
+        <activity android:name=".registro.RegistroClienteActivity"/>
+        <activity android:name=".registro.RegistroLectorActivity"/>
+        <activity android:name=".cliente.comic.ComicViewActivity"/>
 
         <!--Lector-->
         <activity android:name=".lector.PerfilLectorActivity"/>
@@ -77,9 +79,10 @@
         <activity android:name=".cliente.wiki.NuevaEntradaWikiActivity"/>
         <activity android:name=".cliente.wiki.EntradasWikiActivity"/>
 
+        <activity android:name=".cliente.FacturacionActivity"/>
         <provider
             android:name="androidx.core.content.FileProvider"
-            android:authorities="com.example.tebeoteca.fileprovider"
+            android:authorities="com.example.vineta_virtual.fileprovider"
             android:exported="false"
             android:grantUriPermissions="true">
             <meta-data

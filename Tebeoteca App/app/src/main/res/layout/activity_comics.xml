@@ -26,14 +26,28 @@
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
                 android:layout_marginTop="60dp">
-                <TextView
+                <LinearLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_gravity="center|start"
-                    android:text="Comics"
-                    android:textSize="20sp"
-                    android:textColor="@android:color/white"
-                    android:textStyle="bold"/>
+                    android:orientation="horizontal"
+                    android:layout_gravity="start|center">
+                    <TextView
+                        android:id="@+id/tv_comicCounter"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginEnd="10dp"
+                        android:text="0"
+                        android:textSize="20sp"
+                        android:textColor="@android:color/white"
+                        android:textStyle="bold"/>
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Comics"
+                        android:textSize="20sp"
+                        android:textColor="@android:color/white"
+                        android:textStyle="bold"/>
+                </LinearLayout>
                 <TextView
                     android:id="@+id/tv_anadir_comic"
                     android:layout_width="wrap_content"

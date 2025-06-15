@@ -11,6 +11,16 @@
         android:orientation="vertical"
         android:gravity="center">
 
+        <ImageView
+            android:id="@+id/iv_fotoApp"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:layout_gravity="center|top"
+            android:layout_marginTop="50dp"
+            android:background="@drawable/bg_avatar"
+            android:clipToOutline="true"
+            android:elevation="20dp"
+            android:scaleType="centerCrop"/>
         <TextView
             android:id="@+id/textMain"
             android:layout_width="wrap_content"
@@ -18,8 +28,8 @@
             android:layout_gravity="center"
             android:layout_marginTop="50dp"
             android:layout_margin="20dp"
-            android:text="VIÑETA\nVIRTUAL"
-            android:textSize="45sp"
+            android:text="Viñeta Virtual"
+            android:textSize="20sp"
             android:textStyle="bold"
             android:textColor="@color/white"
             android:alpha="0.7"

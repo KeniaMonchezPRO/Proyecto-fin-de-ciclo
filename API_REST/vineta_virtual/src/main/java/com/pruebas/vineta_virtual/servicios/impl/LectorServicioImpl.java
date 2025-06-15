@@ -1,5 +1,7 @@
 package com.pruebas.vineta_virtual.servicios.impl;
 
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -114,6 +116,28 @@ public class LectorServicioImpl implements ILectorServicio {
 	        throw new RuntimeException("No se encontró el lector con ID: " + idLector);
 	    }
 	    return new ArrayList<>(lectorOpt.get().getFavoritos());
+	}
+
+	@Override
+	public Lector editarLector(int idLector, Lector lector) {
+		Optional<Lector> lectorOpt = lectorRepositorio.findById(idLector);
+
+        if (lectorOpt.isPresent()) {
+            Lector lectorExistente = lectorOpt.get();
+
+            lectorExistente.setNombreUsuario(lector.getNombreUsuario());
+            lectorExistente.setEmail(lector.getEmail());
+            lectorExistente.setNombreLector(lector.getNombreLector());
+            lectorExistente.setApellidosLector(lector.getApellidosLector());
+            lectorExistente.setFechaModificacion(LocalDateTime.now());
+            lectorExistente.setFechaNac(lector.getFechaNac());
+            lectorExistente.setContrasena(lector.getContrasena());
+            lectorExistente.setFotoPerfil(lector.getFotoPerfil());
+
+            return lectorRepositorio.save(lectorExistente);
+        } else {
+            throw new RuntimeException("Lector no encontrado con Id: " + idLector);
+        }
 	}
 	
 	

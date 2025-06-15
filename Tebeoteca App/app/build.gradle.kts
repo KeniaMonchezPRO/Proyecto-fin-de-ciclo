@@ -3,17 +3,18 @@ plugins {
 }
 
 android {
-    namespace = "com.example.tebeoteca"
+    namespace = "com.example.vineta_virtual"
     compileSdk = 34
 
     defaultConfig {
-        applicationId = "com.example.tebeoteca"
+        applicationId = "com.example.vineta_virtual"
         minSdk = 24
         targetSdk = 34
         versionCode = 1
         versionName = "1.0"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
+
     }
 
     buildTypes {
@@ -32,6 +33,11 @@ android {
 }
 
 dependencies {
+    testImplementation("junit:junit:4.13.2")
+    testImplementation("org.mockito:mockito-core:4.8.1")
+    androidTestImplementation("androidx.test.ext:junit:1.1.5")
+    androidTestImplementation("androidx.test.espresso:espresso-core:3.5.1")
+
     implementation(libs.androidx.viewpager2)
     implementation(libs.appcompat)
     implementation(libs.material)

@@ -20,6 +20,8 @@ public class AnadirComicRequestDTO {
 	private PaisOrigen paisOrigen;
 	private IdiomaOriginal idiomaOriginal;
 	private String categorias;
+	private String precioCompra;
+	private String precioAlquiler;
 	
 	public String getPortada() {
 		return portada;
@@ -92,6 +94,18 @@ public class AnadirComicRequestDTO {
 	}
 	public void setCategorias(String categorias) {
 		this.categorias = categorias;
+	}
+	public String getPrecioCompra() {
+		return precioCompra;
+	}
+	public void setPrecioCompra(String precioCompra) {
+		this.precioCompra = precioCompra;
+	}
+	public String getPrecioAlquiler() {
+		return precioAlquiler;
+	}
+	public void setPrecioAlquiler(String precioAlquiler) {
+		this.precioAlquiler = precioAlquiler;
 	}
 	
 	

@@ -19,6 +19,6 @@ dependencyResolutionManagement {
     }
 }
 
-rootProject.name = "Tebeoteca"
+rootProject.name = "vineta_virtual"
 include(":app")
  

@@ -31,6 +31,18 @@
                 android:textSize="20sp"
                 android:textColor="@android:color/white"
                 android:textStyle="bold"/>
+            <TextView
+                android:visibility="gone"
+                android:id="@+id/tv_comicCounterColeccion"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center|end"
+                android:text="0"
+                android:textSize="20sp"
+                android:textColor="@android:color/white"
+                android:textStyle="bold"/>
+
+
         </FrameLayout>
         <LinearLayout
             android:id="@+id/ly_coleccionLector"

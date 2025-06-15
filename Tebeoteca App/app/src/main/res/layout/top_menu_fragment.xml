@@ -66,6 +66,7 @@
         app:tint="#22103b" />
 
     <ImageButton
+        android:visibility="gone"
         android:id="@+id/btn_anadir"
         android:layout_width="48dp"
         android:layout_height="48dp"

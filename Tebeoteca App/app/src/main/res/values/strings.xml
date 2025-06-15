@@ -1,12 +1,14 @@
 <resources>
     <!--Títulos-->
-    <string name="app_name">Tebeoteca</string>
+    <string name="app_name">Viñeta Virtual</string>
     <string name="textView_registrarse">Registrarse</string>
     <string name="textView_iniciarSesion">Iniciar Sesión</string>
 
     <!--Enlaces-->
     <string name="textView_sinCuenta"><u>¿Aún no tienes cuenta? Créala aquí</u></string>
     <string name="textView_registroClienteForm">¿Eres editor, distribuidora o creador? &#xA;&#xA;<u>Crea una cuenta de cliente aquí</u></string>
+    <string name="textView_terminos">He leído y acepto los
+        <font color="#0000FF"><u>Términos y Condiciones, la Política de Privacidad, las Condiciones Generales de Contratación y el Aviso Legal.</u></font></string>
 
     <!--Campos obligatorios-->
         <!--Para activity registro-->
@@ -22,4 +24,7 @@
         <string name="textView_tituloComic">Título <font color="#FF0000">*</font></string>
         <string name="textView_selloComic">Sello editorial <font color="#FF0000">*</font></string>
         <string name="textView_autoresComic">Autores <font color="#FF0000">*</font></string>
+
+        <!--Para activity anadir comic-->
+
 </resources>

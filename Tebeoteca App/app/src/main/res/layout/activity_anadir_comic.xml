@@ -393,6 +393,52 @@
                         app:chipSpacingHorizontal="8dp"
                         app:chipSpacingVertical="4dp" />
                 </LinearLayout>
+                <FrameLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+                    <!--precio compra-->
+                    <com.google.android.material.textfield.TextInputLayout
+                        android:layout_width="180dp"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="start"
+                        app:boxStrokeWidth="1dp"
+                        android:hint="Precio compra"
+                        android:overScrollMode="always"
+                        app:hintTextColor="@color/teal_200"
+                        android:textColorHint="@color/teal_200"
+                        app:cursorColor="@color/teal_200"
+                        app:boxStrokeColor="@color/text_input_stroke_color"
+                        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
+                        <com.google.android.material.textfield.TextInputEditText
+                            android:id="@+id/et_precioCompra"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:textSize="12sp"
+                            android:textColor="@color/white"
+                            android:textAlignment="center"/>
+                    </com.google.android.material.textfield.TextInputLayout>
+                    <!--precio alquiler-->
+                    <com.google.android.material.textfield.TextInputLayout
+                        android:layout_width="180dp"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="end"
+                        app:boxStrokeWidth="1dp"
+                        android:hint="Precio Alquiler"
+                        android:overScrollMode="always"
+                        app:hintTextColor="@color/teal_200"
+                        android:textColorHint="@color/teal_200"
+                        app:cursorColor="@color/teal_200"
+                        app:boxStrokeColor="@color/text_input_stroke_color"
+                        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
+                        <com.google.android.material.textfield.TextInputEditText
+                            android:id="@+id/et_precioAlquiler"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:textSize="12sp"
+                            android:textColor="@color/white"
+                            android:textAlignment="center"/>
+                    </com.google.android.material.textfield.TextInputLayout>
+                </FrameLayout>
                 <!--Botones-->
                 <FrameLayout
                     android:layout_width="match_parent"

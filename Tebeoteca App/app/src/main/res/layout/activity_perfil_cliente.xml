@@ -92,24 +92,43 @@
                         android:id="@+id/btn_editarPerfil"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_gravity="start"
+                        android:layout_gravity="start|center"
                         android:text="Editar perfil"
                         android:backgroundTint="#8003DAC5" />
+
+                    <TextView
+                        android:id="@+id/tv_email"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="bottom|end"
+                        android:layout_marginBottom="40dp"
+                        android:text="Contacto"
+                        android:textColor="#70FFFFFF"/>
 
                     <TextView
                         android:id="@+id/tv_nifEmpresa"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="top|end"
+                        android:layout_marginBottom="60dp"
                         android:text="NIF"
-                        android:textColor="@color/white"/>
+                        android:textColor="#70FFFFFF"/>
 
                     <TextView
                         android:id="@+id/tv_fechaCreacionEmpresa"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="bottom|end"
-                        android:text="1997-10-31"
+                        android:layout_marginBottom="20dp"
+                        android:text="Fundación"
+                        android:textColor="#70FFFFFF"/>
+
+                    <TextView
+                        android:id="@+id/tv_localidad"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="bottom|end"
+                        android:text="Localidad: España"
                         android:textColor="#70FFFFFF"/>
                 </FrameLayout>
             </LinearLayout>
