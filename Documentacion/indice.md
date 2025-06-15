@@ -28,7 +28,9 @@
   - [8.3. Estructura de la aplicación](8.implementacion.md#83-estructura-de-la-aplicación)
   - [8.4. Pruebas realizadas](8.implementacion.md#84-pruebas-realizadas)
 - [9. Solución desarrollada](9.solucion.md)
-- [10. Conclusiones y líneas de trabajo futuras](10.conclusiones.md)
+- [10. Lecciones aprendidas en los módulos del ciclo](10.lecciones.md)
+- [11. Conclusiones y líneas de trabajo futuras](11.lecciones.md)
+- [12.Referencias bibliográficas](12.referencias.md)
 - [Anexos](anexos.md)
   
 ---
